@@ -1,3 +1,76 @@
-<div>
-    <h1>Register</h1>
+<div class="hero is-fullheight" gdAlignColumns="center" gdAlignRows="center">
+    <div>
+        <form class="box" fxFlex="100%" #registerForm="ngForm" (submit)="login(registerForm.value)">
+            <div>
+                <h1 class="has-text-centered is-size-3 has-text-weight-bold">
+                    REGISTER
+                </h1>
+            </div>
+            <div class="field">
+            <label class="label">Username</label>
+            <div class="control">
+                <input class="input" type="text" placeholder="Username" ngModel name="username">
+            </div>
+            </div>
+            <div class="field">
+            <label class="label">Name</label>
+            <div class="control">
+                <input class="input" type="text" placeholder="Name" ngModel name="name">
+            </div>
+            </div>
+            <div class="field">
+            <label class="label">Surname</label>
+            <div class="control">
+                <input class="input" type="text" placeholder="Surname" ngModel name="surname">
+            </div>
+            </div>
+
+            <div class="field">
+            <label class="label">Birthday</label>
+            <div class="control">
+                <input class="input" type="date" placeholder="" ngModel name="birthday">
+            </div>
+            </div>
+
+            <div class="field">
+            <label class="label">Tlf</label>
+            <div class="control">
+                <input class="input" type="tel" placeholder="" ngModel name="tlf">
+            </div>
+            </div>
+
+            <div class="field">
+            <label class="label">Email</label>
+            <div class="control">
+                <input class="input" type="email" placeholder="" ngModel name="email">
+            </div>
+            </div>
+        
+            <div class="field">
+            <label class="label">Password</label>
+            <div class="control">
+                <input class="input" type="password" placeholder="********" ngModel name="password">
+            </div>
+            </div>
+            <div class="field">
+            <label class="label">Repeat password</label>
+            <div class="control">
+                <input class="input" type="password" placeholder="********" ngModel name="repeatPassword">
+            </div>
+            </div>
+        
+            <div class="field is-grouped is-grouped-centered" fxLayout="column" fxLayout.gt-xs="row">
+                <div class="p-1 has-text-centered">
+                  <button class="button is-primary">
+                    Submit
+                  </button>
+                </div>
+                <div class="p-1 has-text-centered">
+                  <a class="button is-light" routerLink="/">
+                    Cancel
+                  </a>
+                </div>
+              </div>
+        </form>
+    </div>
 </div>

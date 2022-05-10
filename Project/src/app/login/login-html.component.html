@@ -1,26 +1,30 @@
 <div class="hero is-fullheight" gdAlignColumns="center" gdAlignRows="center">
     <div>
-<form class="box" fxFlex="100%">
-    <div>
-        <h1 class="has-text-centered is-size-3 has-text-weight-bold">
-            LOGIN
-        </h1>
+        <form class="box" fxFlex="100%" #loginForm="ngForm" (submit)="login(loginForm.value)">
+            <div>
+                <h1 class="has-text-centered is-size-3 has-text-weight-bold">
+                    LOGIN
+                </h1>
+            </div>
+            <div class="field">
+            <label class="label">Username</label>
+            <div class="control">
+                <input class="input" type="text" placeholder="Username" ngModel name="username">
+            </div>
+            </div>
+        
+            <div class="field">
+            <label class="label">Password</label>
+            <div class="control">
+                <input class="input" type="password" placeholder="********" ngModel name="password">
+            </div>
+            </div>
+            
+            <div>
+                <p>No tienes cuenta? <a routerLink="/register">Registrate</a></p>
+            </div>
+        
+            <button class="button is-primary">Sign in</button>
+        </form>
     </div>
-    <div class="field">
-      <label class="label">Username</label>
-      <div class="control">
-        <input class="input" type="text" placeholder="Username" [(ngModel)]="loginObj.username">
-      </div>
-    </div>
-  
-    <div class="field">
-      <label class="label">Password</label>
-      <div class="control">
-        <input class="input" type="password" placeholder="********">
-      </div>
-    </div>
-  
-    <button class="button is-primary" (click)="login()">Sign in</button>
-</form>
-</div>
 </div>
