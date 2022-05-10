@@ -9,6 +9,7 @@ import { HomeComponent } from './home/home.component';
 import { RegisterComponent } from './register/register.component';
 import { LoginComponent } from './login/login.component';
 import { SidenavComponent } from './sidenav/sidenav.component';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { SidenavComponent } from './sidenav/sidenav.component';
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    FlexLayoutModule
   ],
   providers: [],
   bootstrap: [AppComponent]
