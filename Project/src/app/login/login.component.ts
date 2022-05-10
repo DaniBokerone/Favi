@@ -2,11 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-login',
-  template: `
-    <p>
-      login works!
-    </p>
-  `,
+  templateUrl: './login-html.component.html',
   styles: [
   ]
 })
