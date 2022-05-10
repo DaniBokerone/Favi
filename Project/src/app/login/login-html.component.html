@@ -7,9 +7,9 @@
         </h1>
     </div>
     <div class="field">
-      <label class="label">Email</label>
+      <label class="label">Username</label>
       <div class="control">
-        <input class="input" type="email" placeholder="e.g. alex@example.com">
+        <input class="input" type="text" placeholder="Username" [(ngModel)]="loginObj.username">
       </div>
     </div>
   
@@ -20,7 +20,7 @@
       </div>
     </div>
   
-    <button class="button is-primary">Sign in</button>
+    <button class="button is-primary" (click)="login()">Sign in</button>
 </form>
 </div>
 </div>
