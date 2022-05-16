@@ -18,7 +18,6 @@ export class SidenavComponent implements OnInit {
   }
 
   logout(){
-    this.globalVar.setNameUser(undefined);
     this.coockieService.delete('token_access');
     this.router.navigate(['/login']);
   }

@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { CookieService } from 'ngx-cookie-service';
 
 @Injectable({
   providedIn: 'root'
@@ -6,48 +7,48 @@ import { Injectable } from '@angular/core';
 export class GlobalVarService {
   public API_SERVER_TEST = 'https://reqres.in';
   public API_SERVER = 'http://192.168.8.165/oda/api';
-  private nameUser: String | undefined;
+
   public actualUser = {
     username: "",
     name: "",
-    lastname: "",
+    surname: "",
     email: "",
-    birthday: "",
-    image: "",
-    isArtist: "",
+    birth_date: "",
+    profile_image: "",
+    is_artist: "",
     tlf: "",
   }
-  constructor() { }
+  constructor(private coockieService: CookieService) { }
 
-  setNameUser(nameUser:String | undefined){
-    this.nameUser = nameUser;
-  }
-  getNameUser(){
-    return this.nameUser;
+  init(){
+    
+    var coockie = this.coockieService.get("token_access");
+    var data = JSON.parse(coockie)
+    console.log(data)
+    this.setActualUser(data);
   }
 
   setActualUser(user:any){
     this.actualUser.username = user.username;
     this.actualUser.name = user.name;
-    this.actualUser.lastname= user.surname;
+    this.actualUser.surname= user.surname;
     this.actualUser.email= user.email;
-    this.actualUser.birthday= user.birth_date;
-    this.actualUser.image= user.profile_image;
-    this.actualUser.isArtist= user.is_artist;
+    this.actualUser.birth_date= user.birth_date;
+    this.actualUser.profile_image= user.profile_image;
+    this.actualUser.is_artist= user.is_artist;
     this.actualUser.tlf= user.tlf;
+    console.log(this.actualUser)
   }
   
 
   logOut(){
-    this.nameUser = undefined;
-
     this.actualUser.username = "";
     this.actualUser.name = "";
-    this.actualUser.lastname= "";
+    this.actualUser.surname= "";
     this.actualUser.email= "";
-    this.actualUser.birthday= "";
-    this.actualUser.image= "";
-    this.actualUser.isArtist= "";
+    this.actualUser.birth_date= "";
+    this.actualUser.profile_image= "";
+    this.actualUser.is_artist= "";
     this.actualUser.tlf= "";
   }
 }

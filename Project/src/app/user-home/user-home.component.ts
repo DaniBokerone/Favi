@@ -10,12 +10,13 @@ import { ActivatedRoute, Router } from '@angular/router';
   ]
 })
 export class UserHomeComponent implements OnInit {
-  public username:String | undefined;
+  public user: any;
   constructor(private globalVar:GlobalVarService, private coockieService: CookieService,
-    private router: Router, private activedRoute: ActivatedRoute) { }
+    private router: Router) { }
 
   ngOnInit(): void {
-    this.username = this.globalVar.getNameUser();
+    this.globalVar.init();
+    this.user = this.globalVar.actualUser;
     
   }
 
