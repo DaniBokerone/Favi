@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { GlobalVarService } from '../global-var.service';
+import { CookieService } from 'ngx-cookie-service';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-sidenav',
@@ -8,9 +11,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SidenavComponent implements OnInit {
 
-  constructor() { }
+  constructor(private globalVar: GlobalVarService, private coockieService: CookieService,
+    private router:Router) { }
 
   ngOnInit(): void {
+  }
+
+  logout(){
+    this.globalVar.setNameUser(undefined);
+    this.coockieService.delete('token_access');
+    this.router.navigate(['/login']);
   }
 
 }

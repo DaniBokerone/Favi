@@ -6,7 +6,6 @@ import { Component } from '@angular/core';
     <!--HEADER-->
     <app-header></app-header>
     <!--ROUTE-->
-    <app-sidenav></app-sidenav>
     <router-outlet></router-outlet>
 
     <!--FOOTER-->

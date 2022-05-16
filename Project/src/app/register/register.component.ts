@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
+import { RestService } from '../rest.service';
 
 declare var $: any;
 @Component({
@@ -10,19 +11,25 @@ declare var $: any;
   ]
 })
 export class RegisterComponent implements OnInit {
-  registerForm:any;
-  registerData: any={};
-  constructor(private router: Router) {
+
+  constructor(private router: Router, private rest: RestService) {
   }
 
   ngOnInit(): void {
   }
 
   login(data: NgForm){
-    this.registerData = data;
+    // TODO: validaciones register form
     if(true){
-      console.log(this.registerData)
-      //this.router.navigateByUrl('/');
+      this.rest.post('/register',data)
+      .subscribe({
+        next: res=>{
+          this.router.navigate(['/login']);
+        },
+        error: err=>{
+          console.log(err);
+        }
+      })
     }
   }
 }

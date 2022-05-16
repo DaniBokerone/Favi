@@ -12,6 +12,10 @@ import { SidenavComponent } from './sidenav/sidenav.component';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { CookieService } from 'ngx-cookie-service';
+import { UserHomeComponent } from './user-home/user-home.component';
+import { UserProfileComponent } from './user-profile/user-profile.component';
+import { PageNotFoundComponent } from './not-found/not-found.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +25,10 @@ import { HttpClientModule } from '@angular/common/http';
     HomeComponent,
     RegisterComponent,
     LoginComponent,
-    SidenavComponent
+    SidenavComponent,
+    UserHomeComponent,
+    UserProfileComponent,
+    PageNotFoundComponent
   ],
   imports: [
     BrowserModule,
@@ -31,7 +38,7 @@ import { HttpClientModule } from '@angular/common/http';
     HttpClientModule,
     ReactiveFormsModule
   ],
-  providers: [],
+  providers: [CookieService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
