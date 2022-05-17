@@ -1,7 +1,36 @@
-<app-sidenav></app-sidenav>
-<div *ngIf="showHome();">
-    <h1>HOME</h1>
-    <h1>USER HOME NAME: {{user.username}} </h1>
-
+<!-- <app-sidenav></app-sidenav> -->
+<div *ngIf="showHome();" class="full-h">
+    <h1 class="is-size-1" fxLayoutAlign="center">HOME</h1>
+    <!-- PLACEHOLDER -->
+    <div class="home-content">
+        <div class="card my-card" *ngFor="let item of items" routerLink="songs/{{item.album_id}}">
+            <div class="card-content">
+                <img src="../../assets/img/noimage.png">
+                <!-- <div [innerHTML]="item.cover_image"></div> -->
+                <!-- <img [src]="item.cover_image ? item.cover_image: 'assets/img/default.png'"> -->
+                <div>
+                    <p class="ellipsis">{{item.name}}</p>
+                </div>
+            </div>
+        </div>
+        <!-- routerLink="song/{{item.id}}" -->
+        <!-- <div class="card my-card" routerLink="songs/1">
+            <div class="card-content">
+                <img src="../../assets/img/noimage.png">
+                <div>
+                    <p class="ellipsis">Titulo cancion </p>
+                </div>
+            </div>
+        </div>
+        <div class="card my-card" routerLink="songs/2">
+            <div class="card-content">
+                <img src="../../assets/img/noimage.png">
+                <div>
+                    <p class="ellipsis">Titulo cancion muuy muy muy muy uuy muy largo</p>
+                </div>
+            </div>
+        </div> -->
+    </div>
+    
 </div>
 <router-outlet></router-outlet>

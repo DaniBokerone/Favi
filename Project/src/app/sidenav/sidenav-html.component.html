@@ -1,5 +1,14 @@
-<div style="width: 300px;float: left; background-color: black; height: 100vh;">
-    <a routerLink="."><button class="slide">HOME</button></a>
+<div id="sideNav">
+    <ul>
+        <li (click)="closeSideNav()" class="slide">x</li>
+        <li routerLink="." class="slide">HOME</li>
+        <li routerLink="profile" class="slide">Profile</li>
+        <li (click)="logout()" class="slide">Logout</li>
+    </ul>
+    <!-- <a routerLink="." class="slide">HOME</a>
     <a routerLink="profile"><button class="slide">Profile</button></a>
-    <a (click)="logout()"><button class="slide">logout</button></a>
+    <a (click)="logout()"><button class="slide">logout</button></a> -->
+</div>
+<div id="openSideNav">
+    <a (click)="closeSideNav()" >OPEN</a>
 </div>

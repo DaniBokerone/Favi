@@ -11,11 +11,16 @@ export class RestService {
 
   public post(path:String,data: any){
     // return this.http.post<any>(this.globalVar.API_SERVER_TEST+"/api/users", data)
-    return this.http.post<any>(this.globalVar.API_SERVER+path, JSON.stringify(data))
-    // return {
-    //   username: "usernametest",
-    //   id: "001"
-    // };
+    return this.http.post<any>(this.globalVar.API_SERVER+path, JSON.stringify(data));
+  }
+
+  public get(path:String){
+    return this.http.get(this.globalVar.API_SERVER+path);
+  }
+
+  public getWithParams(path:String,params:any){
+    /**@TODO */
+    return this.http.get(this.globalVar.API_SERVER+path, {params: params});
   }
   
   

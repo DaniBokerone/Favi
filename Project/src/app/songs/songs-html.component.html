@@ -1,0 +1,19 @@
+<div class="full-h" *ngIf="song">
+    <div class="header-song">
+        <img src="../../assets/img/noimage.png">
+        <h1 class="is-size-4">{{song.name}}</h1>
+    </div>
+    
+    <div class="separator"></div>  
+    <div class="song-list">
+        <ul>
+            <li *ngFor="let _ of [].constructor(20)">
+                <div class="song">
+                    <i class="fa-solid fa-play"></i>
+                    song_name_test_1
+                </div>
+            </li>
+        </ul>
+    </div>
+    
+</div>

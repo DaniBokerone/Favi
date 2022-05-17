@@ -7,6 +7,7 @@ import { RegisterComponent } from './register/register.component';
 import { UserHomeComponent } from './user-home/user-home.component';
 import { UserProfileComponent } from './user-profile/user-profile.component';
 import { PageNotFoundComponent } from './not-found/not-found.component';
+import { SongsComponent } from './songs/songs.component';
 
 const routes: Routes = [
 
@@ -26,11 +27,15 @@ const routes: Routes = [
     path: 'home',
     component: UserHomeComponent,
     canActivate: [PathProtectGuard],
-    // canActivateChild: [PathProtectGuard],
+    canActivateChild: [PathProtectGuard],
     children:[
     {
       path: 'profile',
       component: UserProfileComponent
+    },
+    {
+      path: 'songs/:id',
+      component: SongsComponent
     }
   ]
   },

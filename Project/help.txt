@@ -1,2 +1,4 @@
 FlexLayout:
 https://github.com/angular/flex-layout/wiki/Declarative-API-Overview
+icons:
+https://fontawesome.com/search?s=solid%2Cbrands

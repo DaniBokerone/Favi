@@ -1,19 +1,49 @@
-<div>
-    <h1>Profile</h1>
+<div class="full-h">
+    <h1 class="is-size-1" fxLayoutAlign="center">PROFILE</h1>
 
-    <div>
-        <img src="../../assets/img/{{user.profile_image}}">
+    <div class="img-profile is-size-5">
+        <!-- <img src="../../assets/img/{{user.profile_image}}"> -->
+        <img src="../../assets/img/noimage.png">
+        <div>
+            <p>{{user.username}}</p>
+            <p>{{user.name}},{{user.surname}}</p>
+        </div>
     </div>
-    <h1>{{user.username}} </h1>
-    <span>{{user.name}},{{user.surname}}</span>
-    <br>
-    <span>{{user.email}}</span>
-    <br>
-    <span>{{user.birth_date}}</span>
-    <br>
-    <span>{{user.is_artist}}</span>
-    <br>
-    <span>{{user.tlf}}</span>
-    <br>
-    <span>{{user.profile_image}}</span>
+    <div class="separator"></div>
+    <form #updateProfile="ngForm" (submit)="update(updateProfile.value)">
+    <table class="table-data-profile">
+        <tr *ngIf="edit">
+            <td>Name:</td>
+            <input class="my-input" type="text" ngModel="{{user.name}}" name="name">
+        </tr>
+        <tr *ngIf="edit">
+            <td>Surname:</td>
+            <input  class="my-input" type="text" ngModel="{{user.surname}}" ngModel="{{user.surname}}" name="surname">
+        </tr>
+        <tr>
+            <td>Email:</td>
+            <td *ngIf="!edit">{{user.email}}</td>
+            <input *ngIf="edit" class="my-input" type="text" ngModel="{{user.email}}" name="email">
+        </tr>
+        <tr>
+            <td>Telf:</td>
+            <td *ngIf="!edit">{{user.tlf}}</td>
+            <input *ngIf="edit" class="my-input" type="tel" ngModel="{{user.tlf}}" name="tlf">
+        </tr>
+        <tr>
+            <td>Birth date:</td>
+            <td *ngIf="!edit">{{user.birth_date}}</td>
+            <input *ngIf="edit" class="my-input" type="date" ngModel="{{user.birth_date}}" name="birth_date">
+        </tr>
+    </table>
+    <div *ngIf="edit" fxLayoutAlign="center" class="buttons">
+        <button  class="my-button my-button-confirm" >Submit</button>
+    </div>
+    
+</form>
+    <div fxLayoutAlign="center" class="buttons">
+        <button (click)="enableEdit();" class="my-button">{{edit? 'Close': 'Edit'}}</button>
+    </div>
+
+    
 </div>

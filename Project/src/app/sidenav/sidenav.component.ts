@@ -4,7 +4,7 @@ import { CookieService } from 'ngx-cookie-service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { style } from '@angular/animations';
 
-
+declare var $: any;
 @Component({
   selector: 'app-sidenav',
   templateUrl: './sidenav-html.component.html',
@@ -21,6 +21,16 @@ export class SidenavComponent implements OnInit {
   logout(){
     this.coockieService.delete('token_access');
     this.router.navigate(['/login']);
+  }
+
+  closeSideNav(){
+    let sideNav = $('#sideNav');
+    if(sideNav.hasClass('closeSideNav')){
+      sideNav.removeClass('closeSideNav');
+    }else{
+      sideNav.addClass('closeSideNav');
+    }
+    
   }
 
 }

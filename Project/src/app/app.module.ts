@@ -16,6 +16,7 @@ import { CookieService } from 'ngx-cookie-service';
 import { UserHomeComponent } from './user-home/user-home.component';
 import { UserProfileComponent } from './user-profile/user-profile.component';
 import { PageNotFoundComponent } from './not-found/not-found.component';
+import { SongsComponent } from './songs/songs.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { PageNotFoundComponent } from './not-found/not-found.component';
     SidenavComponent,
     UserHomeComponent,
     UserProfileComponent,
-    PageNotFoundComponent
+    PageNotFoundComponent,
+    SongsComponent
   ],
   imports: [
     BrowserModule,
