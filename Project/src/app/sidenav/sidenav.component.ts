@@ -2,13 +2,14 @@ import { Component, OnInit } from '@angular/core';
 import { GlobalVarService } from '../global-var.service';
 import { CookieService } from 'ngx-cookie-service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { style } from '@angular/animations';
+
 
 @Component({
   selector: 'app-sidenav',
   templateUrl: './sidenav-html.component.html',
-  styles: [
-  ]
-})
+  styles:[]
+ })
 export class SidenavComponent implements OnInit {
 
   constructor(private globalVar: GlobalVarService, private coockieService: CookieService,
