@@ -1,0 +1,15 @@
+<div id="progress-bar">
+    <div class="progress-bar-div">
+        <input type="range" id="actualMusic" min="0" max="100" value="0">
+    </div>
+    <div class="info-song">
+        <img src="../../assets/img/noimage.png">
+        <div class="data-song">
+            <p>name_song</p>
+            <p>artist_name</p>
+        </div>
+        <i (click)="play()" *ngIf="!isPlayed" class="fa-solid fa-play"></i>
+        <i (click)="play()" *ngIf="isPlayed" class="fa-solid fa-pause"></i>
+        <i class="fa-solid fa-forward-step"></i>
+    </div>
+</div>

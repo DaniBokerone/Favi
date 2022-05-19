@@ -5,9 +5,7 @@
     <div class="home-content">
         <div class="card my-card" *ngFor="let item of items" routerLink="songs/{{item.album_id}}">
             <div class="card-content">
-                <img src="../../assets/img/noimage.png">
-                <!-- <div [innerHTML]="item.cover_image"></div> -->
-                <!-- <img [src]="item.cover_image ? item.cover_image: 'assets/img/default.png'"> -->
+                <img src="data:image/jpeg;base64,{{item.cover_image}}">
                 <div>
                     <p class="ellipsis">{{item.name}}</p>
                 </div>

@@ -1,16 +1,45 @@
-<div class="full-h" *ngIf="song">
-    <div class="header-song">
-        <img src="../../assets/img/noimage.png">
-        <h1 class="is-size-4">{{song.name}}</h1>
+<div class="full-h" *ngIf="song" id="songs-component">
+    <div class="header-song" (scroll)="animationHeader()" [ngClass]="isFixed? 'fixedClass':'notFixedClass'">
+        <img src="data:image/jpeg;base64,{{song.cover_image}}" *ngIf="!isFixed">
+        <!-- <img src="../../assets/img/noimage.png"> -->
+        <h1 class="is-size-4" [ngClass]="isFixed? 'ellipsis':''">{{song.name}}</h1>
     </div>
+    <script>
+        
+
+    </script>
     
     <div class="separator"></div>  
-    <div class="song-list">
+    <div class="song-list" [ngClass]="isFixed? 'testing-scroll':''">
         <ul>
-            <li *ngFor="let _ of [].constructor(20)">
+                <!-- <li *ngFor="let _ of [].constructor(20); let i=index">
+                    <div class="song">
+                        <span>{{(i+1)}}</span>
+                        <i class="fa-solid fa-play"></i> 
+                        
+                        <div>
+                            <p>song_name_test_1</p>
+                            <p>by bokerone studios</p>
+                        </div>
+
+                        <i class="fa-solid fa-heart my-icon-color"></i>
+                        <i class="fa-regular fa-heart"></i>
+                        <i class="fa-regular fa-ellipsis-vertical"></i>
+                    </div>
+                </li> -->
+            <li *ngFor="let a of song.songs; let i=index">
                 <div class="song">
-                    <i class="fa-solid fa-play"></i>
-                    song_name_test_1
+                    <span>{{(i+1)}}</span>
+                    
+                    <div class="info-song">
+                        <p class="ellipsis">{{a.name}}</p>
+                        <p>by {{a.artist_name}}</p>
+                    </div>
+
+                    <i class="fa-solid fa-heart my-icon-color"></i>
+                    <i class="fa-regular fa-heart"></i>
+                    
+                    <i class="fa-solid fa-ellipsis-vertical"></i>
                 </div>
             </li>
         </ul>

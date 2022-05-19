@@ -1,0 +1,24 @@
+@use "../../vars" as *;
+
+#progress-bar{
+    .progress-bar-div{
+        width: 100%;
+        margin: auto;
+        #actualMusic{
+            width: 100%;
+            height: 5px !important;
+        }
+    }
+    .data-song{
+        width: 70%;
+    }
+    img{
+        max-width: 15%;
+    }
+    .info-song{
+        display: flex;
+    }
+    i{
+        font-size: 2em;
+    }
+}

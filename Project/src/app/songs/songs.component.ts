@@ -1,6 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { GlobalVarService } from '../global-var.service';
 import { RestService } from '../rest.service';
+
 
 @Component({
   selector: 'app-songs',
@@ -12,15 +14,20 @@ import { RestService } from '../rest.service';
 export class SongsComponent implements OnInit {
 
   public song: any;
+  public isFixed:boolean = false;
 
-  constructor(private activeRoute: ActivatedRoute, private rest:RestService) { }
+  constructor(private activeRoute: ActivatedRoute, private rest:RestService,
+    private globalVar: GlobalVarService) { }
 
   ngOnInit(): void {
     this.activeRoute.params.subscribe({
       next: res =>{
-        console.log(res)
+        let data ={
+          username: this.globalVar.actualUser.username,
+          id: res["id"],
+        };
         console.log("todo piola");
-        this.rest.getWithParams('/getAlbum', res).subscribe({
+        this.rest.getWithParams('/getAlbum', data).subscribe({
           next: getRes=>{
             this.song = getRes;
             console.log(getRes)
@@ -35,6 +42,15 @@ export class SongsComponent implements OnInit {
         console.log(err)
       }
     });
+  }
+
+  /**@TODO */
+  @HostListener('window:scroll',['$event']) animationHeader(){
+      if(window.scrollY>100){
+        this.isFixed = true;
+      }else{
+        this.isFixed = false;
+      }
   }
 
 }
