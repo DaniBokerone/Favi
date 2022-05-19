@@ -1,16 +1,30 @@
-<div class="full-h" *ngIf="song" id="songs-component">
+<div class="full-h" *ngIf="album" id="songs-component">
     <div class="header-song" (scroll)="animationHeader()" [ngClass]="isFixed? 'fixedClass':'notFixedClass'">
-        <img src="data:image/jpeg;base64,{{song.cover_image}}" *ngIf="!isFixed">
+        <img src="data:image/jpeg;base64,{{album.cover_image}}" *ngIf="!isFixed">
         <!-- <img src="../../assets/img/noimage.png"> -->
-        <h1 class="is-size-4" [ngClass]="isFixed? 'ellipsis':''">{{song.name}}</h1>
+        <h1 class="is-size-4" [ngClass]="isFixed? 'ellipsis not-fixed-album-title':''">{{album.name}}</h1>
+        <div *ngIf="!isFixed" class="not-fixed">
+            <div fxLayoutAlign="center">
+                <p (click)="goToArtist(album.artist_id)">{{album.artist_name}}</p>
+            </div>
+            <div class="div-album-buttons">
+                <button class="my-button"><i class="fa-solid fa-play"></i> Play</button>
+                <button *ngIf="!album.follow" (click)="followAlbum(album)" class="my-button my-button-confirm"><i class="fa-solid fa-plus"></i> Follow</button>
+                <button *ngIf="album.follow" (click)="unfollowAlbum(album)" class="my-button my-button-remove   "><i class="fa-solid fa-xmark"></i> Unfollow</button>
+            </div>
+            
+        </div>
+
+        
     </div>
+    <div *ngIf="isFixed" class="space-header"></div>
     <script>
         
 
     </script>
     
     <div class="separator"></div>  
-    <div class="song-list" [ngClass]="isFixed? 'testing-scroll':''">
+    <div class="song-list">
         <ul>
                 <!-- <li *ngFor="let _ of [].constructor(20); let i=index">
                     <div class="song">
@@ -27,22 +41,26 @@
                         <i class="fa-regular fa-ellipsis-vertical"></i>
                     </div>
                 </li> -->
-            <li *ngFor="let a of song.songs; let i=index">
-                <div class="song">
+            <li *ngFor="let song of album.songs; let i=index">
+                <div class="song" (click)="play(song.file_name)">
                     <span>{{(i+1)}}</span>
                     
                     <div class="info-song">
-                        <p class="ellipsis">{{a.name}}</p>
-                        <p>by {{a.artist_name}}</p>
+                        <p class="ellipsis">{{song.name}}</p>
+                        <p>by {{song.artist_name}}</p>
                     </div>
+                    {{song.duration}}
 
-                    <i class="fa-solid fa-heart my-icon-color"></i>
-                    <i class="fa-regular fa-heart"></i>
+                    <i (click)="removeToFav(song)" *ngIf="song.fav" class="fa-solid fa-heart my-icon-color"></i>
+                    <i (click)="addToFav(song)" *ngIf="!song.fav" class="fa-regular fa-heart"></i>
                     
                     <i class="fa-solid fa-ellipsis-vertical"></i>
-                </div>
+                </div>  
             </li>
         </ul>
+        <div>
+            <span>{{album.release_date}}</span>
+        </div>
     </div>
     
 </div>

@@ -1,5 +1,19 @@
 <!-- <app-sidenav></app-sidenav> -->
 <div *ngIf="showHome();" class="full-h">
+    <div *ngIf="favAlbums">
+    <h1 class="is-size-1" fxLayoutAlign="center">FAV ALBUM</h1>
+    <div class="home-content">
+        <div class="card my-card" *ngFor="let item of favAlbums" routerLink="songs/{{item.album_id}}">
+            <div class="card-content">
+                <img src="data:image/jpeg;base64,{{item.cover_image}}">
+                <div>
+                    <p class="ellipsis">{{item.name}}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
     <h1 class="is-size-1" fxLayoutAlign="center">HOME</h1>
     <!-- PLACEHOLDER -->
     <div class="home-content">

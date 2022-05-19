@@ -20,22 +20,49 @@
         font-weight: bold;
         padding-bottom: 10px;
     }
+    .not-fixed{
+        width: 100%;
+
+        .not-fixed-album-title{
+            padding: 10px 0;
+        }
+        p{
+            text-align: center;
+            padding-bottom: 10px;
+        }
+        .div-album-buttons{
+            width: 80%;
+            margin: auto;
+            display: flex;
+            justify-content: space-between;
+        }   
+
+    }
+    
 }
 .song-list{
-    height: 300px;
+    min-height: 50vh;
     // overflow: auto;
     .song{
         padding:5px 0 5px 0;
         display: flex;
+        justify-content: space-evenly;
         align-items: center;
+        &:hover{
+            background-color: $dark-text-color;
+        }
         span{
-            margin: 10px;
+            min-width: 30px;
+            padding-right: 10px;;
             padding-right: 10px;
         }
         div{
             display: flex;
             flex-direction: column;
-            width: 70%;
+            width: 60%;
+        }
+        i{
+            padding: 0 7px;
         }
     }
 }
@@ -51,8 +78,8 @@
     position: static;
     transition: 0.3s linear;
     top: 0px;
+    height: 40vh;
 }
-.testing-scroll{
-    // transition: 0.3s linear;
-    margin-top: 150px; 
+.space-header{
+    height: 40vh;
 }

@@ -17,6 +17,8 @@ import { UserHomeComponent } from './user-home/user-home.component';
 import { UserProfileComponent } from './user-profile/user-profile.component';
 import { PageNotFoundComponent } from './not-found/not-found.component';
 import { SongsComponent } from './songs/songs.component';
+import { MyFavSongsComponent } from './my-fav-songs/my-fav-songs.component';
+import { ArtistProfileComponent } from './artist-profile/artist-profile.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +32,9 @@ import { SongsComponent } from './songs/songs.component';
     UserHomeComponent,
     UserProfileComponent,
     PageNotFoundComponent,
-    SongsComponent
+    SongsComponent,
+    MyFavSongsComponent,
+    ArtistProfileComponent
   ],
   imports: [
     BrowserModule,
