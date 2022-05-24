@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
+import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
@@ -44,7 +45,8 @@ import { ArtistProfileComponent } from './artist-profile/artist-profile.componen
     HttpClientModule,
     ReactiveFormsModule
   ],
-  providers: [CookieService],
+  providers: [CookieService,{provide: LocationStrategy, useClass: HashLocationStrategy}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
+
