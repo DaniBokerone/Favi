@@ -2,14 +2,16 @@
     <div class="progress-bar-div">
         <input type="range" id="actualMusic" min="0" max="100" value="0">
     </div>
-    <div class="info-song">
-        <img src="../../assets/img/noimage.png">
+    <!-- <div class="info-song">
+        <img *ngIf="actualSong.cover_img!=''" src="data:image/jpeg;base64,{{actualSong.cover_img}}">
         <div class="data-song">
-            <p>name_song</p>
-            <p>artist_name</p>
+            <p>{{actualSong.name}}</p>
+            <p>{{actualSong.artist_name}}</p>
+            <input type="range" min="0" max="1" value="0" step="0.01" (input)="setVolume($event)">
         </div>
         <i (click)="play()" *ngIf="!isPlayed" class="fa-solid fa-play"></i>
-        <i (click)="play()" *ngIf="isPlayed" class="fa-solid fa-pause"></i>
+        <i (click)="pause()" *ngIf="isPlayed" class="fa-solid fa-pause"></i>
         <i class="fa-solid fa-forward-step"></i>
-    </div>
+        <i class="fa-solid fa-play" (click)="testing()"></i>
+    </div> -->
 </div>

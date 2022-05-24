@@ -10,6 +10,7 @@ import { PageNotFoundComponent } from './not-found/not-found.component';
 import { SongsComponent } from './songs/songs.component';
 import { MyFavSongsComponent } from './my-fav-songs/my-fav-songs.component';
 import { ArtistProfileComponent } from './artist-profile/artist-profile.component';
+import { FooterComponent } from './footer/footer.component';
 
 const routes: Routes = [
 

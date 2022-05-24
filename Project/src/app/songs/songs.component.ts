@@ -16,8 +16,6 @@ export class SongsComponent implements OnInit{
 
   public album: any;
   public isFixed:boolean = false;
-  public songPath = this.globalVar.SONG_REPOSITORY;
-
   constructor(private activeRoute: ActivatedRoute, private rest:RestService,
     private globalVar: GlobalVarService, private userHome: UserHomeComponent) { }
 
@@ -100,11 +98,19 @@ export class SongsComponent implements OnInit{
     this.userHome.goToArtist(id);
   }
 
-  play(file:any){
-    let audio = new Audio();
-    audio.src = this.globalVar.SONG_REPOSITORY+file;
-    audio.load();
-    audio.play();
+  load(songList:any, index:any){
+    console.log(songList)
+    // this.globalVar.actualSong = song;
+    this.userHome.loadMusic(songList, index);
+
+  }
+
+  play(){
+    this.userHome.play();
+  }
+
+  pause(){
+    this.userHome.pause();
   }
 
 }

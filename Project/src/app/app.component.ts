@@ -9,7 +9,7 @@ import { Component } from '@angular/core';
     <router-outlet></router-outlet>
 
     <!--FOOTER-->
-    <app-footer></app-footer>
+    <!-- <app-footer></app-footer> -->
   `,
   styles: []
 })

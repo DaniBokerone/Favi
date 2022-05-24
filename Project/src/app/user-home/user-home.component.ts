@@ -4,12 +4,15 @@ import { CookieService } from 'ngx-cookie-service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { RestService } from '../rest.service';
 import { DomSanitizer, SafeResourceUrl, SafeUrl} from '@angular/platform-browser';
+import { Observable } from 'rxjs';
+import * as moment from 'moment';
 
 declare var $: any;
 
 @Component({
   selector: 'app-user-home',
   templateUrl: './user-home-html.component.html',
+  styleUrls: ['progressbar.scss'],
   styles: [
   ]
 })
@@ -18,6 +21,27 @@ export class UserHomeComponent implements OnInit {
   public items: any;
   public favAlbums: any;
   public test: any;
+  public audio = new Audio();
+  public actualPlaylist:any;
+  public actualSong:any;
+  public actualPosition:any;
+  public songPath = this.globalVar.SONG_REPOSITORY;
+  public isPlayed: boolean = false;
+  duration = '';
+  durationImput = 0;
+  currentTime = '';
+  currentTimeInput = 0;
+  audioEvents = [
+    "ended",
+    "error",
+    "play",
+    "playing",
+    "pause",
+    "timeupdate",
+    "canplay",
+    "loadedmetadata",
+    "loadstart"
+  ];
 
   constructor(private globalVar:GlobalVarService, private coockieService: CookieService,
     private router: Router, private rest:RestService, private sanitizer:DomSanitizer) { }
@@ -48,6 +72,10 @@ export class UserHomeComponent implements OnInit {
 
   showHome():boolean{
     return this.router.url == "/home";
+  }
+  
+  showFooter(test:boolean):boolean{
+    return test;
   }
 
   /**
@@ -129,16 +157,141 @@ export class UserHomeComponent implements OnInit {
   }
 
   goToArtist(id:any){
-    this.rest.post('/getArtist',{artist_id: id}).subscribe({
-      next: res=>{
-        console.log(res)
-        this.router.navigate(['artist/'+id]);
-      },
-      error: err=>{
-        console.log(err)
+    this.router.navigate(['home/artist/'+id]);
+    // let data = {
+    //   id: id,
+    //   username: this.globalVar.actualUser.username
+    // }
+    // this.rest.post('/getArtist',data).subscribe({
+    //   next: res=>{
+    //     console.log(res)
+    //   },
+    //   error: err=>{
+    //     console.log(err)
+    //   }
+    // });
+  }
+    // play(){
+  //   if(this.isPlayed){
+  //     this.isPlayed = false
+  //   }else{
+  //     this.isPlayed = true
+  //   }
+  //   return this.isPlayed;
+  // }
+
+  // ################# MUSIC ###################
+  loadMusic(songList:any, index:any){
+    this.actualPlaylist = songList;
+    this.actualPosition = index;
+    this.actualSong = this.actualPlaylist[this.actualPosition];
+    this.load(this.actualSong);
+  }
+  load(song:any){
+    // this.ngOnInit();
+    // console.log(song);
+    // this.userHome.showFooter(true);
+    this.streamObserver(this.songPath+this.actualSong.file_name)
+    .subscribe(event=>{});
+    this.isPlayed = true;
+    // this.audio.addEventListener("ended", this.next);
+    // this.audio.src = this.songPath+this.actualSong.file_name;
+    // this.audio.load();
+    // this.play();
+    // if(this.isPlayed){
+    //   this.isPlayed = false
+    // }else{
+    //   this.isPlayed = true
+    // }
+    // return this.isPlayed;
+    console.log("actual song")
+    console.log(this.actualSong)
+    console.log(this.audio)
+    // this.ngOnInit();
+    
+  }
+
+  play(){
+    this.audio.play();
+    this.isPlayed = true;
+  }
+
+  pause(){
+    this.audio.pause();
+    this.isPlayed = false;
+  }
+
+  next(){
+
+    this.actualPosition++;
+    if(this.actualPosition >= this.actualPlaylist.length){
+      this.actualPosition = 0;
+    }
+    this.actualSong = this.actualPlaylist[this.actualPosition];
+    this.load(this.actualSong);
+  }
+
+  back(){
+    if(this.currentTimeInput > 2){
+      this.audio.currentTime = 0;
+      if(!this.isPlayed){
+        this.play();
+      }
+    }else{
+      this.actualPosition--;
+      if(this.actualPosition < 0){
+        this.actualPosition = this.actualPlaylist.length-1;
+      }
+      this.actualSong = this.actualPlaylist[this.actualPosition];
+      this.load(this.actualSong);
+    }
+    
+
+  }
+
+  setVolume(event:any){
+    this.audio.volume = event.target.value;
+  }
+  streamObserver(url:any){
+    return new Observable(observer =>{
+
+      this.audio.src = url;
+      this.audio.load();
+      this.audio.play();
+      
+
+      const handler = (event: Event)=>{
+        this.durationImput = this.audio.duration;
+        this.duration= this.timeFormat(this.audio.duration);
+        this.currentTimeInput = this.audio.currentTime;
+        this.currentTime = this.timeFormat(this.audio.currentTime);
+      }
+      this.addEvent(this.audio,this.audioEvents,handler);
+
+      return() =>{
+        this.audio.pause();
+        this.audio.currentTime = 0;
+        this.removeEvent(this.audio, this.audioEvents, handler);
       }
     });
   }
-  
+  addEvent(audio:any, events:Array<String>, handler:any){
+    events.forEach(event => {
+      audio.addEventListener(event,handler);
+    });
 
+  }
+  removeEvent(audio:any, events:Array<String>, handler:any){
+    events.forEach(event => {
+      audio.removeEventListener(event,handler);
+    });
+  }
+  timeFormat(time:any, format='mm:ss'):string{
+    const momentTime = time*1000;
+    return moment.utc(momentTime).format(format);
+  }
+
+  setTime(event:any){
+    this.audio.currentTime = event.target.value;
+  }
 }

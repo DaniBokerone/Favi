@@ -18,6 +18,21 @@ export class GlobalVarService {
     is_artist: "",
     tlf: "",
   }
+
+  // public actualSong = {
+  //   album_id: '',
+  //   artist_id: '',
+  //   artist_name: '',
+  //   collaborators: '',
+  //   cover_img: '',
+  //   duration: '',
+  //   fav: '',
+  //   file_name: '',
+  //   name: '',
+  //   release_date: '',
+  //   song_id: '',
+
+  // }
   constructor(private coockieService: CookieService) { }
 
   init(){

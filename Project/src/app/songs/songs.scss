@@ -35,6 +35,7 @@
             margin: auto;
             display: flex;
             justify-content: space-between;
+            padding-bottom: 10px;
         }   
 
     }
@@ -78,8 +79,8 @@
     position: static;
     transition: 0.3s linear;
     top: 0px;
-    height: 40vh;
+    min-height: 250px;
 }
 .space-header{
-    height: 40vh;
+    min-height: 250px;
 }
