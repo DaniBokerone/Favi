@@ -20,7 +20,7 @@ export class UserHomeComponent implements OnInit {
   public user: any;
   public items: any;
   public favAlbums: any;
-  public test: any;
+  public artists:any;
   public audio = new Audio();
   public actualPlaylist:any;
   public actualSong:any;
@@ -32,7 +32,7 @@ export class UserHomeComponent implements OnInit {
   currentTime = '';
   currentTimeInput = 0;
   audioEvents = [
-    "ended",
+    // "ended",
     "error",
     "play",
     "playing",
@@ -47,6 +47,7 @@ export class UserHomeComponent implements OnInit {
     private router: Router, private rest:RestService, private sanitizer:DomSanitizer) { }
 
   ngOnInit(): void {
+    /**@TODO separar en metodos */
     this.globalVar.init();
     this.user = this.globalVar.actualUser;
     this.rest.get('/getAllAlbums').subscribe({
@@ -67,6 +68,15 @@ export class UserHomeComponent implements OnInit {
         console.log("piolan't")
       }
     });
+    this.rest.get('/getAllArtists').subscribe({
+      next: res=>{
+        console.log(res)
+        this.artists = res;
+      },
+      error: err=>{
+        console.log(":C")
+      }
+    });
     
   }
 
@@ -74,9 +84,6 @@ export class UserHomeComponent implements OnInit {
     return this.router.url == "/home";
   }
   
-  showFooter(test:boolean):boolean{
-    return test;
-  }
 
   /**
    * 
@@ -158,27 +165,7 @@ export class UserHomeComponent implements OnInit {
 
   goToArtist(id:any){
     this.router.navigate(['home/artist/'+id]);
-    // let data = {
-    //   id: id,
-    //   username: this.globalVar.actualUser.username
-    // }
-    // this.rest.post('/getArtist',data).subscribe({
-    //   next: res=>{
-    //     console.log(res)
-    //   },
-    //   error: err=>{
-    //     console.log(err)
-    //   }
-    // });
   }
-    // play(){
-  //   if(this.isPlayed){
-  //     this.isPlayed = false
-  //   }else{
-  //     this.isPlayed = true
-  //   }
-  //   return this.isPlayed;
-  // }
 
   // ################# MUSIC ###################
   loadMusic(songList:any, index:any){
@@ -193,6 +180,8 @@ export class UserHomeComponent implements OnInit {
     // this.userHome.showFooter(true);
     this.streamObserver(this.songPath+this.actualSong.file_name)
     .subscribe(event=>{});
+    // this.addEnded();
+    
     this.isPlayed = true;
     // this.audio.addEventListener("ended", this.next);
     // this.audio.src = this.songPath+this.actualSong.file_name;
@@ -211,6 +200,32 @@ export class UserHomeComponent implements OnInit {
     
   }
 
+  // addEnded(){
+  //   let actualPlaylist = this.actualPlaylist;
+  //   let actualPosition = this.actualPosition;
+  //   let actualSong = this.actualSong;
+  //   let data = this.audio.addEventListener("ended",function(){
+  //     console.log(actualPlaylist)
+  //     console.log(actualPosition)
+  //     console.log(actualSong)
+  //     actualPosition++;
+  //     if(actualPosition >= actualPlaylist.length){
+  //       actualPosition = 0;
+  //     }
+  //     actualSong = actualPlaylist[actualPosition];
+  //     let data ={
+  //       actualPlaylist:actualPlaylist,
+  //       actualPosition:actualPosition,
+  //       actualSong:actualSong,
+  //     }
+  //     console.log(data)
+  //     return data;
+  //     this.load();
+  //   });
+  //   console.log("DATA ENDED")
+  //   console.log(data)
+  // }
+
   play(){
     this.audio.play();
     this.isPlayed = true;
@@ -222,7 +237,9 @@ export class UserHomeComponent implements OnInit {
   }
 
   next(){
-
+    console.log(this.actualPlaylist)
+    console.log(this.actualPosition)
+    console.log(this.actualSong)
     this.actualPosition++;
     if(this.actualPosition >= this.actualPlaylist.length){
       this.actualPosition = 0;
@@ -267,6 +284,7 @@ export class UserHomeComponent implements OnInit {
         this.currentTime = this.timeFormat(this.audio.currentTime);
       }
       this.addEvent(this.audio,this.audioEvents,handler);
+      // this.audio.addEventListener("ended",this.next);
 
       return() =>{
         this.audio.pause();
@@ -279,7 +297,7 @@ export class UserHomeComponent implements OnInit {
     events.forEach(event => {
       audio.addEventListener(event,handler);
     });
-
+    // audio.addEventListener("ended",this.load);
   }
   removeEvent(audio:any, events:Array<String>, handler:any){
     events.forEach(event => {

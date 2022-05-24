@@ -1,9 +1,13 @@
 <div class="full-h">
     <h1 class="is-size-1" fxLayoutAlign="center">PROFILE</h1>
 
-    <div class="img-profile is-size-5">
-        <!-- <img src="../../assets/img/{{user.profile_image}}"> -->
-        <img src="../../assets/img/noimage.png">
+    <div class="img-profile is-size-5" >
+        <img src="data:image/jpeg;base64,{{img}}" *ngIf="img">
+        <div class="upload-profile-img" *ngIf="edit">
+            <label for="upload"><i class="fa-solid fa-pen-to-square is-size-3"></i></label>
+             <input type='file' id="upload" (change)="uploadImg($event.target)"/>
+        </div>
+        
         <div>
             <p>{{user.username}}</p>
             <p>{{user.name}},{{user.surname}}</p>
@@ -12,6 +16,10 @@
     <div class="separator"></div>
     <form #updateProfile="ngForm" (submit)="update(updateProfile.value)">
     <table class="table-data-profile">
+        <tr *ngIf="edit">
+            <td>Username:</td>
+            <input class="my-input" type="text" ngModel="{{user.username}}" name="username">
+        </tr>
         <tr *ngIf="edit">
             <td>Name:</td>
             <input class="my-input" type="text" ngModel="{{user.name}}" name="name">

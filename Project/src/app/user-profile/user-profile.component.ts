@@ -1,20 +1,38 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
+import { DomSanitizer } from '@angular/platform-browser';
 import { GlobalVarService } from '../global-var.service';
+import { RestService } from '../rest.service';
 
 @Component({
   selector: 'app-user-profile',
   templateUrl: './user-profile-html.component.html',
+  styleUrls:['profile.scss'],
   styles: [
   ]
 })
 export class UserProfileComponent implements OnInit {
   public user: any;
   public edit:boolean = false;
-  constructor(private globalVar: GlobalVarService) { }
+  public img:any;
+  constructor(private globalVar: GlobalVarService, private rest:RestService,
+    private sanitizer:DomSanitizer) { }
 
   ngOnInit(): void {
     this.user = this.globalVar.actualUser;
+    this.getImg();
+  }
+
+  getImg(){
+    this.rest.post('/getProfileImage',{username:this.user.username}).subscribe({
+      next: res=>{
+        this.img = res.profile_image;
+        console.log("get img")
+      },
+      error: err=>{
+        console.log(err);
+      }
+    });
   }
 
   enableEdit(){
@@ -59,5 +77,42 @@ export class UserProfileComponent implements OnInit {
     }
     return true;
   }
+
+  uploadImg(file:any){
+    let actualFile = file.files[0];
+    this.getB64(actualFile).then((img:any)=>{
+      let imgBase = img.base.split('data:image/png;base64,')
+      this.rest.post('/editProfileImage',{img: imgBase[1]}).subscribe({
+        next: res=>{
+          console.log(res)
+          this.getImg();
+        },
+        error: err=>{
+          console.log(err)
+        }
+      })
+    })
+  }
+
+  getB64 = async ($event: any) => new Promise((resolve, _reject):any => {
+    try {
+      const reader = new FileReader();
+      reader.readAsDataURL($event);
+      reader.onload = () => {
+        resolve({
+          base: reader.result
+        });
+      };
+      reader.onerror = _error => {
+        resolve({
+          base: null
+        });
+      };
+
+    } catch (e) {
+      return null;
+    }
+  })
+
 
 }

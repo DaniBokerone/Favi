@@ -49,12 +49,10 @@ export class GlobalVarService {
     this.actualUser.surname= user.surname;
     this.actualUser.email= user.email;
     this.actualUser.birth_date= user.birth_date;
-    this.actualUser.profile_image= user.profile_image;
     this.actualUser.is_artist= user.is_artist;
     this.actualUser.tlf= user.tlf;
     console.log(this.actualUser)
   }
-  
 
   logOut(){
     this.actualUser.username = "";
@@ -62,7 +60,6 @@ export class GlobalVarService {
     this.actualUser.surname= "";
     this.actualUser.email= "";
     this.actualUser.birth_date= "";
-    this.actualUser.profile_image= "";
     this.actualUser.is_artist= "";
     this.actualUser.tlf= "";
   }

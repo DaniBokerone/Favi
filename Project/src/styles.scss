@@ -1,4 +1,6 @@
 @use "vars" as *;
+@use "progressbar-style";
+
 body{
     background-color: #292929;
     color: $text-color;
@@ -84,45 +86,12 @@ body{
 .full-h{
     min-height: 100vh;
 }
-.img-profile{
-    display: flex;
-    align-items: center;
-    margin: 20px;
-    img{
-        width: 20%;
-        border-radius: 100%;
-        margin-right: 30px;
-    }
-}
+
 .separator{
     height: 5px;
     background: $gradient;
     margin-bottom: 10px;
 }
-.info-user{
-    overflow-x: auto;
-    display: flex;
-    width: 70%;
-    margin: auto;
-    padding-bottom: 5%;
-    .data-user{
-        padding-left: 10px;
-    }
-    p,.my-input{
-        padding-bottom: 5px;
-    }        
-}
-.buttons{
-    padding: 15px;
-}
-.table-data-profile{
-    margin: auto;
-    width: 70%;
-    td{
-        padding: 5px;
-    }
-}
-
 // card
 .my-card{
     max-width: 47%;
