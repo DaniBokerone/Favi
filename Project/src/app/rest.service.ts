@@ -2,6 +2,8 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { GlobalVarService } from './global-var.service'
 
+declare var $: any;
+
 @Injectable({
   providedIn: 'root'
 })
@@ -21,6 +23,20 @@ export class RestService {
   public getWithParams(path:String,params:any){
     /**@TODO */
     return this.http.get(this.globalVar.API_SERVER+path, {params: params});
+  }
+
+  public postFile(path:String,data:any){
+
+    return $.ajax({
+      url: this.globalVar.API_SERVER+path,
+      type: "POST",
+      data: data,
+      dataType: "html",
+      processData: false,
+      contentType: false
+    });
+
+    // return this.http.post(this.globalVar.API_SERVER+path, params);
   }
   
   

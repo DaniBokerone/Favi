@@ -31,3 +31,56 @@
         font-size: 2em;
     }
 }
+
+.fixed-song{
+    top: 0px;
+    position: absolute;
+    .img-blur{
+
+        position: absolute;
+        height: 75vh;
+        top: 0px;
+        width: 100%;
+        filter: blur(8px);
+        -webkit-filter: blur(8px);
+
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+
+        z-index: -1;
+    }
+    .icon-div{
+        position: absolute;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        margin-top: 5px;
+    }
+    .div-img{
+        min-height: 75vh;
+        display: flex;
+        align-items: center;
+        padding: 0 10%;
+        // flex-direction: column;
+        // justify-content: center;
+
+        background-color: $black-50;
+
+        img{
+            width: 100% !important;
+            height: 100% !important;
+        }
+    }
+    .content-song{
+        background-color: $dark-text-color;
+        padding: 0px 10px 10px 10px;
+        .progress-bar-div{
+            .duration{
+                display: flex;
+                justify-content: space-between;
+            }
+        }
+    }
+    
+}

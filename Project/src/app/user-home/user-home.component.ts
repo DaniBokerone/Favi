@@ -21,6 +21,7 @@ export class UserHomeComponent implements OnInit {
   public items: any;
   public favAlbums: any;
   public artists:any;
+  public displaySong:boolean = true; // <-- false
   public audio = new Audio();
   public actualPlaylist:any;
   public actualSong:any;
@@ -33,6 +34,17 @@ export class UserHomeComponent implements OnInit {
   currentTimeInput = 0;
   audioEvents = [
     // "ended",
+    "error",
+    "play",
+    "playing",
+    "pause",
+    "timeupdate",
+    "canplay",
+    "loadedmetadata",
+    "loadstart"
+  ];
+  removeAudioEvents = [
+    "ended",
     "error",
     "play",
     "playing",
@@ -167,6 +179,17 @@ export class UserHomeComponent implements OnInit {
     this.router.navigate(['home/artist/'+id]);
   }
 
+  openSong(){
+    if(this.displaySong){
+      this.displaySong = false;
+    }else{
+      this.displaySong = true;
+    }
+    console.log("Open:" +this.displaySong)
+    return this.displaySong;
+
+  }
+
   // ################# MUSIC ###################
   loadMusic(songList:any, index:any){
     this.actualPlaylist = songList;
@@ -175,12 +198,13 @@ export class UserHomeComponent implements OnInit {
     this.load(this.actualSong);
   }
   load(song:any){
+
     // this.ngOnInit();
     // console.log(song);
     // this.userHome.showFooter(true);
     this.streamObserver(this.songPath+this.actualSong.file_name)
     .subscribe(event=>{});
-    // this.addEnded();
+    this.addEnded();
     
     this.isPlayed = true;
     // this.audio.addEventListener("ended", this.next);
@@ -200,31 +224,20 @@ export class UserHomeComponent implements OnInit {
     
   }
 
-  // addEnded(){
-  //   let actualPlaylist = this.actualPlaylist;
-  //   let actualPosition = this.actualPosition;
-  //   let actualSong = this.actualSong;
-  //   let data = this.audio.addEventListener("ended",function(){
-  //     console.log(actualPlaylist)
-  //     console.log(actualPosition)
-  //     console.log(actualSong)
-  //     actualPosition++;
-  //     if(actualPosition >= actualPlaylist.length){
-  //       actualPosition = 0;
-  //     }
-  //     actualSong = actualPlaylist[actualPosition];
-  //     let data ={
-  //       actualPlaylist:actualPlaylist,
-  //       actualPosition:actualPosition,
-  //       actualSong:actualSong,
-  //     }
-  //     console.log(data)
-  //     return data;
-  //     this.load();
-  //   });
-  //   console.log("DATA ENDED")
-  //   console.log(data)
-  // }
+  addEnded(){
+    let actualPlaylist = this.actualPlaylist;
+    let actualPosition = this.actualPosition;
+    let actualSong = this.actualSong;
+    let me = this;
+    // this.audio.removeEventListener("ended",function(){
+    //   console.log("end")
+    //   me.next();
+    // });
+    this.audio.addEventListener("ended",function(){
+      console.log("end")
+      me.next();
+    });
+  }
 
   play(){
     this.audio.play();
@@ -289,7 +302,7 @@ export class UserHomeComponent implements OnInit {
       return() =>{
         this.audio.pause();
         this.audio.currentTime = 0;
-        this.removeEvent(this.audio, this.audioEvents, handler);
+        this.removeEvent(this.audio, this.removeAudioEvents, handler);
       }
     });
   }
@@ -297,7 +310,7 @@ export class UserHomeComponent implements OnInit {
     events.forEach(event => {
       audio.addEventListener(event,handler);
     });
-    // audio.addEventListener("ended",this.load);
+    // audio.addEventListener("ended",this.next);
   }
   removeEvent(audio:any, events:Array<String>, handler:any){
     events.forEach(event => {

@@ -4,6 +4,8 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { GlobalVarService } from '../global-var.service';
 import { RestService } from '../rest.service';
 
+declare var $: any;
+
 @Component({
   selector: 'app-user-profile',
   templateUrl: './user-profile-html.component.html',
@@ -78,20 +80,79 @@ export class UserProfileComponent implements OnInit {
     return true;
   }
 
-  uploadImg(file:any){
-    let actualFile = file.files[0];
-    this.getB64(actualFile).then((img:any)=>{
-      let imgBase = img.base.split('data:image/png;base64,')
-      this.rest.post('/editProfileImage',{img: imgBase[1]}).subscribe({
-        next: res=>{
-          console.log(res)
-          this.getImg();
-        },
-        error: err=>{
-          console.log(err)
-        }
-      })
+  // onFileChange(event:any) {
+  //   const reader = new FileReader();
+     
+  //   if(event.target.files && event.target.files.length) {
+  //     const [file] = event.target.files;
+  //     reader.readAsDataURL(file);
+     
+  //     reader.onload = () => {
+    
+  //       this.imageSrc = reader.result as string;
+      
+  //       this.myForm.patchValue({
+  //         fileSource: reader.result
+  //       });
+    
+  //     };
+    
+  //   }
+  // }
+  photo(img:any){  
+    console.log(img)
+    let data = {
+      img : img.img,
+      username: this.globalVar.actualUser.username
+    }
+    this.rest.post('/editProfileImage', data).subscribe({
+      next: res=>{
+        console.log(res)
+      },
+      error: err=>{
+        console.log(err)
+      }
     })
+    
+  }
+
+  aaaa(){
+    console.log(":D")
+    this.getImg();
+  }
+
+  uploadImg(file:any){
+          var fd = new FormData();
+          fd.append("username", this.globalVar.actualUser.username);
+          fd.append("img", file.files[0]);
+
+          // this.rest.postFile('/editProfileImage',fd, this.aaaa);
+          var me = this;
+          $.ajax({
+              url: this.globalVar.API_SERVER+'/editProfileImage',
+              type: "POST",
+              data: fd,
+              dataType: "html",
+              processData: false,
+              contentType: false,
+              success: me.getImg()
+          });
+
+
+
+    // this.getB64(actualFile).then((img:any)=>{
+    //   let imgBase = img.base.split('data:image/png;base64,')
+    //   console.log(imgBase[1])
+    //   this.rest.post('/editProfileImage',{img: imgBase[1]}).subscribe({
+    //     next: res=>{
+    //       console.log(res)
+    //       this.getImg();
+    //     },
+    //     error: err=>{
+    //       console.log(err)
+    //     }
+    //   })
+    // })
   }
 
   getB64 = async ($event: any) => new Promise((resolve, _reject):any => {

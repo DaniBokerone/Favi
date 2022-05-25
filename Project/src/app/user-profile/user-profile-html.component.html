@@ -5,7 +5,7 @@
         <img src="data:image/jpeg;base64,{{img}}" *ngIf="img">
         <div class="upload-profile-img" *ngIf="edit">
             <label for="upload"><i class="fa-solid fa-pen-to-square is-size-3"></i></label>
-             <input type='file' id="upload" (change)="uploadImg($event.target)"/>
+            <input type='file' id="upload" ngModel name="img" (change)="uploadImg($event.target)"/>
         </div>
         
         <div>
@@ -26,7 +26,7 @@
         </tr>
         <tr *ngIf="edit">
             <td>Surname:</td>
-            <input  class="my-input" type="text" ngModel="{{user.surname}}" ngModel="{{user.surname}}" name="surname">
+            <input  class="my-input" type="text" ngModel="{{user.surname}}" name="surname">
         </tr>
         <tr>
             <td>Email:</td>
