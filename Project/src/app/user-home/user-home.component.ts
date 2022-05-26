@@ -28,6 +28,7 @@ export class UserHomeComponent implements OnInit {
   public actualPosition:any;
   public songPath = this.globalVar.SONG_REPOSITORY;
   public isPlayed: boolean = false;
+  public volumeMenu:boolean = false;
   duration = '';
   durationImput = 0;
   currentTime = '';
@@ -187,6 +188,17 @@ export class UserHomeComponent implements OnInit {
     }
     console.log("Open:" +this.displaySong)
     return this.displaySong;
+
+  }
+
+  openVolume(){
+    if(this.volumeMenu){
+      this.volumeMenu = false;
+    }else{
+      this.volumeMenu = true;
+    }
+    console.log("Open:" +this.volumeMenu)
+    return this.volumeMenu;
 
   }
 

@@ -11,6 +11,7 @@ import { SongsComponent } from './songs/songs.component';
 import { MyFavSongsComponent } from './my-fav-songs/my-fav-songs.component';
 import { ArtistProfileComponent } from './artist-profile/artist-profile.component';
 import { FooterComponent } from './footer/footer.component';
+import { SearchComponent } from './search/search.component';
 
 const routes: Routes = [
 
@@ -47,6 +48,10 @@ const routes: Routes = [
     {
       path: 'artist/:id',
       component: ArtistProfileComponent
+    },
+    {
+      path: 'search',
+      component: SearchComponent
     }
   ]
   },

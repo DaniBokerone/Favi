@@ -62,5 +62,6 @@ export class GlobalVarService {
     this.actualUser.birth_date= "";
     this.actualUser.is_artist= "";
     this.actualUser.tlf= "";
+    this.coockieService.deleteAll();
   }
 }

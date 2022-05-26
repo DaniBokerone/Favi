@@ -1,8 +1,13 @@
 <div class="full-h">
-    <h1 class="is-size-1" fxLayoutAlign="center">PROFILE</h1>
-
+    <h1 class="is-size-4" fxLayoutAlign="center">PROFILE</h1>
     <div class="img-profile is-size-5" >
         <img src="data:image/jpeg;base64,{{img}}" *ngIf="img">
+        <div class="verified-icon" *ngIf="user.is_artist">
+            <i class="fa-solid fa-certificate"></i>
+        </div>
+        <div class="verified-icon check" *ngIf="user.is_artist">
+            <i class="fa-solid fa-check"></i>
+        </div>
         <div class="upload-profile-img" *ngIf="edit">
             <label for="upload"><i class="fa-solid fa-pen-to-square is-size-3"></i></label>
             <input type='file' id="upload" ngModel name="img" (change)="uploadImg($event.target)"/>
@@ -16,10 +21,10 @@
     <div class="separator"></div>
     <form #updateProfile="ngForm" (submit)="update(updateProfile.value)">
     <table class="table-data-profile">
-        <tr *ngIf="edit">
+        <!-- <tr *ngIf="edit">
             <td>Username:</td>
             <input class="my-input" type="text" ngModel="{{user.username}}" name="username">
-        </tr>
+        </tr> -->
         <tr *ngIf="edit">
             <td>Name:</td>
             <input class="my-input" type="text" ngModel="{{user.name}}" name="name">
@@ -42,6 +47,17 @@
             <td>Birth date:</td>
             <td *ngIf="!edit">{{user.birth_date}}</td>
             <input *ngIf="edit" class="my-input" type="date" ngModel="{{user.birth_date}}" name="birth_date">
+        </tr>
+        <tr *ngIf="edit">
+            <td colspan="2">
+                <!-- <img src="data:image/jpeg;base64,{{banner}}" *ngIf="banner"> -->
+                <div class="banner" style="background-image: url(data:image/jpeg;base64,{{banner}});">
+                    <div class="edit-banner">
+                        <label for="banner"><i class="fa-solid fa-pen-to-square is-size-3"></i></label>
+                        <input type='file' ngModel id="banner" name="banner" (change)="uploadBanner($event.target)"/>
+                    </div>
+                </div>
+            </td>
         </tr>
     </table>
     <div *ngIf="edit" fxLayoutAlign="center" class="buttons">

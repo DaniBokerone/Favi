@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { DomSanitizer } from '@angular/platform-browser';
+import { CookieService } from 'ngx-cookie-service';
 import { GlobalVarService } from '../global-var.service';
 import { RestService } from '../rest.service';
 
@@ -17,19 +18,35 @@ export class UserProfileComponent implements OnInit {
   public user: any;
   public edit:boolean = false;
   public img:any;
+  public banner:any;
   constructor(private globalVar: GlobalVarService, private rest:RestService,
-    private sanitizer:DomSanitizer) { }
+    private sanitizer:DomSanitizer, private cookieService:CookieService) { }
 
   ngOnInit(): void {
     this.user = this.globalVar.actualUser;
     this.getImg();
+    if(this.user.is_artist){
+      this.getBanner();
+    }
   }
 
   getImg(){
+    // debugger
     this.rest.post('/getProfileImage',{username:this.user.username}).subscribe({
       next: res=>{
         this.img = res.profile_image;
         console.log("get img")
+      },
+      error: err=>{
+        console.log(err);
+      }
+    });
+  }
+  getBanner(){
+    this.rest.post('/getBanner',{username:this.user.username}).subscribe({
+      next: res=>{
+        this.banner = res.banner;
+        console.log("get banner")
       },
       error: err=>{
         console.log(err);
@@ -50,11 +67,29 @@ export class UserProfileComponent implements OnInit {
   update(data:NgForm){
     // TODO validaciones
     if(true){
-      if(this.check(data, this.user)){
-        console.log("iguales")
+      if(!this.check(data, this.user)){
+        let editedUser = {
+          oldUsername: this.globalVar.actualUser.username,
+          user: data
+        }
+        console.log(editedUser)
+        this.rest.post('/editUser', editedUser).subscribe({
+          next: res=>{
+            console.log(res)
+            this.globalVar.setActualUser(res);
+            this.user = this.globalVar.actualUser;
+            this.cookieService.deleteAll();
+            this.cookieService.set('token_access', JSON.stringify(this.globalVar.actualUser),30,'/');
+
+          },
+          error: err=>{
+            console.log(err)
+          }
+        })
+        console.log("cambios")
         
       }else{
-        console.log("cambios")
+        console.log("iguales")
         /**@TODO update user */
       }
     }
@@ -116,43 +151,28 @@ export class UserProfileComponent implements OnInit {
     
   }
 
-  aaaa(){
-    console.log(":D")
-    this.getImg();
+  uploadImg(file:any){
+    let fd = new FormData();
+    fd.append("username", this.globalVar.actualUser.username);
+    fd.append("img", file.files[0]);
+    let me = this;
+    this.rest.postFile('/editProfileImage',fd).done(
+      setTimeout(() => {
+        me.getImg();
+      }, 200)
+    );
   }
 
-  uploadImg(file:any){
-          var fd = new FormData();
-          fd.append("username", this.globalVar.actualUser.username);
-          fd.append("img", file.files[0]);
-
-          // this.rest.postFile('/editProfileImage',fd, this.aaaa);
-          var me = this;
-          $.ajax({
-              url: this.globalVar.API_SERVER+'/editProfileImage',
-              type: "POST",
-              data: fd,
-              dataType: "html",
-              processData: false,
-              contentType: false,
-              success: me.getImg()
-          });
-
-
-
-    // this.getB64(actualFile).then((img:any)=>{
-    //   let imgBase = img.base.split('data:image/png;base64,')
-    //   console.log(imgBase[1])
-    //   this.rest.post('/editProfileImage',{img: imgBase[1]}).subscribe({
-    //     next: res=>{
-    //       console.log(res)
-    //       this.getImg();
-    //     },
-    //     error: err=>{
-    //       console.log(err)
-    //     }
-    //   })
-    // })
+  uploadBanner(file:any){
+    let fd = new FormData();
+    fd.append("username", this.globalVar.actualUser.username);
+    fd.append("img", file.files[0]);
+    let me = this;
+    this.rest.postFile('/editBanner',fd).done(
+      setTimeout(() => {
+        me.getBanner();
+      }, 200)
+    );
   }
 
   getB64 = async ($event: any) => new Promise((resolve, _reject):any => {
