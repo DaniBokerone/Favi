@@ -21,6 +21,8 @@ import { SongsComponent } from './songs/songs.component';
 import { MyFavSongsComponent } from './my-fav-songs/my-fav-songs.component';
 import { ArtistProfileComponent } from './artist-profile/artist-profile.component';
 import { SearchComponent } from './search/search.component';
+import { UploadAlbumComponent } from './upload-album/upload-album.component';
+import { PlaylistComponent } from './playlist/playlist.component';
 
 @NgModule({
   declarations: [
@@ -37,7 +39,9 @@ import { SearchComponent } from './search/search.component';
     SongsComponent,
     MyFavSongsComponent,
     ArtistProfileComponent,
-    SearchComponent
+    SearchComponent,
+    UploadAlbumComponent,
+    PlaylistComponent
   ],
   imports: [
     BrowserModule,

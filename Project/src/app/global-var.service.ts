@@ -6,6 +6,7 @@ import { CookieService } from 'ngx-cookie-service';
 })
 export class GlobalVarService {
   public API_SERVER = 'http://192.168.8.165/oda/api';
+  // public API_SERVER = 'http://192.168.1.134/oda/api'; // <-- Mi server
   public SONG_REPOSITORY = 'http://192.168.8.165/oda/songs/';
 
   public actualUser = {

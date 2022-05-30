@@ -12,7 +12,7 @@ declare var $: any;
 @Component({
   selector: 'app-user-home',
   templateUrl: './user-home-html.component.html',
-  styleUrls: ['progressbar.scss'],
+  styleUrls: ['progressbar.scss','user-home.scss'],
   styles: [
   ]
 })
@@ -21,6 +21,11 @@ export class UserHomeComponent implements OnInit {
   public items: any;
   public favAlbums: any;
   public artists:any;
+  public playlists:any;
+  public followedPlaylists:any;
+  public myPlaylists:any;
+  public subMenuSong:boolean = false;
+  public subMenuSongCurrentSong:any;
   public displaySong:boolean = true; // <-- false
   public audio = new Audio();
   public actualPlaylist:any;
@@ -90,7 +95,38 @@ export class UserHomeComponent implements OnInit {
         console.log(":C")
       }
     });
+    this.rest.post('/getAllPlaylists', {username:this.user.username}).subscribe({
+      next: res=>{
+        console.log(res)
+        this.playlists = res;
+      },
+      error: err=>{
+        console.log(":C")
+      }
+    });
+    this.rest.post('/getFollowedPlaylists', {username:this.user.username}).subscribe({
+      next: res=>{
+        console.log(res)
+        this.followedPlaylists = res;
+      },
+      error: err=>{
+        console.log(":C")
+      }
+    });
     
+    this.getMyPlaylist();
+  }
+
+  getMyPlaylist(){
+    this.rest.post('/getMyPlaylists',{username:this.user.username}).subscribe({
+      next: res=>{
+        console.log(res)
+        this.myPlaylists = res;
+      },
+      error: err=>{
+        console.log(err)
+      }
+    })
   }
 
   showHome():boolean{
@@ -180,6 +216,39 @@ export class UserHomeComponent implements OnInit {
     this.router.navigate(['home/artist/'+id]);
   }
 
+  createPlaylist(){
+    let data = {
+      username: this.user.username,
+      name: this.myPlaylists? 'My Playlist '+this.myPlaylists.length : 'My Playlist 0',
+    } 
+    this.rest.post('/createPlaylist', data).subscribe({
+      next: res=>{
+        this.getMyPlaylist();
+      },
+      error: err=>{
+        console.log(err);
+      }
+    });
+  }
+
+  openSubMenu(songList:any, index:any){
+    this.openSubMenuDisplay();
+    this.subMenuSongCurrentSong = songList[index];
+    console.log(this.subMenuSongCurrentSong)
+    
+    // console.log("adding "+song);
+
+  }
+
+  openSubMenuDisplay(){
+    if(this.subMenuSong){
+      this.subMenuSong = false;
+    }else{
+      this.subMenuSong = true;
+    }
+    return this.subMenuSong;
+  }
+
   openSong(){
     if(this.displaySong){
       this.displaySong = false;
@@ -214,10 +283,12 @@ export class UserHomeComponent implements OnInit {
     // this.ngOnInit();
     // console.log(song);
     // this.userHome.showFooter(true);
+    let me = this;
+    // this.audio.removeEventListener("ended",this.addEnded);
     this.streamObserver(this.songPath+this.actualSong.file_name)
     .subscribe(event=>{});
-    this.addEnded();
-    
+    // this.addEnded();
+    // this.audio.addEventListener("ended",this.addEnded);
     this.isPlayed = true;
     // this.audio.addEventListener("ended", this.next);
     // this.audio.src = this.songPath+this.actualSong.file_name;
@@ -237,18 +308,18 @@ export class UserHomeComponent implements OnInit {
   }
 
   addEnded(){
-    let actualPlaylist = this.actualPlaylist;
-    let actualPosition = this.actualPosition;
-    let actualSong = this.actualSong;
-    let me = this;
+    // let actualPlaylist = this.actualPlaylist;
+    // let actualPosition = this.actualPosition;
+    // let actualSong = this.actualSong;
+    // let me = this;
     // this.audio.removeEventListener("ended",function(){
     //   console.log("end")
     //   me.next();
     // });
-    this.audio.addEventListener("ended",function(){
+    // this.audio.addEventListener("ended",function(){
       console.log("end")
-      me.next();
-    });
+      this.next();
+    // });
   }
 
   play(){
@@ -308,26 +379,30 @@ export class UserHomeComponent implements OnInit {
         this.currentTimeInput = this.audio.currentTime;
         this.currentTime = this.timeFormat(this.audio.currentTime);
       }
-      this.addEvent(this.audio,this.audioEvents,handler);
+      const nextSong = (event : Event)=>{
+        this.next();
+      }
+      this.addEvent(this.audio,this.audioEvents,handler,nextSong);
       // this.audio.addEventListener("ended",this.next);
 
       return() =>{
         this.audio.pause();
         this.audio.currentTime = 0;
-        this.removeEvent(this.audio, this.removeAudioEvents, handler);
+        this.removeEvent(this.audio, this.audioEvents, handler, nextSong);
       }
     });
   }
-  addEvent(audio:any, events:Array<String>, handler:any){
+  addEvent(audio:any, events:Array<String>, handler:any, nextSong:any){
     events.forEach(event => {
       audio.addEventListener(event,handler);
     });
-    // audio.addEventListener("ended",this.next);
+    audio.addEventListener("ended",nextSong);
   }
-  removeEvent(audio:any, events:Array<String>, handler:any){
+  removeEvent(audio:any, events:Array<String>, handler:any, nextSong:any){
     events.forEach(event => {
       audio.removeEventListener(event,handler);
     });
+    audio.removeEventListener("ended", nextSong)
   }
   timeFormat(time:any, format='mm:ss'):string{
     const momentTime = time*1000;

@@ -1,4 +1,52 @@
 <div class="full-h">
     <h1 class="is-size-4" fxLayoutAlign="center">SEARCH</h1>
-    <input (input)="search($event.target)" type="text" ngModel id="search" name="search">
+    <div class="search-div">
+        <div class="search-content">
+            <input (input)="search($event.target)" class="my-input" placeholder="Search" autocomplete="off" type="text" ngModel id="search" name="search">
+            <label for="search"><i class="fa-solid fa-magnifying-glass"></i></label>
+        </div>
+        <div class="type-search">
+            <ul>
+                <li *ngFor="let searchType of searchTypes">
+                    <button class="my-button " [ngClass]="{'selected-button': typeToSearch==searchType.type}" (click)="setType(searchType.type)" [value]="searchType.type">{{searchType.name}}</button>
+                </li>
+            </ul>
+        </div>
+        <div class="search-results">
+            <ul>
+                <div *ngIf="typeToSearch==0||typeToSearch==1">
+                    <li *ngFor="let artist of artists" (click)="goToArtist(artist.id)">
+                        <img src="data:image/jpeg;base64,{{artist.profile_img}}">
+                        <div class="data">
+                            <p class="ellipsis">{{artist.username}}</p>
+                        </div>
+                    </li>
+                </div>
+                <div *ngIf="typeToSearch==0||typeToSearch==2">
+                    <li *ngFor="let song of songs">
+                        <img src="data:image/jpeg;base64,{{song.cover_img}}">
+                        <div (click)="load(song)" class="data">
+                            <p class="ellipsis">{{song.name}}</p>
+                            <p class="ellipsis">{{song.artist_username}}</p>
+                        </div>
+                        <div>
+                            <i (click)="removeToFav(song)" *ngIf="song.fav" class="fa-solid fa-heart my-icon-color"></i>
+                            <i (click)="addToFav(song)" *ngIf="!song.fav" class="fa-regular fa-heart"></i>
+                        </div>
+                    </li>
+                </div>
+                <div *ngIf="typeToSearch==0||typeToSearch==3">
+                    <li *ngFor="let album of albums" routerLink="../songs/{{album.id}}">
+                        <img src="data:image/jpeg;base64,{{album.cover_img}}">
+                        <div class="data">
+                            <p class="ellipsis">{{album.name}}</p>
+                        </div>
+                    </li>
+                </div>
+                
+            </ul>
+        </div>
+    </div>
+    
+    
 </div>

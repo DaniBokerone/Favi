@@ -1,0 +1,45 @@
+@use "../../vars" as *;
+
+.upload-content{
+    .fase-1{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        label{
+            min-width: 50%;
+            max-width: 50%;
+            min-height: 50%;
+            max-height: 50%;
+        }
+        img{
+            min-width: 50%;
+            max-width: 50%;
+            min-height: 50%;
+            max-height: 50%;
+        }
+        .upload-profile-img{
+            height: 100px;
+            width: 100px;
+            display: flex;
+            /* margin: 50px; */
+            align-items: center;
+            justify-content: center;
+    
+            position: absolute;
+            input{
+                visibility: hidden;
+                width: 0;
+                height: 0;
+            }
+            label{
+                width: 100%;
+                height: 100%;
+                display: flex;
+                border-radius: 100%;
+                background-color: $black-50;
+                align-items: center;
+                justify-content: center;
+            }
+        }
+    }
+}

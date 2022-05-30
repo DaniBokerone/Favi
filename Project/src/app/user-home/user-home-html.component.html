@@ -1,5 +1,12 @@
 <!-- <app-sidenav></app-sidenav> -->
 <div *ngIf="showHome();" class="full-h">
+
+    
+    <div (click)="createPlaylist()">
+        DELETE
+        CREAR PLAYLST
+    </div>
+
     <div *ngIf="favAlbums">
     <h1 class="is-size-1" fxLayoutAlign="center">FAV ALBUM</h1>
     <div class="home-content">
@@ -13,6 +20,44 @@
         </div>
     </div>
 </div>
+<h1 class="is-size-1" fxLayoutAlign="center">MY PLAYLIST</h1>
+    <!-- PLACEHOLDER -->
+    <div class="home-content">
+        <div class="card my-card" *ngFor="let myPlaylist of myPlaylists" routerLink="playlist/{{myPlaylist.playlist_id}}">
+            <div class="card-content">
+                <img src="data:image/jpeg;base64,{{myPlaylist.cover_image}}">
+                <div>
+                    <p class="ellipsis">{{myPlaylist.name}}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <h1 class="is-size-1" fxLayoutAlign="center">PLAYLIST</h1>
+    <!-- PLACEHOLDER -->
+    <div class="home-content">
+        <div class="card my-card" *ngFor="let playlist of playlists" routerLink="playlist/{{playlist.playlist_id}}">
+            <div class="card-content">
+                <img src="data:image/jpeg;base64,{{playlist.playlist_img}}">
+                <div>
+                    <p class="ellipsis">{{playlist.name}}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <h1 class="is-size-1" fxLayoutAlign="center">FOLLOW PLAYLIST</h1>
+    <!-- PLACEHOLDER -->
+    <div class="home-content">
+        <div class="card my-card" *ngFor="let playlist of followedPlaylists" routerLink="playlist/{{playlist.playlist_id}}">
+            <div class="card-content">
+                <img src="data:image/jpeg;base64,{{playlist.playlist_img}}">
+                <div>
+                    <p class="ellipsis">{{playlist.name}}</p>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <h1 class="is-size-1" fxLayoutAlign="center">HOME</h1>
     <!-- PLACEHOLDER -->
@@ -43,9 +88,39 @@
             </div>
         </div> -->
     </div>
+
+    <h1 class="is-size-1" fxLayoutAlign="center">ARTIST</h1>
+    <!-- PLACEHOLDER -->
+    <div class="home-content">
+        <div class="card my-card my-artist" *ngFor="let artist of artists" routerLink="artist/{{artist.artist_id}}">
+            <div class="card-content">
+                <img src="data:image/jpeg;base64,{{artist.artist_image}}">
+                <p>{{artist.artist_name}}</p>
+            </div>
+        </div>
+    </div>
     
 </div>
 <router-outlet></router-outlet>
+<div id="subMenuSong" *ngIf="subMenuSong">
+    <!-- //subMenuSongCurrentSong -->
+    <div>
+        <ul>
+            <li><img src="data:image/jpeg;base64,{{subMenuSongCurrentSong.cover_img}}"></li>
+            <li>{{subMenuSongCurrentSong.name}}</li>
+            <li>{{subMenuSongCurrentSong.artist_name}}</li>
+            <li class="slide">Play</li>
+            <li *ngIf="!subMenuSongCurrentSong.fav" class="slide">Add to fav</li>
+            <li *ngIf="subMenuSongCurrentSong.fav" class="slide">Remove to fav</li>
+            <li class="slide">Go to artist</li>
+            <li>Add to playlist</li>
+            <li  class="slide" *ngFor="let playlist of myPlaylists">
+                {{playlist.name}}
+            </li>
+            <li class="slide" (click)="openSubMenuDisplay()">Close</li>
+        </ul>
+    </div>
+</div>
 <div id="progress-bar" *ngIf="actualSong && !displaySong">
     <div class="progress-bar-div">
         {{currentTime}}

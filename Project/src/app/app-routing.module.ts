@@ -12,6 +12,8 @@ import { MyFavSongsComponent } from './my-fav-songs/my-fav-songs.component';
 import { ArtistProfileComponent } from './artist-profile/artist-profile.component';
 import { FooterComponent } from './footer/footer.component';
 import { SearchComponent } from './search/search.component';
+import { UploadAlbumComponent } from './upload-album/upload-album.component';
+import { PlaylistComponent } from './playlist/playlist.component';
 
 const routes: Routes = [
 
@@ -52,6 +54,14 @@ const routes: Routes = [
     {
       path: 'search',
       component: SearchComponent
+    },
+    {
+      path: 'upload',
+      component: UploadAlbumComponent
+    },
+    {
+      path: 'playlist/:id',
+      component: PlaylistComponent
     }
   ]
   },

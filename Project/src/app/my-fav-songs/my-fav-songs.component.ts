@@ -80,4 +80,8 @@ export class MyFavSongsComponent implements OnInit {
     this.userHome.pause();
   }
 
+  openSubMenu(songList:any, index:any){
+    this.userHome.openSubMenu(songList, index);
+  }
+
 }

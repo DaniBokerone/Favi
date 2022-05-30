@@ -174,26 +174,4 @@ export class UserProfileComponent implements OnInit {
       }, 200)
     );
   }
-
-  getB64 = async ($event: any) => new Promise((resolve, _reject):any => {
-    try {
-      const reader = new FileReader();
-      reader.readAsDataURL($event);
-      reader.onload = () => {
-        resolve({
-          base: reader.result
-        });
-      };
-      reader.onerror = _error => {
-        resolve({
-          base: null
-        });
-      };
-
-    } catch (e) {
-      return null;
-    }
-  })
-
-
 }

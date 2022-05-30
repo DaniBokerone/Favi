@@ -42,10 +42,10 @@
                     </div>
                 </li> -->
             <li *ngFor="let song of album.songs; let i=index">
-                <div class="song" (click)="load(album.songs, i)">
-                    <span>{{(i+1)}}</span>
+                <div class="song">
+                    <span (click)="load(album.songs, i)">{{(i+1)}}</span>
                     
-                    <div class="info-song">
+                    <div class="info-song" (click)="load(album.songs, i)">
                         <p class="ellipsis">{{song.name}}</p>
                         <p>by {{song.artist_name}}</p>
                     </div>
@@ -54,7 +54,7 @@
                     <i (click)="removeToFav(song)" *ngIf="song.fav" class="fa-solid fa-heart my-icon-color"></i>
                     <i (click)="addToFav(song)" *ngIf="!song.fav" class="fa-regular fa-heart"></i>
                     
-                    <i class="fa-solid fa-ellipsis-vertical"></i>
+                    <i (click)="openSubMenu(album.songs, i)" class="fa-solid fa-ellipsis-vertical"></i>
                 </div>  
             </li>
         </ul>
