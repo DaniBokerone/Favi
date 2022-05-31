@@ -106,18 +106,27 @@
     <!-- //subMenuSongCurrentSong -->
     <div>
         <ul>
-            <li><img src="data:image/jpeg;base64,{{subMenuSongCurrentSong.cover_img}}"></li>
-            <li>{{subMenuSongCurrentSong.name}}</li>
-            <li>{{subMenuSongCurrentSong.artist_name}}</li>
-            <li class="slide">Play</li>
-            <li *ngIf="!subMenuSongCurrentSong.fav" class="slide">Add to fav</li>
-            <li *ngIf="subMenuSongCurrentSong.fav" class="slide">Remove to fav</li>
-            <li class="slide">Go to artist</li>
-            <li>Add to playlist</li>
-            <li  class="slide" *ngFor="let playlist of myPlaylists">
-                {{playlist.name}}
-            </li>
-            <li class="slide" (click)="openSubMenuDisplay()">Close</li>
+            <li class="img-li"><img src="data:image/jpeg;base64,{{subMenuData.currentSong.cover_img}}"></li>
+            <li class="li-center">{{subMenuData.currentSong.name}}</li>
+            <li class="li-center">{{subMenuData.currentSong.artist_name}}</li>
+            <li (click)="loadMusic(subMenuData.playlist, subMenuData.index); subMenuDisplay()" class="slide">Play</li>
+            <li (click)="goToArtist(subMenuData.currentSong.artist_id); subMenuDisplay()" class="slide">Go to artist</li>
+            <!-- create playlist if length == 0 -->
+            <div *ngIf="myPlaylists && (subMenuData.playlist_id == null || !subMenuData.isMyPlaylist)">
+                <li class="li-center add-playlist">Add to playlist</li>
+                <li class="slide" *ngFor="let playlist of myPlaylists" (click)="addToPlaylist(subMenuData.currentSong, playlist); subMenuDisplay()">
+                    {{playlist.name}}
+                </li>
+            </div>
+            <div *ngIf="myPlaylists==undefined">
+                <li class="li-center add-playlist">Add to playlist</li>
+                <li (click)="createPlaylist()" class="slide">Create playlist</li>
+            </div>
+            <div *ngIf="subMenuData.playlist_id != null && subMenuData.isMyPlaylist">
+                <li (click)="removeToPlaylist(subMenuData.currentSong, subMenuData.playlist_id)" class="slide">Remove to playlist</li>
+            </div>
+            
+            <li class="slide close" (click)="subMenuDisplay()">Close</li>
         </ul>
     </div>
 </div>

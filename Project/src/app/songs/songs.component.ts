@@ -15,6 +15,7 @@ import { UserHomeComponent } from '../user-home/user-home.component';
 export class SongsComponent implements OnInit{
 
   public album: any;
+  public username = this.globalVar.actualUser.username;
   public isFixed:boolean = false;
   constructor(private activeRoute: ActivatedRoute, private rest:RestService,
     private globalVar: GlobalVarService, private userHome: UserHomeComponent) { }
@@ -93,6 +94,12 @@ export class SongsComponent implements OnInit{
     this.userHome.followAlbum(album.album_id);
     return album.follow = false;
   }
+  publish(album:any){
+
+  }
+  unpublish(album:any){
+
+  }
 
   goToArtist(id:any){
     this.userHome.goToArtist(id);
@@ -112,9 +119,12 @@ export class SongsComponent implements OnInit{
   pause(){
     this.userHome.pause();
   }
+  deletePlaylist(album:any){ }
+  uploadImg(file:any){ }
+  updatePlaylist(name:any){ }
 
-  openSubMenu(songList:any, index:any){
-    this.userHome.openSubMenu(songList, index);
+  openSubMenu(songList:any, index:any, playlist_id:any, isMyPlaylist:any){
+    this.userHome.openSubMenu(songList, index, null, false);
   }
 
 }

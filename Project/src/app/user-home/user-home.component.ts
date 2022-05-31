@@ -25,7 +25,13 @@ export class UserHomeComponent implements OnInit {
   public followedPlaylists:any;
   public myPlaylists:any;
   public subMenuSong:boolean = false;
-  public subMenuSongCurrentSong:any;
+
+  // public subMenuSongCurrentSong:any;
+  // public subMenuSongCurrentPlaylist:any;
+  // public subMenuSongCurrentPosition:any;
+
+  public subMenuData:any;
+
   public displaySong:boolean = true; // <-- false
   public audio = new Audio();
   public actualPlaylist:any;
@@ -61,7 +67,7 @@ export class UserHomeComponent implements OnInit {
     "loadstart"
   ];
 
-  constructor(private globalVar:GlobalVarService, private coockieService: CookieService,
+  constructor(private globalVar:GlobalVarService, private activeRoute:ActivatedRoute,
     private router: Router, private rest:RestService, private sanitizer:DomSanitizer) { }
 
   ngOnInit(): void {
@@ -197,20 +203,20 @@ export class UserHomeComponent implements OnInit {
       }
     });
   }
-  unfollowAlbum(id: any){
-    let data ={
-      username: this.globalVar.actualUser.username,
-      album_id: id,
-    };
-    this.rest.post('/followAlbum',data).subscribe({
-      next: res=>{
-        console.log("unfollow album")
-      },
-      error: err=>{
-        console.log("No se puede unfollow")
-      }
-    });
-  }
+  // unfollowAlbum(id: any){
+  //   let data ={
+  //     username: this.globalVar.actualUser.username,
+  //     album_id: id,
+  //   };
+  //   this.rest.post('/followAlbum',data).subscribe({
+  //     next: res=>{
+  //       console.log("unfollow album")
+  //     },
+  //     error: err=>{
+  //       console.log("No se puede unfollow")
+  //     }
+  //   });
+  // }
 
   goToArtist(id:any){
     this.router.navigate(['home/artist/'+id]);
@@ -231,16 +237,61 @@ export class UserHomeComponent implements OnInit {
     });
   }
 
-  openSubMenu(songList:any, index:any){
-    this.openSubMenuDisplay();
-    this.subMenuSongCurrentSong = songList[index];
-    console.log(this.subMenuSongCurrentSong)
+  addToPlaylist(song:any, playlist:any){
+    let data={
+      username: this.user.username,
+      song: song.song_id,
+      playlist: playlist.playlist_id
+    }
+    this.rest.post('/addToPlaylist', data).subscribe({
+      next: res=>{
+        console.log(res)
+      },
+      error: err=>{
+        console.log(err)  
+      }
+    })
+    console.log(data)
+    
+  }
+  removeToPlaylist(song:any, playlist:any){
+    let data={
+      username: this.user.username,
+      song: song.song_id,
+      playlist: playlist
+    }
+    this.rest.post('/removeToPlaylist', data).subscribe({
+      next: res=>{
+        console.log(res)
+      },
+      error: err=>{
+        console.log(err)  
+      }
+    })
+    console.log(data)
+    
+  }
+
+  openSubMenu(songList:any, index:any, playlist_id:any, isMyPlaylist:any){
+    this.subMenuDisplay();
+    this.subMenuData ={
+      playlist: songList,
+      index: index,
+      currentSong: songList[index],
+      playlist_id: playlist_id,
+      isMyPlaylist: isMyPlaylist
+    }
+    console.log(this.subMenuData)
+    // this.subMenuSongCurrentPlaylist = songList;
+    // this.subMenuSongCurrentPosition = index;
+    // this.subMenuSongCurrentSong = songList[index];
+    // console.log(this.subMenuSongCurrentSong)
     
     // console.log("adding "+song);
 
   }
 
-  openSubMenuDisplay(){
+  subMenuDisplay(){
     if(this.subMenuSong){
       this.subMenuSong = false;
     }else{

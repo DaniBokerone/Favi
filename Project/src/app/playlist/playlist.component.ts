@@ -14,12 +14,18 @@ import { UserHomeComponent } from '../user-home/user-home.component';
 export class PlaylistComponent  implements OnInit {
   
   public album:any;
+  public username:any;
   public isFixed:boolean = false;
 
   constructor(private activeRoute: ActivatedRoute, private rest:RestService,
     private globalVar: GlobalVarService, private userHome: UserHomeComponent) { }
   
     ngOnInit(): void {
+      this.username = this.globalVar.actualUser.username;
+      this.getPlaylist();
+    }
+
+    getPlaylist(){
       this.activeRoute.params.subscribe({
         next: res =>{
           let data ={
@@ -63,11 +69,22 @@ export class PlaylistComponent  implements OnInit {
     }
   
     followAlbum(album:any){
-      this.userHome.followAlbum(album.album_id);
+      let data= {
+        username: this.globalVar.actualUser.username,
+        playlist_id: album.playlist_id
+      };
+      this.rest.post('/followPlaylist',data).subscribe({
+        next: res=>{
+          console.log("follow playlist")
+        },
+        error: err=>{
+          console.log("No se puede follow")
+        }
+      });
       return album.follow = true;
     }
     unfollowAlbum(album:any){
-      this.userHome.followAlbum(album.album_id);
+      this.followAlbum(album);
       return album.follow = false;
     }
   
@@ -90,9 +107,75 @@ export class PlaylistComponent  implements OnInit {
       this.userHome.pause();
     }
 
-    openSubMenu(songList:any, index:any){
-      this.userHome.openSubMenu(songList, index);
+    openSubMenu(songList:any, index:any, playlist_id:any, isMyPlaylist:any){
+      this.userHome.openSubMenu(songList, index, playlist_id, isMyPlaylist);
     }
 
+    
+    publish(album:any){
+      let data= {
+        username: this.globalVar.actualUser.username,
+        playlist_id: album.playlist_id,
+        public: album.public? false : true
+      };
+      this.rest.post('/publishPlaylist',data).subscribe({
+        next: res=>{
+          console.log("public")
+        },
+        error: err=>{
+          console.log(err)
+        }
+      });
+      return album.public = true;
+    }
+    unpublish(album:any){
+      this.publish(album);
+      return album.public = false;
+    }
+
+    deletePlaylist(album:any){ 
+      let data={
+        username: this.username,
+        playlist_id: album.playlist_id
+      }
+      this.rest.post('/deletePlaylist',data).subscribe({
+        next: res=>{
+          console.log("delete :D")
+          /**@TODO redirecto home */
+        },
+        error: err=>{
+          console.log(err)
+        }
+      });
+    }
+
+    uploadImg(file:any){
+      let fd = new FormData();
+      fd.append("username", this.globalVar.actualUser.username);
+      fd.append("playlist_id", this.album.playlist_id);
+      fd.append("img", file.files[0]);
+      let me = this;
+      this.rest.postFile('/editPlaylistImage',fd).done(
+        setTimeout(() => {
+          me.getPlaylist();
+        }, 200)
+      );
+    }
+    updatePlaylist(name:any){
+      let data={
+        username: this.username,
+        playlist_id: this.album.playlist_id,
+        name: name.playlistName
+      }
+      this.rest.post('/editPlaylist',data).subscribe({
+        next: res=>{
+
+        },
+        error: err=>{
+          console.log(err)
+        }
+      });
+      
+    }
 
 }

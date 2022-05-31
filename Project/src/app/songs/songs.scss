@@ -12,8 +12,9 @@
     padding: 0 10% 0 10%;
     transition: 0.3s linear;
     img{
-        max-width: 100px;
-        padding: 10px 0 10px 0;
+        width: 100px;
+        height: 100px;
+        margin: 10px 0 10px 0;
     }
     h1{
         text-align: center;
@@ -83,4 +84,28 @@
 }
 .space-header{
     min-height: 250px;
+}
+.upload-profile-img{
+    height: 100px;
+    width: 100px;
+    display: flex;
+    margin: 10px 0 10px 0;
+    /* margin: 50px; */
+    align-items: center;
+    justify-content: center;
+
+    position: absolute;
+    input{
+        visibility: hidden;
+        width: 0;
+        height: 0;
+    }
+    label{
+        width: 100%;
+        height: 100%;
+        display: flex;
+        background-color: $black-50;
+        align-items: center;
+        justify-content: center;
+    }
 }

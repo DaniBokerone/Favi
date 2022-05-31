@@ -15,6 +15,7 @@ export class MyFavSongsComponent implements OnInit {
 
   public album: any;
   public isFixed:boolean = false;
+  public username = this.globalVar.actualUser.username;
   public songPath = this.globalVar.SONG_REPOSITORY;
   public audio = new Audio();
 
@@ -60,6 +61,12 @@ export class MyFavSongsComponent implements OnInit {
     this.userHome.followAlbum(album.album_id);
     return album.follow = false;
   }
+  publish(album:any){
+
+  }
+  unpublish(album:any){
+    
+  }
 
   goToArtist(id:any){
     this.userHome.goToArtist(id);
@@ -79,9 +86,12 @@ export class MyFavSongsComponent implements OnInit {
   pause(){
     this.userHome.pause();
   }
+  deletePlaylist(album:any){ }
+  uploadImg(file:any){ }
+  updatePlaylist(name:any){ }
 
-  openSubMenu(songList:any, index:any){
-    this.userHome.openSubMenu(songList, index);
+  openSubMenu(songList:any, index:any, playlist_id:any, isMyPlaylist:any){
+    this.userHome.openSubMenu(songList, index, null, false);
   }
 
 }

@@ -54,6 +54,13 @@ body{
     }
     
 }
+.my-input-no-border{
+    border: none !important;
+}
+.my-input-center{
+    font-weight: bold;
+    text-align: center;
+}
 .my-button{
     min-width: 85px;
     padding: 10px;
@@ -116,4 +123,11 @@ body{
 }
 .my-icon-color{
     color: $purple;
+}
+.my-button-little{
+    min-width: 0;
+    width: 25px;
+    height: 25px;
+    padding: 1px;
+    border-radius: 15px;
 }
