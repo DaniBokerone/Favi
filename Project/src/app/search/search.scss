@@ -1,11 +1,5 @@
 @use '../../vars' as *;
 
-
-h1{
-    background-color: $dark-text-color;
-    font-weight: bold;
-}
-
 .search-div{
     padding: 10px;
     .search-content{

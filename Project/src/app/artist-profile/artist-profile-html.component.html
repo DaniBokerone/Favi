@@ -9,10 +9,15 @@
                 <p class="is-size-1">{{artist.artist_name}}</p>
             </div>
         </div>
+        <div class="artist-buttons">    
+            <button (click)="load(artist.songs, 0)" class="my-button"><i class="fa-solid fa-play"></i> Play</button>
+            <button *ngIf="!artist.fav && username != artist.artist_name" (click)="followArtist(artist)" class="my-button my-button-confirm"><i class="fa-solid fa-plus"></i> Follow</button>
+            <button *ngIf="artist.fav && username != artist.artist_name" (click)="unfollowArtist(artist)" class="my-button my-button-remove   "><i class="fa-solid fa-xmark"></i> Unfollow</button>
+        </div>
     </div>
 </div>
     <div class="separator"></div>
-    <h1 class="is-size-2">SONGS</h1>
+    <h1 class="is-size-4 my-h1" fxLayoutAlign="center">Songs</h1>
     <div class="song-list">
         <ul>
             <li *ngFor="let song of artist.songs; let i=index">
@@ -56,7 +61,7 @@
             <span>{{album.release_date}}</span>
         </div>
     </div> -->
-    <h1 class="is-size-2">ALBUMS</h1>
+    <h1 class="is-size-4 my-h1" fxLayoutAlign="center">Albums</h1>
     <div class="home-content">
         <div class="card my-card" *ngFor="let album of artist.albums" (click)="goTo(album.album_id)">
             <div class="card-content">

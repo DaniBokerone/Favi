@@ -1,109 +1,112 @@
-<!-- <app-sidenav></app-sidenav> -->
+<app-sidenav></app-sidenav>
 <div *ngIf="showHome();" class="full-h">
 
-    
-    <div (click)="createPlaylist()">
-        DELETE
-        CREAR PLAYLST
-    </div>
-
     <div *ngIf="favAlbums">
-    <h1 class="is-size-1" fxLayoutAlign="center">FAV ALBUM</h1>
-    <div class="home-content">
-        <div class="card my-card" *ngFor="let item of favAlbums" routerLink="songs/{{item.album_id}}">
-            <div class="card-content">
-                <img src="data:image/jpeg;base64,{{item.cover_image}}">
-                <div>
-                    <p class="ellipsis">{{item.name}}</p>
+        <h1 class="is-size-4 my-h1" fxLayoutAlign="center">My Favorite Albums</h1>
+        <div class="home-content">
+            <div class="card my-card" *ngFor="let item of favAlbums" routerLink="songs/{{item.album_id}}">
+                <div class="card-content">
+                    <img src="data:image/jpeg;base64,{{item.cover_image}}">
+                    <div>
+                        <p class="ellipsis">{{item.name}}</p>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
-<h1 class="is-size-1" fxLayoutAlign="center">MY PLAYLIST</h1>
-    <!-- PLACEHOLDER -->
-    <div class="home-content">
-        <div class="card my-card" *ngFor="let myPlaylist of myPlaylists" routerLink="playlist/{{myPlaylist.playlist_id}}">
-            <div class="card-content">
-                <img src="data:image/jpeg;base64,{{myPlaylist.cover_image}}">
-                <div>
-                    <p class="ellipsis">{{myPlaylist.name}}</p>
+
+    <div *ngIf="myPlaylists">
+        <h1 class="is-size-4 my-h1" fxLayoutAlign="center">My Playlists</h1>
+        <div class="home-content">
+            <div class="card my-card" *ngFor="let myPlaylist of myPlaylists" routerLink="playlist/{{myPlaylist.playlist_id}}">
+                <div class="card-content">
+                    <img src="data:image/jpeg;base64,{{myPlaylist.cover_image}}">
+                    <div>
+                        <p class="ellipsis">{{myPlaylist.name}}</p>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
     
-    <h1 class="is-size-1" fxLayoutAlign="center">PLAYLIST</h1>
-    <!-- PLACEHOLDER -->
-    <div class="home-content">
-        <div class="card my-card" *ngFor="let playlist of playlists" routerLink="playlist/{{playlist.playlist_id}}">
-            <div class="card-content">
-                <img src="data:image/jpeg;base64,{{playlist.playlist_img}}">
-                <div>
-                    <p class="ellipsis">{{playlist.name}}</p>
+    <div *ngIf="followedPlaylists">
+        <h1 class="is-size-4 my-h1" fxLayoutAlign="center">Followed Playlists</h1>
+        <div class="home-content">
+            <div class="card my-card" *ngFor="let playlist of followedPlaylists" routerLink="playlist/{{playlist.playlist_id}}">
+                <div class="card-content">
+                    <img src="data:image/jpeg;base64,{{playlist.playlist_img}}">
+                    <div>
+                        <p class="ellipsis">{{playlist.name}}</p>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <h1 class="is-size-1" fxLayoutAlign="center">FOLLOW PLAYLIST</h1>
-    <!-- PLACEHOLDER -->
-    <div class="home-content">
-        <div class="card my-card" *ngFor="let playlist of followedPlaylists" routerLink="playlist/{{playlist.playlist_id}}">
-            <div class="card-content">
-                <img src="data:image/jpeg;base64,{{playlist.playlist_img}}">
-                <div>
-                    <p class="ellipsis">{{playlist.name}}</p>
+    <div *ngIf="followedArtists">
+        <h1 class="is-size-4 my-h1" fxLayoutAlign="center">Followed Artist</h1>
+        <div class="home-content">
+            <div class="card my-card" *ngFor="let artist of followedArtists" routerLink="artist/{{artist.artist_id}}">
+                <div class="card-content">
+                    <img src="data:image/jpeg;base64,{{artist.artist_image}}">
+                    <div>
+                        <p class="ellipsis">{{artist.artist_name}}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div *ngIf="items">
+        <h1 class="is-size-4 my-h1" fxLayoutAlign="center">Recomendated Songs/Albums</h1>
+        <div class="home-content">
+            <div class="card my-card" *ngFor="let item of items" routerLink="songs/{{item.album_id}}">
+                <div class="card-content">
+                    <img src="data:image/jpeg;base64,{{item.cover_image}}">
+                    <div>
+                        <p class="ellipsis">{{item.name}}</p>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <h1 class="is-size-1" fxLayoutAlign="center">HOME</h1>
-    <!-- PLACEHOLDER -->
-    <div class="home-content">
-        <div class="card my-card" *ngFor="let item of items" routerLink="songs/{{item.album_id}}">
-            <div class="card-content">
-                <img src="data:image/jpeg;base64,{{item.cover_image}}">
-                <div>
-                    <p class="ellipsis">{{item.name}}</p>
+    <div *ngIf="playlists">
+        <h1 class="is-size-4 my-h1" fxLayoutAlign="center">Recomendated Playlists</h1>
+        <div class="home-content">
+            <div class="card my-card" *ngFor="let playlist of playlists" routerLink="playlist/{{playlist.playlist_id}}">
+                <div class="card-content">
+                    <img src="data:image/jpeg;base64,{{playlist.playlist_img}}">
+                    <div>
+                        <p class="ellipsis">{{playlist.name}}</p>
+                    </div>
                 </div>
             </div>
         </div>
-        <!-- routerLink="song/{{item.id}}" -->
-        <!-- <div class="card my-card" routerLink="songs/1">
-            <div class="card-content">
-                <img src="../../assets/img/noimage.png">
-                <div>
-                    <p class="ellipsis">Titulo cancion </p>
-                </div>
-            </div>
-        </div>
-        <div class="card my-card" routerLink="songs/2">
-            <div class="card-content">
-                <img src="../../assets/img/noimage.png">
-                <div>
-                    <p class="ellipsis">Titulo cancion muuy muy muy muy uuy muy largo</p>
-                </div>
-            </div>
-        </div> -->
     </div>
 
-    <h1 class="is-size-1" fxLayoutAlign="center">ARTIST</h1>
-    <!-- PLACEHOLDER -->
-    <div class="home-content">
-        <div class="card my-card my-artist" *ngFor="let artist of artists" routerLink="artist/{{artist.artist_id}}">
-            <div class="card-content">
-                <img src="data:image/jpeg;base64,{{artist.artist_image}}">
-                <p>{{artist.artist_name}}</p>
+    <div *ngIf="artists">
+        <h1 class="is-size-4 my-h1" fxLayoutAlign="center">Recomendated Artists</h1>
+        <div class="home-content">
+            <div class="card my-card" *ngFor="let artist of artists" routerLink="artist/{{artist.artist_id}}">
+                <div class="card-content">
+                    <img src="data:image/jpeg;base64,{{artist.artist_image}}">
+                    <div>
+                        <p class="ellipsis">{{artist.artist_name}}</p>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
     
 </div>
+
+
 <router-outlet></router-outlet>
+
+
 <div id="subMenuSong" *ngIf="subMenuSong">
-    <!-- //subMenuSongCurrentSong -->
+    <!-- subMenuSongCurrentSong -->
     <div>
         <ul>
             <li class="img-li"><img src="data:image/jpeg;base64,{{subMenuData.currentSong.cover_img}}"></li>
@@ -130,7 +133,35 @@
         </ul>
     </div>
 </div>
+
+
 <div id="progress-bar" *ngIf="actualSong && !displaySong">
+    
+    <div class="conten-song">
+
+        <div class="progress-bar-div">
+            <input type="range" id="actualMusic" min="0" max="{{durationImput}}" [value]="currentTimeInput" (input)="setTime($event)">
+            
+            
+            <div class="duration">
+                <span>{{currentTime}}</span>
+                <span>{{duration}}</span>
+            </div>
+        </div>
+        <!-- <div class="name-buttons">
+            
+            
+            <input [ngClass]="{'closed-volume-menu': !volumeMenu}" type="range" min="0" max="1" value="0" step="0.01" (input)="setVolume($event)" value="1" id="volume">
+            <i (click)="removeToFav(actualSong)" *ngIf="actualSong.fav" class="fa-solid fa-heart my-icon-color"></i>
+            <i (click)="addToFav(actualSong)" *ngIf="!actualSong.fav" class="fa-regular fa-heart"></i>
+            
+            
+            <i class="fa-solid fa-repeat"></i>
+            <i (click)="openVolume()" class="fa-solid fa-volume-high"></i>
+            
+            
+        </div> -->
+    </div>
     <div class="progress-bar-div">
         {{currentTime}}
         <input type="range" id="actualMusic" min="0" max="{{durationImput}}" [value]="currentTimeInput" (input)="setTime($event)">
@@ -144,26 +175,20 @@
             <input type="range" min="0" max="1" value="0" step="0.01" (input)="setVolume($event)" value="1">
         </div>
         <i class="fa-solid fa-repeat"></i>
-
-        <i class="fa-solid fa-volume-high"></i>
-        <!-- <i class="fa-solid fa-volume-low"></i>
-        <i class="fa-solid fa-volume-off"></i>
-        <i class="fa-solid fa-volume-xmark"></i> -->
         
-        <i (click)="back()" class="fa-solid fa-backward-step"></i>
-
-        <i (click)="play()" *ngIf="!isPlayed" class="fa-solid fa-play"></i>
-        <i (click)="pause()" *ngIf="isPlayed" class="fa-solid fa-pause"></i>
-        <!-- <i (click)="play()"  class="fa-solid fa-play"></i>
-        <i (click)="pause()" class="fa-solid fa-pause"></i> -->
-        <i (click)="next()" class="fa-solid fa-forward-step"></i>
-    </div>
+        <i class="fa-solid fa-volume-high"></i>
+            <i (click)="back()" class="fa-solid fa-backward-step"></i>
+            
+            <i (click)="play()" *ngIf="!isPlayed" class="fa-solid fa-play"></i>
+            <i (click)="pause()" *ngIf="isPlayed" class="fa-solid fa-pause"></i>
+                <i (click)="next()" class="fa-solid fa-forward-step"></i>
+            </div>
 </div>
+
 <div id="progress-bar" class="full-h fixed-song" *ngIf="actualSong && displaySong">
     <div class="img-blur" style="background-image: url(data:image/jpeg;base64,{{actualSong.cover_img}});"></div>
     <div class="icon-div" (click)="openSong()"><i class="fa-solid fa-angle-down"></i></div>
     <div class="div-img">
-        
         <img *ngIf="actualSong.cover_img!=''" src="data:image/jpeg;base64,{{actualSong.cover_img}}">
     </div>
     <div class="content-song">
@@ -176,22 +201,21 @@
             <div class="name-buttons">
                 <i (click)="removeToFav(actualSong)" *ngIf="actualSong.fav" class="fa-solid fa-heart my-icon-color"></i>
                 <i (click)="addToFav(actualSong)" *ngIf="!actualSong.fav" class="fa-regular fa-heart"></i>
-
-
+                
+                
                 <i class="fa-solid fa-repeat"></i>
-                <i class="fa-solid fa-shuffle"></i>
-
+                <!-- <i class="fa-solid fa-shuffle"></i> -->
+                
                 <input [ngClass]="{'closed-volume-menu': !volumeMenu}" type="range" min="0" max="1" value="0" step="0.01" (input)="setVolume($event)" value="1" id="volume">
                 
                 <i (click)="openVolume()" class="fa-solid fa-volume-high"></i>
-
+                
                 
             </div>
         </div>
         
-
+        
         <div class="progress-bar-div">
-            
             <input type="range" id="actualMusic" min="0" max="{{durationImput}}" [value]="currentTimeInput" (input)="setTime($event)">
             
             
@@ -200,7 +224,7 @@
                 <span>{{duration}}</span>
             </div>
         </div>
-
+        
         <div class="main-buttons">
             <div></div>
             <i (click)="back()" class="fa-solid fa-backward-step"></i>
@@ -209,26 +233,6 @@
             <i (click)="next()" class="fa-solid fa-forward-step"></i>
             <div></div>
         </div>
-
-        <!-- <div class="info-song">
-            
-            
-
-            
-
-
-            <i class="fa-solid fa-repeat"></i>
-
-            <i class="fa-solid fa-volume-high"></i>
-            
-            <i (click)="back()" class="fa-solid fa-backward-step"></i>
-
-            <i (click)="play()" *ngIf="!isPlayed" class="fa-solid fa-play"></i>
-            <i (click)="pause()" *ngIf="isPlayed" class="fa-solid fa-pause"></i>
-            <i (click)="play()"  class="fa-solid fa-play"></i>
-            <i (click)="pause()" class="fa-solid fa-pause"></i>
-            <i (click)="next()" class="fa-solid fa-forward-step"></i>
-        </div> -->
     </div>
 </div>
-<!-- <app-footer *ngIf="showFooter(true);"></app-footer> -->
+        <!-- <app-footer *ngIf="showFooter(true);"></app-footer> -->

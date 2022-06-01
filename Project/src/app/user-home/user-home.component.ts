@@ -24,6 +24,7 @@ export class UserHomeComponent implements OnInit {
   public playlists:any;
   public followedPlaylists:any;
   public myPlaylists:any;
+  public followedArtists:any;
   public subMenuSong:boolean = false;
 
   // public subMenuSongCurrentSong:any;
@@ -32,7 +33,7 @@ export class UserHomeComponent implements OnInit {
 
   public subMenuData:any;
 
-  public displaySong:boolean = true; // <-- false
+  public displaySong:boolean = false;
   public audio = new Audio();
   public actualPlaylist:any;
   public actualSong:any;
@@ -121,6 +122,7 @@ export class UserHomeComponent implements OnInit {
     });
     
     this.getMyPlaylist();
+    this.getFollowedArtists();
   }
 
   getMyPlaylist(){
@@ -128,6 +130,18 @@ export class UserHomeComponent implements OnInit {
       next: res=>{
         console.log(res)
         this.myPlaylists = res;
+      },
+      error: err=>{
+        console.log(err)
+      }
+    })
+  }
+
+  getFollowedArtists(){
+    this.rest.post('/getFollowedArtists',{username:this.user.username}).subscribe({
+      next: res=>{
+        console.log(res)
+        this.followedArtists = res;
       },
       error: err=>{
         console.log(err)

@@ -14,12 +14,14 @@ import { UserHomeComponent } from '../user-home/user-home.component';
 export class ArtistProfileComponent implements OnInit {
 
   public artist: any;
+  public username: any;
 
   constructor(private globalVar: GlobalVarService, private rest: RestService,
     private activeRoute: ActivatedRoute, private userHome: UserHomeComponent,
     private router:Router) { }
 
   ngOnInit(): void {
+    this.username = this.globalVar.actualUser.username;
     this.activeRoute.params.subscribe({
       next: res =>{
         let data ={
@@ -52,6 +54,26 @@ export class ArtistProfileComponent implements OnInit {
   }
   goTo(id:any){
     this.router.navigate(['/home/songs/'+id]);
+  }
+
+  followArtist(artist:any){
+    let data ={
+      username: this.username,
+      artist_id: artist.artist_id
+    }
+    this.rest.post('/followArtist',data).subscribe({
+      next: res=>{
+        console.log("funciona follow")
+      },
+      error: err=>{
+        console.log(err)
+      }
+    });
+    return artist.fav = true;
+  }
+  unfollowArtist(artist:any){
+    this.followArtist(artist);
+    return artist.fav = false;
   }
 
 }

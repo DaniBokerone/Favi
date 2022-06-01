@@ -169,7 +169,7 @@ export class PlaylistComponent  implements OnInit {
       }
       this.rest.post('/editPlaylist',data).subscribe({
         next: res=>{
-
+          /**@TODO actualizar */
         },
         error: err=>{
           console.log(err)

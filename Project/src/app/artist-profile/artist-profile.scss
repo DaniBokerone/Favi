@@ -10,6 +10,14 @@
         height: 100%;
         display: flex;
         align-items: center;
+        flex-direction: column;
+        .artist-buttons{
+            width: 80%;
+            margin: auto;
+            display: flex;
+            justify-content: space-evenly;
+            margin-bottom: 15px;
+        }
     }
    
     .img-profile{
@@ -20,8 +28,10 @@
         justify-content: flex-start;
 
         img{
-            width: 15vh;
-            height: 15vh;
+            min-width: 100px;
+            min-height: 100px;
+            max-width: 100px;
+            max-height: 100px;
             margin: 0 15px;
             border-radius: 100%;
         }
@@ -57,4 +67,7 @@
             padding: 0 7px;
         }
     }
+}
+.separator{
+    margin: 0;
 }

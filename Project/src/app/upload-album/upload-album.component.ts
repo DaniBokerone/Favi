@@ -15,6 +15,7 @@ export class UploadAlbumComponent implements OnInit {
   public coverAlbum:any;
   public coverAlbumImage:any;
   public idAlbum:any;
+  public idSongs:any;
   public phase = 1;
 
   constructor(private globalVar:GlobalVarService, private rest:RestService) { }
@@ -53,17 +54,29 @@ export class UploadAlbumComponent implements OnInit {
       fd.append("song_"+i, this.filesToUpload[i]);
     }
     fd.append("total_songs", this.filesToUpload.length);
-    // this.rest.postFile('/add_albums/uploadAlbumSongs', fd);
-    this.rest.postFile('/add_albums/hola', fd);
+    this.rest.postFile('/add_albums/uploadAlbumSongs', fd).done((res:any)=>{
+      console.log(res)
+      this.idSongs = JSON.parse(res);
+    });
     this.phase = 3;
   }
 
   uploadNameSongs(nameSongs:any){
+    
+    let arr=[];
+    for(let i=0; i<this.idSongs.length;i++){
+      arr.push({
+        id: this.idSongs[i]['song_id_'+i],
+        name: nameSongs['namesong'+i]
+      });
+    }
     let data = {
       username: this.globalVar.actualUser.username,
       album_id: this.idAlbum,
-      nameSongs: nameSongs
+      names: arr
     }
+    console.log(data)
+    console.log(nameSongs)
     this.rest.post('/add_albums/uploadAlbumNames', data).subscribe({
       next: res=>{
         this.phase = 4;

@@ -1,14 +1,42 @@
-<div id="sideNav">
+<div id="sideNav" class="closeSideNav">
     <ul>
-        <li (click)="closeSideNav()" class="slide">x</li>
-        <li routerLink="." class="slide">HOME</li>
-        <li routerLink="profile" class="slide">Profile</li>
-        <li (click)="logout()" class="slide">Logout</li>
+        <li (click)="closeSideNav()" class="slide"><i class="fa-solid fa-xmark"></i></li>
+
+        <li routerLink="." class="slide"><i class="fa-solid fa-house"></i> Home</li>
+        <li routerLink="profile" class="slide"><i class="fa-solid fa-user"></i> Profile</li>
+        <li routerLink="search" class="slide"><i class="fa-solid fa-magnifying-glass"></i> Search</li>
+        <li routerLink="favSongs" class="slide"><i class="fa-solid fa-heart"></i> Favorite songs</li>
+
+
+        <li (click)="createPlaylist(); init()" class="slide"><i class="fa-solid fa-plus"></i> Create Playlist</li>
+        <li class="slide-separator"><i class="fa-solid fa-compact-disc"></i> My playlists</li>
+        <li class="slide ellipsis" *ngFor="let playlist of myPlaylists" routerLink="playlist/{{playlist.playlist_id}}">
+            <i class="fa-solid fa-play"></i> {{playlist.name}}
+        </li>
+
+
+        <li class="slide-separator"><i class="fa-solid fa-compact-disc"></i> My favorite albums</li>
+        <li class="slide ellipsis" *ngFor="let album of favAlbums" routerLink="songs/{{album.album_id}}">
+            <i class="fa-solid fa-play"></i> {{album.name}}
+        </li>
+        <li class="slide-separator"><i class="fa-solid fa-user-group"></i> My favorite artists</li>
+        <li class="slide ellipsis" *ngFor="let artist of favArtist" routerLink="artist/{{artist.artist_id}}">
+            <i class="fa-solid fa-user"></i> {{artist.artist_name}}
+        </li>
+        <div>
+            <li class="slide-separator"><i class="fa-solid fa-compact-disc"></i> Artist</li>
+            <li class="slide"> Artist profile</li>
+        </div>
+        
+        <li (click)="logout()" class="slide slide-close">Logout</li>
     </ul>
     <!-- <a routerLink="." class="slide">HOME</a>
     <a routerLink="profile"><button class="slide">Profile</button></a>
     <a (click)="logout()"><button class="slide">logout</button></a> -->
 </div>
 <div id="openSideNav">
-    <a (click)="closeSideNav()" >OPEN</a>
+    <p (click)="closeSideNav(); init()" ><i class="fa-solid fa-bars is-size-4"></i></p>
 </div>
+
+<!-- music
+<i class="fa-solid fa-music"></i> -->
