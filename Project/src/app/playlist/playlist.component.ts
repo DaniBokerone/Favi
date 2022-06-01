@@ -1,5 +1,5 @@
 import { Component, HostListener, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { GlobalVarService } from '../global-var.service';
 import { RestService } from '../rest.service';
 import { UserHomeComponent } from '../user-home/user-home.component';
@@ -18,10 +18,11 @@ export class PlaylistComponent  implements OnInit {
   public isFixed:boolean = false;
 
   constructor(private activeRoute: ActivatedRoute, private rest:RestService,
-    private globalVar: GlobalVarService, private userHome: UserHomeComponent) { }
+    private globalVar: GlobalVarService, private userHome: UserHomeComponent,
+    private router:Router) { }
   
     ngOnInit(): void {
-      this.username = this.globalVar.actualUser.username;
+      this.username = this.globalVar.currentUser.username;
       this.getPlaylist();
     }
 
@@ -29,7 +30,7 @@ export class PlaylistComponent  implements OnInit {
       this.activeRoute.params.subscribe({
         next: res =>{
           let data ={
-            username: this.globalVar.actualUser.username,
+            username: this.globalVar.currentUser.username,
             id: res["id"],
           };
           console.log("todo piola");
@@ -70,12 +71,13 @@ export class PlaylistComponent  implements OnInit {
   
     followAlbum(album:any){
       let data= {
-        username: this.globalVar.actualUser.username,
+        username: this.globalVar.currentUser.username,
         playlist_id: album.playlist_id
       };
       this.rest.post('/followPlaylist',data).subscribe({
         next: res=>{
           console.log("follow playlist")
+          this.userHome.getFollowedPlaylists();
         },
         error: err=>{
           console.log("No se puede follow")
@@ -94,7 +96,7 @@ export class PlaylistComponent  implements OnInit {
   
     load(songList:any, index:any){
       console.log(songList)
-      // this.globalVar.actualSong = song;
+      // this.globalVar.currentSong = song;
       this.userHome.loadMusic(songList, index);
   
     }
@@ -114,7 +116,7 @@ export class PlaylistComponent  implements OnInit {
     
     publish(album:any){
       let data= {
-        username: this.globalVar.actualUser.username,
+        username: this.globalVar.currentUser.username,
         playlist_id: album.playlist_id,
         public: album.public? false : true
       };
@@ -142,6 +144,8 @@ export class PlaylistComponent  implements OnInit {
         next: res=>{
           console.log("delete :D")
           /**@TODO redirecto home */
+          this.userHome.getMyPlaylist();
+          this.router.navigate(['/home']);
         },
         error: err=>{
           console.log(err)
@@ -151,7 +155,7 @@ export class PlaylistComponent  implements OnInit {
 
     uploadImg(file:any){
       let fd = new FormData();
-      fd.append("username", this.globalVar.actualUser.username);
+      fd.append("username", this.globalVar.currentUser.username);
       fd.append("playlist_id", this.album.playlist_id);
       fd.append("img", file.files[0]);
       let me = this;
@@ -169,7 +173,7 @@ export class PlaylistComponent  implements OnInit {
       }
       this.rest.post('/editPlaylist',data).subscribe({
         next: res=>{
-          /**@TODO actualizar */
+          /**@TODO currentizar */
         },
         error: err=>{
           console.log(err)

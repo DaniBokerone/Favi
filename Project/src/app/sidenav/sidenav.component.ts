@@ -17,12 +17,16 @@ export class SidenavComponent implements OnInit {
   public myPlaylists = this.userHome.myPlaylists;
   public favAlbums = this.userHome.favAlbums;
   public favArtist = this.userHome.followedArtists;
+  public favPlaylists = this.userHome.followedPlaylists;
+  public user:any;
   
 
   constructor(private globalVar: GlobalVarService, private coockieService: CookieService,
     private router:Router, private userHome:UserHomeComponent) { }
 
   ngOnInit(): void {
+    this.user = this.globalVar.currentUser;
+    console.log(this.user)
     this.init();
     
   }
@@ -30,6 +34,7 @@ export class SidenavComponent implements OnInit {
     this.getPlaylists();
     this.getFavAlbums();
     this.getFavArtist();
+    this.getFavPlaylists();
   }
   getPlaylists(){
     setTimeout(()=>{
@@ -44,6 +49,11 @@ export class SidenavComponent implements OnInit {
   getFavArtist(){
     setTimeout(()=>{
       this.favArtist = this.userHome.followedArtists;
+    }, 200);
+  }
+  getFavPlaylists(){
+    setTimeout(()=>{
+      this.favPlaylists = this.userHome.followedPlaylists;
     }, 200);
   }
 

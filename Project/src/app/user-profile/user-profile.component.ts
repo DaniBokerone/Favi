@@ -23,7 +23,8 @@ export class UserProfileComponent implements OnInit {
     private sanitizer:DomSanitizer, private cookieService:CookieService) { }
 
   ngOnInit(): void {
-    this.user = this.globalVar.actualUser;
+    this.user = this.globalVar.currentUser;
+    console.log(this.user)
     this.getImg();
     if(this.user.is_artist){
       this.getBanner();
@@ -31,7 +32,6 @@ export class UserProfileComponent implements OnInit {
   }
 
   getImg(){
-    // debugger
     this.rest.post('/getProfileImage',{username:this.user.username}).subscribe({
       next: res=>{
         this.img = res.profile_image;
@@ -69,17 +69,17 @@ export class UserProfileComponent implements OnInit {
     if(true){
       if(!this.check(data, this.user)){
         let editedUser = {
-          oldUsername: this.globalVar.actualUser.username,
+          oldUsername: this.globalVar.currentUser.username,
           user: data
         }
         console.log(editedUser)
         this.rest.post('/editUser', editedUser).subscribe({
           next: res=>{
             console.log(res)
-            this.globalVar.setActualUser(res);
-            this.user = this.globalVar.actualUser;
+            this.globalVar.setCurrentUser(res);
+            this.user = this.globalVar.currentUser;
             this.cookieService.deleteAll();
-            this.cookieService.set('token_access', JSON.stringify(this.globalVar.actualUser),30,'/');
+            this.cookieService.set('token_access', JSON.stringify(this.globalVar.currentUser),30,'/');
 
           },
           error: err=>{
@@ -115,30 +115,11 @@ export class UserProfileComponent implements OnInit {
     return true;
   }
 
-  // onFileChange(event:any) {
-  //   const reader = new FileReader();
-     
-  //   if(event.target.files && event.target.files.length) {
-  //     const [file] = event.target.files;
-  //     reader.readAsDataURL(file);
-     
-  //     reader.onload = () => {
-    
-  //       this.imageSrc = reader.result as string;
-      
-  //       this.myForm.patchValue({
-  //         fileSource: reader.result
-  //       });
-    
-  //     };
-    
-  //   }
-  // }
   photo(img:any){  
     console.log(img)
     let data = {
       img : img.img,
-      username: this.globalVar.actualUser.username
+      username: this.globalVar.currentUser.username
     }
     this.rest.post('/editProfileImage', data).subscribe({
       next: res=>{
@@ -153,7 +134,7 @@ export class UserProfileComponent implements OnInit {
 
   uploadImg(file:any){
     let fd = new FormData();
-    fd.append("username", this.globalVar.actualUser.username);
+    fd.append("username", this.globalVar.currentUser.username);
     fd.append("img", file.files[0]);
     let me = this;
     this.rest.postFile('/editProfileImage',fd).done(
@@ -165,7 +146,7 @@ export class UserProfileComponent implements OnInit {
 
   uploadBanner(file:any){
     let fd = new FormData();
-    fd.append("username", this.globalVar.actualUser.username);
+    fd.append("username", this.globalVar.currentUser.username);
     fd.append("img", file.files[0]);
     let me = this;
     this.rest.postFile('/editBanner',fd).done(

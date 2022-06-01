@@ -37,7 +37,10 @@
             display: flex;
             justify-content: space-between;
             padding-bottom: 10px;
-        }   
+        }
+        .div-album-buttons-centered{
+            justify-content: center;
+        }
 
     }
     
@@ -108,4 +111,10 @@
         align-items: center;
         justify-content: center;
     }
+}
+.release-date{
+    background-color: $dark-text-color;
+    text-align: right;
+    padding-right: 20px;
+    color: $gray;
 }

@@ -36,7 +36,7 @@ export class UploadAlbumComponent implements OnInit {
 
   uploadAlbum(album:any){
     let fd = new FormData();
-    fd.append("username", this.globalVar.actualUser.username);
+    fd.append("username", this.globalVar.currentUser.username);
     fd.append("album_name", album.nameAlbum);
     fd.append("cover_image", this.coverAlbum);
     this.rest.postFile('/add_albums/addAlbum', fd).done((res:any)=>{
@@ -48,7 +48,7 @@ export class UploadAlbumComponent implements OnInit {
 
   uploadSongsConfirm(){
     let fd = new FormData();
-    fd.append("username", this.globalVar.actualUser.username);
+    fd.append("username", this.globalVar.currentUser.username);
     fd.append("album_id", this.idAlbum);
     for(let i=0;i<this.filesToUpload.length;i++){
       fd.append("song_"+i, this.filesToUpload[i]);
@@ -71,7 +71,7 @@ export class UploadAlbumComponent implements OnInit {
       });
     }
     let data = {
-      username: this.globalVar.actualUser.username,
+      username: this.globalVar.currentUser.username,
       album_id: this.idAlbum,
       names: arr
     }
@@ -90,7 +90,7 @@ export class UploadAlbumComponent implements OnInit {
   
   publish(){
     let data = {
-      username: this.globalVar.actualUser.username,
+      username: this.globalVar.currentUser.username,
       album_id: this.idAlbum
     }
     this.rest.post('/add_albums/publish',data).subscribe({
@@ -105,7 +105,7 @@ export class UploadAlbumComponent implements OnInit {
 
   cancelUpload(){
     let data = {
-      username: this.globalVar.actualUser.username,
+      username: this.globalVar.currentUser.username,
       album_id: this.idAlbum
     }
     this.rest.post('/add_albums/cancelUpload',data).subscribe({
@@ -121,15 +121,15 @@ export class UploadAlbumComponent implements OnInit {
   // uploadAlbum(album:any){
   //   let fdFiles = new FormData();
   //   let data = {
-  //     username: this.globalVar.actualUser.username,
+  //     username: this.globalVar.currentUser.username,
   //     album_name: album.nameAlbum
   //   }
 
   //   let fd = new FormData();
   //   // fd.append("cover_album", album.coverAlbum)
   //   // fd.append("album_name", album.nameAlbum)
-  //   fdFiles.append("username", this.globalVar.actualUser.username);
-  //   fd.append("username", this.globalVar.actualUser.username);
+  //   fdFiles.append("username", this.globalVar.currentUser.username);
+  //   fd.append("username", this.globalVar.currentUser.username);
     
     
   //   for(let i=0;i<this.filesToUpload.length;i++){

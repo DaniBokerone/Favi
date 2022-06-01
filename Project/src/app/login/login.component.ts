@@ -41,8 +41,8 @@ export class LoginComponent implements OnInit {
       .subscribe({
         next: res=>{
           console.log(res)
-          this.globalVar.setActualUser(res);
-          this.cookieService.set('token_access', JSON.stringify(this.globalVar.actualUser),30,'/');
+          this.globalVar.setCurrentUser(res);
+          this.cookieService.set('token_access', JSON.stringify(this.globalVar.currentUser),30,'/');
           this.router.navigate(['/home']);
         },
         error: err =>{

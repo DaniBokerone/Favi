@@ -9,7 +9,8 @@ export class GlobalVarService {
   // public API_SERVER = 'http://192.168.1.134/oda/api'; // <-- Mi server
   public SONG_REPOSITORY = 'http://192.168.8.165/oda/songs/';
 
-  public actualUser = {
+  public currentUser = {
+    user_id:"",
     username: "",
     name: "",
     surname: "",
@@ -20,7 +21,7 @@ export class GlobalVarService {
     tlf: "",
   }
 
-  // public actualSong = {
+  // public currentSong = {
   //   album_id: '',
   //   artist_id: '',
   //   artist_name: '',
@@ -41,28 +42,30 @@ export class GlobalVarService {
     var coockie = this.coockieService.get("token_access");
     var data = JSON.parse(coockie)
     console.log(data)
-    this.setActualUser(data);
+    this.setCurrentUser(data);
   }
 
-  setActualUser(user:any){
-    this.actualUser.username = user.username;
-    this.actualUser.name = user.name;
-    this.actualUser.surname= user.surname;
-    this.actualUser.email= user.email;
-    this.actualUser.birth_date= user.birth_date;
-    this.actualUser.is_artist= user.is_artist;
-    this.actualUser.tlf= user.tlf;
-    console.log(this.actualUser)
+  setCurrentUser(user:any){
+    this.currentUser.user_id = user.user_id;
+    this.currentUser.username = user.username;
+    this.currentUser.name = user.name;
+    this.currentUser.surname= user.surname;
+    this.currentUser.email= user.email;
+    this.currentUser.birth_date= user.birth_date;
+    this.currentUser.is_artist= user.is_artist;
+    this.currentUser.tlf= user.tlf;
+    console.log(this.currentUser)
   }
 
   logOut(){
-    this.actualUser.username = "";
-    this.actualUser.name = "";
-    this.actualUser.surname= "";
-    this.actualUser.email= "";
-    this.actualUser.birth_date= "";
-    this.actualUser.is_artist= "";
-    this.actualUser.tlf= "";
+    this.currentUser.user_id = "";
+    this.currentUser.username = "";
+    this.currentUser.name = "";
+    this.currentUser.surname= "";
+    this.currentUser.email= "";
+    this.currentUser.birth_date= "";
+    this.currentUser.is_artist= "";
+    this.currentUser.tlf= "";
     this.coockieService.deleteAll();
   }
 }

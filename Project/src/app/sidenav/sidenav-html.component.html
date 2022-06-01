@@ -9,23 +9,38 @@
 
 
         <li (click)="createPlaylist(); init()" class="slide"><i class="fa-solid fa-plus"></i> Create Playlist</li>
-        <li class="slide-separator"><i class="fa-solid fa-compact-disc"></i> My playlists</li>
-        <li class="slide ellipsis" *ngFor="let playlist of myPlaylists" routerLink="playlist/{{playlist.playlist_id}}">
-            <i class="fa-solid fa-play"></i> {{playlist.name}}
-        </li>
+        <div *ngIf="myPlaylists">
+            <li class="slide-separator"><i class="fa-solid fa-compact-disc"></i> My playlists</li>
+            <li class="slide ellipsis" *ngFor="let playlist of myPlaylists" routerLink="playlist/{{playlist.playlist_id}}">
+                <i class="fa-solid fa-play"></i> {{playlist.name}}
+            </li>
+        </div>
 
+        <div *ngIf="favPlaylists">
+            <li class="slide-separator"><i class="fa-solid fa-compact-disc"></i> My favorite playlists</li>
+            <li class="slide ellipsis" *ngFor="let playlist of favPlaylists" routerLink="playlist/{{playlist.playlist_id}}">
+                <i class="fa-solid fa-play"></i> {{playlist.name}}
+            </li>
+        </div>
 
-        <li class="slide-separator"><i class="fa-solid fa-compact-disc"></i> My favorite albums</li>
-        <li class="slide ellipsis" *ngFor="let album of favAlbums" routerLink="songs/{{album.album_id}}">
-            <i class="fa-solid fa-play"></i> {{album.name}}
-        </li>
-        <li class="slide-separator"><i class="fa-solid fa-user-group"></i> My favorite artists</li>
-        <li class="slide ellipsis" *ngFor="let artist of favArtist" routerLink="artist/{{artist.artist_id}}">
-            <i class="fa-solid fa-user"></i> {{artist.artist_name}}
-        </li>
-        <div>
+        <div *ngIf="favAlbums">
+            <li class="slide-separator"><i class="fa-solid fa-compact-disc"></i> My favorite albums</li>
+            <li class="slide ellipsis" *ngFor="let album of favAlbums" routerLink="songs/{{album.album_id}}">
+                <i class="fa-solid fa-play"></i> {{album.name}}
+            </li>
+        </div>
+
+        <div *ngIf="favArtist">
+            <li class="slide-separator"><i class="fa-solid fa-user-group"></i> My favorite artists</li>
+            <li class="slide ellipsis" *ngFor="let artist of favArtist" routerLink="artist/{{artist.artist_id}}">
+                <i class="fa-solid fa-user"></i> {{artist.artist_name}}
+            </li>
+        </div>
+
+        <div *ngIf="user.is_artist">
             <li class="slide-separator"><i class="fa-solid fa-compact-disc"></i> Artist</li>
-            <li class="slide"> Artist profile</li>
+            <li routerLink="artist/{{user.user_id}}" class="slide"><i class="fa-solid fa-user"></i> Artist profile</li>
+            <li routerLink="upload" class="slide"><i class="fa-solid fa-arrow-up-from-bracket"></i> Upload music</li>
         </div>
         
         <li (click)="logout()" class="slide slide-close">Logout</li>

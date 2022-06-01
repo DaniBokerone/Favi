@@ -16,14 +16,16 @@ export class SearchComponent implements OnInit {
 
   public searchTypes = [
     {type: 0, name: 'All', default: true},
-    {type: 1, name: 'Artist'},
+    {type: 1, name: 'Artists'},
     {type: 2, name: 'Songs'},
     {type: 3, name: 'Albums'},
+    {type: 4, name: 'Playlists'}
   ];
   public typeToSearch:any = 0;
   public artists:any;
   public songs:any;
   public albums:any;
+  public playlists:any;
 
   constructor(private rest:RestService, private globalVar:GlobalVarService,
     private userHome:UserHomeComponent) { }
@@ -41,7 +43,7 @@ export class SearchComponent implements OnInit {
       let data = {
         search: search.value,
         type: this.typeToSearch,
-        username: this.globalVar.actualUser.username
+        username: this.globalVar.currentUser.username
       }
       console.log(data)
       this.rest.post('/search', data).subscribe({
@@ -50,6 +52,7 @@ export class SearchComponent implements OnInit {
           this.artists = res.artists;
           this.songs = res.songs;
           this.albums = res.albums;
+          this.playlists = res.playlists;
         },
         error: err=>{
           console.log(err)
@@ -60,6 +63,7 @@ export class SearchComponent implements OnInit {
         this.artists = null;
         this.songs = null;
         this.albums = null;
+        this.playlists = null;
       }, 1000);
     }
   }

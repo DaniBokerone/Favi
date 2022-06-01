@@ -6,6 +6,7 @@ import { RestService } from '../rest.service';
 import { DomSanitizer, SafeResourceUrl, SafeUrl} from '@angular/platform-browser';
 import { Observable } from 'rxjs';
 import * as moment from 'moment';
+import { SidenavComponent } from '../sidenav/sidenav.component';
 
 declare var $: any;
 
@@ -35,9 +36,9 @@ export class UserHomeComponent implements OnInit {
 
   public displaySong:boolean = false;
   public audio = new Audio();
-  public actualPlaylist:any;
-  public actualSong:any;
-  public actualPosition:any;
+  public currentPlaylist:any;
+  public currentSong:any;
+  public currentPosition:any;
   public songPath = this.globalVar.SONG_REPOSITORY;
   public isPlayed: boolean = false;
   public volumeMenu:boolean = false;
@@ -72,9 +73,20 @@ export class UserHomeComponent implements OnInit {
     private router: Router, private rest:RestService, private sanitizer:DomSanitizer) { }
 
   ngOnInit(): void {
-    /**@TODO separar en metodos */
+    
     this.globalVar.init();
-    this.user = this.globalVar.actualUser;
+    this.user = this.globalVar.currentUser;
+
+    this.getAllAlbums();
+    this.getFollowedAlbums();
+    this.getAllArtists();
+    this.getAllPlaylists();
+    this.getFollowedPlaylists();
+    this.getMyPlaylist();
+    this.getFollowedArtists();
+  }
+
+  getAllAlbums(){
     this.rest.get('/getAllAlbums').subscribe({
       next: res=>{
         console.log(res)
@@ -84,6 +96,9 @@ export class UserHomeComponent implements OnInit {
         console.log(":C")
       }
     });
+  }
+
+  getFollowedAlbums(){
     this.rest.post('/getFollowedAlbums', {username:this.user.username}).subscribe({
       next: res=>{
         this.favAlbums = res;
@@ -93,6 +108,9 @@ export class UserHomeComponent implements OnInit {
         console.log("piolan't")
       }
     });
+  }
+
+  getAllArtists(){
     this.rest.get('/getAllArtists').subscribe({
       next: res=>{
         console.log(res)
@@ -102,15 +120,8 @@ export class UserHomeComponent implements OnInit {
         console.log(":C")
       }
     });
-    this.rest.post('/getAllPlaylists', {username:this.user.username}).subscribe({
-      next: res=>{
-        console.log(res)
-        this.playlists = res;
-      },
-      error: err=>{
-        console.log(":C")
-      }
-    });
+  }
+  getFollowedPlaylists(){
     this.rest.post('/getFollowedPlaylists', {username:this.user.username}).subscribe({
       next: res=>{
         console.log(res)
@@ -120,9 +131,18 @@ export class UserHomeComponent implements OnInit {
         console.log(":C")
       }
     });
-    
-    this.getMyPlaylist();
-    this.getFollowedArtists();
+  }
+
+  getAllPlaylists(){
+    this.rest.post('/getAllPlaylists', {username:this.user.username}).subscribe({
+      next: res=>{
+        console.log(res)
+        this.playlists = res;
+      },
+      error: err=>{
+        console.log(":C")
+      }
+    });
   }
 
   getMyPlaylist(){
@@ -134,7 +154,7 @@ export class UserHomeComponent implements OnInit {
       error: err=>{
         console.log(err)
       }
-    })
+    });
   }
 
   getFollowedArtists(){
@@ -146,7 +166,7 @@ export class UserHomeComponent implements OnInit {
       error: err=>{
         console.log(err)
       }
-    })
+    });
   }
 
   showHome():boolean{
@@ -161,11 +181,14 @@ export class UserHomeComponent implements OnInit {
    * prepara los datos en data, pasando como parametro
    * el "username" y "song_id" en JSON por POST llamamos a la API
    * 
-   * @returns boolean
+   * la añadira/quitara de favoritos dependiendo si estaba o
+   * no en favoritos esa cancion
+   * 
+   * @returns void
    */
   addToFav(song:any){
     let data ={
-      username: this.globalVar.actualUser.username,
+      username: this.globalVar.currentUser.username,
       song_id: song,
     };
     this.rest.post('/fav',data).subscribe({
@@ -176,61 +199,26 @@ export class UserHomeComponent implements OnInit {
         console.log("NO se ha podido añadir")
       }
     });
-    
-
   }
-  /**
-   * 
-   * @param song id de la cancion
-   * 
-   * prepara los datos en data, pasando como parametro
-   * el "username" y "song_id" en JSON por POST llamamos a la API
-   * 
-   * @returns boolean
-   */
+
   removeToFav(song:any){
-    let data ={
-      username: this.globalVar.actualUser.username,
-      song_id: song,
-    };
-    this.rest.post('/fav',data).subscribe({
-      next: res =>{
-        console.log("quitado de fav")
-      },
-      error: err=>{
-        console.log("NO se ha podido quitar")
-      }
-    });
+    this.addToFav(song);
   }
 
   followAlbum(id:any){
     let data ={
-      username: this.globalVar.actualUser.username,
+      username: this.globalVar.currentUser.username,
       album_id: id,
     };
     this.rest.post('/followAlbum',data).subscribe({
       next: res=>{
-        console.log("follow album")
+        this.getFollowedAlbums();
       },
       error: err=>{
-        console.log("No se puede follow")
+        console.log(err)
       }
     });
   }
-  // unfollowAlbum(id: any){
-  //   let data ={
-  //     username: this.globalVar.actualUser.username,
-  //     album_id: id,
-  //   };
-  //   this.rest.post('/followAlbum',data).subscribe({
-  //     next: res=>{
-  //       console.log("unfollow album")
-  //     },
-  //     error: err=>{
-  //       console.log("No se puede unfollow")
-  //     }
-  //   });
-  // }
 
   goToArtist(id:any){
     this.router.navigate(['home/artist/'+id]);
@@ -264,7 +252,7 @@ export class UserHomeComponent implements OnInit {
       error: err=>{
         console.log(err)  
       }
-    })
+    });
     console.log(data)
     
   }
@@ -277,11 +265,13 @@ export class UserHomeComponent implements OnInit {
     this.rest.post('/removeToPlaylist', data).subscribe({
       next: res=>{
         console.log(res)
+        /**@TODO refresh */
+        this.router.navigate(['home/playlist/'+playlist]);
       },
       error: err=>{
         console.log(err)  
       }
-    })
+    });
     console.log(data)
     
   }
@@ -296,13 +286,6 @@ export class UserHomeComponent implements OnInit {
       isMyPlaylist: isMyPlaylist
     }
     console.log(this.subMenuData)
-    // this.subMenuSongCurrentPlaylist = songList;
-    // this.subMenuSongCurrentPosition = index;
-    // this.subMenuSongCurrentSong = songList[index];
-    // console.log(this.subMenuSongCurrentSong)
-    
-    // console.log("adding "+song);
-
   }
 
   subMenuDisplay(){
@@ -338,10 +321,11 @@ export class UserHomeComponent implements OnInit {
 
   // ################# MUSIC ###################
   loadMusic(songList:any, index:any){
-    this.actualPlaylist = songList;
-    this.actualPosition = index;
-    this.actualSong = this.actualPlaylist[this.actualPosition];
-    this.load(this.actualSong);
+    this.currentPlaylist = songList;
+    this.currentPosition = index;
+    this.currentSong = this.currentPlaylist[this.currentPosition];
+    $('body').addClass('current-song-body');
+    this.load(this.currentSong);
   }
   load(song:any){
 
@@ -350,13 +334,13 @@ export class UserHomeComponent implements OnInit {
     // this.userHome.showFooter(true);
     let me = this;
     // this.audio.removeEventListener("ended",this.addEnded);
-    this.streamObserver(this.songPath+this.actualSong.file_name)
+    this.streamObserver(this.songPath+this.currentSong.file_name)
     .subscribe(event=>{});
     // this.addEnded();
     // this.audio.addEventListener("ended",this.addEnded);
     this.isPlayed = true;
     // this.audio.addEventListener("ended", this.next);
-    // this.audio.src = this.songPath+this.actualSong.file_name;
+    // this.audio.src = this.songPath+this.currentSong.file_name;
     // this.audio.load();
     // this.play();
     // if(this.isPlayed){
@@ -365,17 +349,17 @@ export class UserHomeComponent implements OnInit {
     //   this.isPlayed = true
     // }
     // return this.isPlayed;
-    console.log("actual song")
-    console.log(this.actualSong)
+    console.log("current song")
+    console.log(this.currentSong)
     console.log(this.audio)
     // this.ngOnInit();
     
   }
 
   addEnded(){
-    // let actualPlaylist = this.actualPlaylist;
-    // let actualPosition = this.actualPosition;
-    // let actualSong = this.actualSong;
+    // let currentPlaylist = this.currentPlaylist;
+    // let currentPosition = this.currentPosition;
+    // let currentSong = this.currentSong;
     // let me = this;
     // this.audio.removeEventListener("ended",function(){
     //   console.log("end")
@@ -398,15 +382,15 @@ export class UserHomeComponent implements OnInit {
   }
 
   next(){
-    console.log(this.actualPlaylist)
-    console.log(this.actualPosition)
-    console.log(this.actualSong)
-    this.actualPosition++;
-    if(this.actualPosition >= this.actualPlaylist.length){
-      this.actualPosition = 0;
+    console.log(this.currentPlaylist)
+    console.log(this.currentPosition)
+    console.log(this.currentSong)
+    this.currentPosition++;
+    if(this.currentPosition >= this.currentPlaylist.length){
+      this.currentPosition = 0;
     }
-    this.actualSong = this.actualPlaylist[this.actualPosition];
-    this.load(this.actualSong);
+    this.currentSong = this.currentPlaylist[this.currentPosition];
+    this.load(this.currentSong);
   }
 
   back(){
@@ -416,12 +400,12 @@ export class UserHomeComponent implements OnInit {
         this.play();
       }
     }else{
-      this.actualPosition--;
-      if(this.actualPosition < 0){
-        this.actualPosition = this.actualPlaylist.length-1;
+      this.currentPosition--;
+      if(this.currentPosition < 0){
+        this.currentPosition = this.currentPlaylist.length-1;
       }
-      this.actualSong = this.actualPlaylist[this.actualPosition];
-      this.load(this.actualSong);
+      this.currentSong = this.currentPlaylist[this.currentPosition];
+      this.load(this.currentSong);
     }
     
 

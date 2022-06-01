@@ -15,7 +15,7 @@ export class MyFavSongsComponent implements OnInit {
 
   public album: any;
   public isFixed:boolean = false;
-  public username = this.globalVar.actualUser.username;
+  public username = this.globalVar.currentUser.username;
   public songPath = this.globalVar.SONG_REPOSITORY;
   public audio = new Audio();
 
@@ -23,7 +23,7 @@ export class MyFavSongsComponent implements OnInit {
     private userHome:UserHomeComponent) { }
 
   ngOnInit(): void {
-    let data = {username: this.globalVar.actualUser.username}
+    let data = {username: this.globalVar.currentUser.username}
     this.rest.post('/favAlbum', data).subscribe({
       next: res =>{
         console.log(res)
@@ -74,7 +74,7 @@ export class MyFavSongsComponent implements OnInit {
 
   load(songList:any, index:any){
     console.log(songList)
-    // this.globalVar.actualSong = song;
+    // this.globalVar.currentSong = song;
     this.userHome.loadMusic(songList, index);
 
   }

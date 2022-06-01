@@ -12,9 +12,10 @@
                 </li>
             </ul>
         </div>
-        <div class="search-results">
+        <div class="search-results" *ngIf="artists || songs || albums || playlists">
             <ul>
                 <div *ngIf="typeToSearch==0||typeToSearch==1">
+                    <li *ngIf="artists" class="slide-separator"><i class="fa-solid fa-user"></i> Artists</li>
                     <li *ngFor="let artist of artists" (click)="goToArtist(artist.id)">
                         <img src="data:image/jpeg;base64,{{artist.profile_img}}">
                         <div class="data">
@@ -22,7 +23,9 @@
                         </div>
                     </li>
                 </div>
+                
                 <div *ngIf="typeToSearch==0||typeToSearch==2">
+                    <li *ngIf="songs" class="slide-separator"><i class="fa-solid fa-music"></i> Songs</li>
                     <li *ngFor="let song of songs">
                         <img src="data:image/jpeg;base64,{{song.cover_img}}">
                         <div (click)="load(song)" class="data">
@@ -35,11 +38,23 @@
                         </div>
                     </li>
                 </div>
+                
                 <div *ngIf="typeToSearch==0||typeToSearch==3">
+                    <li *ngIf="albums" class="slide-separator"><i class="fa-solid fa-compact-disc"></i> Albums</li>
                     <li *ngFor="let album of albums" routerLink="../songs/{{album.id}}">
                         <img src="data:image/jpeg;base64,{{album.cover_img}}">
                         <div class="data">
                             <p class="ellipsis">{{album.name}}</p>
+                        </div>
+                    </li>
+                </div>
+                
+                <div *ngIf="typeToSearch==0||typeToSearch==4">
+                    <li *ngIf="playlists" class="slide-separator"><i class="fa-solid fa-compact-disc"></i> Playlists</li>
+                    <li *ngFor="let playlist of playlists" routerLink="../playlist/{{playlist.playlist_id}}">
+                        <img src="data:image/jpeg;base64,{{playlist.playlist_img}}">
+                        <div class="data">
+                            <p class="ellipsis">{{playlist.name}}</p>
                         </div>
                     </li>
                 </div>

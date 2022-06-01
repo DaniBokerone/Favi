@@ -21,11 +21,11 @@ export class ArtistProfileComponent implements OnInit {
     private router:Router) { }
 
   ngOnInit(): void {
-    this.username = this.globalVar.actualUser.username;
+    this.username = this.globalVar.currentUser.username;
     this.activeRoute.params.subscribe({
       next: res =>{
         let data ={
-          username: this.globalVar.actualUser.username,
+          username: this.globalVar.currentUser.username,
           id: res["id"],
         };
         console.log("todo piola");
@@ -48,7 +48,7 @@ export class ArtistProfileComponent implements OnInit {
 
   load(songList:any, index:any){
     console.log(songList)
-    // this.globalVar.actualSong = song;
+    // this.globalVar.currentSong = song;
     this.userHome.loadMusic(songList, index);
 
   }

@@ -15,7 +15,7 @@ import { UserHomeComponent } from '../user-home/user-home.component';
 export class SongsComponent implements OnInit{
 
   public album: any;
-  public username = this.globalVar.actualUser.username;
+  public username = this.globalVar.currentUser.username;
   public isFixed:boolean = false;
   constructor(private activeRoute: ActivatedRoute, private rest:RestService,
     private globalVar: GlobalVarService, private userHome: UserHomeComponent) { }
@@ -24,7 +24,7 @@ export class SongsComponent implements OnInit{
     this.activeRoute.params.subscribe({
       next: res =>{
         let data ={
-          username: this.globalVar.actualUser.username,
+          username: this.globalVar.currentUser.username,
           id: res["id"],
         };
         console.log("todo piola");
@@ -94,12 +94,9 @@ export class SongsComponent implements OnInit{
     this.userHome.followAlbum(album.album_id);
     return album.follow = false;
   }
-  publish(album:any){
-
-  }
-  unpublish(album:any){
-
-  }
+  
+  publish(album:any){ }
+  unpublish(album:any){ }
 
   goToArtist(id:any){
     this.userHome.goToArtist(id);
@@ -107,7 +104,7 @@ export class SongsComponent implements OnInit{
 
   load(songList:any, index:any){
     console.log(songList)
-    // this.globalVar.actualSong = song;
+    // this.globalVar.currentSong = song;
     this.userHome.loadMusic(songList, index);
 
   }

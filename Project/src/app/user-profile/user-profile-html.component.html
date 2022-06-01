@@ -21,10 +21,6 @@
     <div class="separator"></div>
     <form #updateProfile="ngForm" (submit)="update(updateProfile.value)">
     <table class="table-data-profile">
-        <!-- <tr *ngIf="edit">
-            <td>Username:</td>
-            <input class="my-input" type="text" ngModel="{{user.username}}" name="username">
-        </tr> -->
         <tr *ngIf="edit">
             <td>Name:</td>
             <input class="my-input" type="text" ngModel="{{user.name}}" name="name">
@@ -48,9 +44,8 @@
             <td *ngIf="!edit">{{user.birth_date}}</td>
             <input *ngIf="edit" class="my-input" type="date" ngModel="{{user.birth_date}}" name="birth_date">
         </tr>
-        <tr *ngIf="edit">
+        <tr *ngIf="edit && user.is_artist">
             <td colspan="2">
-                <!-- <img src="data:image/jpeg;base64,{{banner}}" *ngIf="banner"> -->
                 <div class="banner" style="background-image: url(data:image/jpeg;base64,{{banner}});">
                     <div class="edit-banner">
                         <label for="banner"><i class="fa-solid fa-pen-to-square is-size-3"></i></label>

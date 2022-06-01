@@ -135,12 +135,11 @@
 </div>
 
 
-<div id="progress-bar" *ngIf="actualSong && !displaySong">
-    
+<div id="progress-bar" *ngIf="currentSong && !displaySong">
     <div class="conten-song">
-
+        
         <div class="progress-bar-div">
-            <input type="range" id="actualMusic" min="0" max="{{durationImput}}" [value]="currentTimeInput" (input)="setTime($event)">
+            <input type="range" id="currentMusic" min="0" max="{{durationImput}}" [value]="currentTimeInput" (input)="setTime($event)">
             
             
             <div class="duration">
@@ -148,59 +147,51 @@
                 <span>{{duration}}</span>
             </div>
         </div>
-        <!-- <div class="name-buttons">
+        
+    </div>
+    <div class="info-song">
+        <img *ngIf="currentSong.cover_img!=''" src="data:image/jpeg;base64,{{currentSong.cover_img}}">
+        <div class="data-song" (click)="openSong()">
+            <p class="ellipsis">{{currentSong.name}}</p>
+            <p class="ellipsis">{{currentSong.artist_name}}</p>
+        </div>
+        <div class="buttons">
             
-            
-            <input [ngClass]="{'closed-volume-menu': !volumeMenu}" type="range" min="0" max="1" value="0" step="0.01" (input)="setVolume($event)" value="1" id="volume">
-            <i (click)="removeToFav(actualSong)" *ngIf="actualSong.fav" class="fa-solid fa-heart my-icon-color"></i>
-            <i (click)="addToFav(actualSong)" *ngIf="!actualSong.fav" class="fa-regular fa-heart"></i>
+            <i (click)="play()" *ngIf="!isPlayed" class="fa-solid fa-circle-play"></i>
+            <i (click)="pause()" *ngIf="isPlayed" class="fa-solid fa-circle-pause"></i>
+            <i (click)="next()" class="fa-solid fa-forward-step"></i>
+            <i (click)="removeToFav(currentSong)" *ngIf="currentSong.fav" class="fa-solid fa-heart my-icon-color"></i>
+            <i (click)="addToFav(currentSong)" *ngIf="!currentSong.fav" class="fa-regular fa-heart"></i>
             
             
             <i class="fa-solid fa-repeat"></i>
+            
+            <input [ngClass]="{'closed-volume-menu': !volumeMenu}" type="range" min="0" max="1" value="0" step="0.01" (input)="setVolume($event)" value="1" id="volume">
+            
             <i (click)="openVolume()" class="fa-solid fa-volume-high"></i>
-            
-            
-        </div> -->
-    </div>
-    <div class="progress-bar-div">
-        {{currentTime}}
-        <input type="range" id="actualMusic" min="0" max="{{durationImput}}" [value]="currentTimeInput" (input)="setTime($event)">
-        {{duration}}
-    </div>
-    <div class="info-song">
-        <img *ngIf="actualSong.cover_img!=''" src="data:image/jpeg;base64,{{actualSong.cover_img}}">
-        <div class="data-song" (click)="openSong()">
-            <p>{{actualSong.name}}</p>
-            <p>{{actualSong.artist_name}}</p>
-            <input type="range" min="0" max="1" value="0" step="0.01" (input)="setVolume($event)" value="1">
-        </div>
-        <i class="fa-solid fa-repeat"></i>
-        
-        <i class="fa-solid fa-volume-high"></i>
-            <i (click)="back()" class="fa-solid fa-backward-step"></i>
-            
-            <i (click)="play()" *ngIf="!isPlayed" class="fa-solid fa-play"></i>
-            <i (click)="pause()" *ngIf="isPlayed" class="fa-solid fa-pause"></i>
-                <i (click)="next()" class="fa-solid fa-forward-step"></i>
-            </div>
-</div>
 
-<div id="progress-bar" class="full-h fixed-song" *ngIf="actualSong && displaySong">
-    <div class="img-blur" style="background-image: url(data:image/jpeg;base64,{{actualSong.cover_img}});"></div>
+        </div>
+
+    </div>
+</div>
+    
+    
+<div id="progress-bar" class="full-h fixed-song" *ngIf="currentSong && displaySong">
+    <div class="img-blur" style="background-image: url(data:image/jpeg;base64,{{currentSong.cover_img}});"></div>
     <div class="icon-div" (click)="openSong()"><i class="fa-solid fa-angle-down"></i></div>
     <div class="div-img">
-        <img *ngIf="actualSong.cover_img!=''" src="data:image/jpeg;base64,{{actualSong.cover_img}}">
+        <img *ngIf="currentSong.cover_img!=''" src="data:image/jpeg;base64,{{currentSong.cover_img}}">
     </div>
     <div class="content-song">
         <div class="data-div">
             <div class="data-song">
-                <p class="ellipsis">{{actualSong.name}}</p>
-                <p>{{actualSong.artist_name}}</p>
+                <p class="ellipsis">{{currentSong.name}}</p>
+                <p>{{currentSong.artist_name}}</p>
                 
             </div>
             <div class="name-buttons">
-                <i (click)="removeToFav(actualSong)" *ngIf="actualSong.fav" class="fa-solid fa-heart my-icon-color"></i>
-                <i (click)="addToFav(actualSong)" *ngIf="!actualSong.fav" class="fa-regular fa-heart"></i>
+                <i (click)="removeToFav(currentSong)" *ngIf="currentSong.fav" class="fa-solid fa-heart my-icon-color"></i>
+                <i (click)="addToFav(currentSong)" *ngIf="!currentSong.fav" class="fa-regular fa-heart"></i>
                 
                 
                 <i class="fa-solid fa-repeat"></i>
@@ -216,7 +207,7 @@
         
         
         <div class="progress-bar-div">
-            <input type="range" id="actualMusic" min="0" max="{{durationImput}}" [value]="currentTimeInput" (input)="setTime($event)">
+            <input type="range" id="currentMusic" min="0" max="{{durationImput}}" [value]="currentTimeInput" (input)="setTime($event)">
             
             
             <div class="duration">
