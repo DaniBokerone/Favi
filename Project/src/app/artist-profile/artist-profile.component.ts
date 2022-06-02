@@ -33,15 +33,18 @@ export class ArtistProfileComponent implements OnInit {
           next: getRes=>{
             this.artist = getRes;
             console.log(getRes)
+            
           },
           error: getErr=>{
             console.log(getErr)
+            this.router.navigate(['notfound404']);
           }
         });
 
       },
       error: err =>{
         console.log(err)
+        this.router.navigate(['notfound404']);
       }
     });
   }
@@ -64,6 +67,7 @@ export class ArtistProfileComponent implements OnInit {
     this.rest.post('/followArtist',data).subscribe({
       next: res=>{
         console.log("funciona follow")
+        this.userHome.getFollowedArtists();
       },
       error: err=>{
         console.log(err)
@@ -74,6 +78,20 @@ export class ArtistProfileComponent implements OnInit {
   unfollowArtist(artist:any){
     this.followArtist(artist);
     return artist.fav = false;
+  }
+  addToFav(song:any){
+    this.userHome.addToFav(song)
+    return song.fav = true;
+    
+  }
+
+  removeToFav(song:any){
+    this.userHome.removeToFav(song);
+    return song.fav = false;
+  }
+
+  openSubMenu(songList:any, index:any, playlist_id:any, isMyPlaylist:any){
+    this.userHome.openSubMenu(songList, index, null, false);
   }
 
 }

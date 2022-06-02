@@ -2,7 +2,7 @@
 @use "progressbar-style";
 @use "scroll-bar";
 
-body{
+body, html{
     background-color: $bg-color;
     color: $text-color;
 }

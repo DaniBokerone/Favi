@@ -1,4 +1,5 @@
 import { Component, HostListener, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { GlobalVarService } from '../global-var.service';
 import { RestService } from '../rest.service';
 import { SongsComponent } from '../songs/songs.component';
@@ -20,7 +21,7 @@ export class MyFavSongsComponent implements OnInit {
   public audio = new Audio();
 
   constructor(private rest:RestService, private globalVar: GlobalVarService,
-    private userHome:UserHomeComponent) { }
+    private userHome:UserHomeComponent, private router:Router) { }
 
   ngOnInit(): void {
     let data = {username: this.globalVar.currentUser.username}
@@ -30,7 +31,7 @@ export class MyFavSongsComponent implements OnInit {
         this.album = res;
       },
       error: err=>{
-
+        this.router.navigate(['notfound404']);
       }
     })
   }
@@ -43,13 +44,13 @@ export class MyFavSongsComponent implements OnInit {
     }
 }
   addToFav(song:any){
-    this.userHome.addToFav(song.song_id)
+    this.userHome.addToFav(song)
     return song.fav = true;
     
   }
 
   removeToFav(song:any){
-    this.userHome.removeToFav(song.song_id);
+    this.userHome.removeToFav(song);
     return song.fav = false;
   }
 

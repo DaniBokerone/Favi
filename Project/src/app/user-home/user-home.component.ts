@@ -7,6 +7,7 @@ import { DomSanitizer, SafeResourceUrl, SafeUrl} from '@angular/platform-browser
 import { Observable } from 'rxjs';
 import * as moment from 'moment';
 import { SidenavComponent } from '../sidenav/sidenav.component';
+import { PlaylistComponent } from '../playlist/playlist.component';
 
 declare var $: any;
 
@@ -70,7 +71,7 @@ export class UserHomeComponent implements OnInit {
   ];
 
   constructor(private globalVar:GlobalVarService, private activeRoute:ActivatedRoute,
-    private router: Router, private rest:RestService, private sanitizer:DomSanitizer) { }
+    private router: Router, private rest:RestService) { }
 
   ngOnInit(): void {
     
@@ -187,18 +188,26 @@ export class UserHomeComponent implements OnInit {
    * @returns void
    */
   addToFav(song:any){
+    // debugger
     let data ={
       username: this.globalVar.currentUser.username,
-      song_id: song,
+      song_id: song.song_id,
     };
+    console.log(data)
+    console.log(song)
     this.rest.post('/fav',data).subscribe({
       next: res =>{
         console.log("añadido a fav")
+        if(this.currentSong){
+          this.currentSong.fav=res.fav;
+        }
+       
       },
       error: err=>{
         console.log("NO se ha podido añadir")
       }
     });
+    
   }
 
   removeToFav(song:any){
@@ -265,8 +274,8 @@ export class UserHomeComponent implements OnInit {
     this.rest.post('/removeToPlaylist', data).subscribe({
       next: res=>{
         console.log(res)
-        /**@TODO refresh */
-        this.router.navigate(['home/playlist/'+playlist]);
+        console.log(playlist)
+        this.reload('home/playlist/'+playlist);
       },
       error: err=>{
         console.log(err)  
@@ -286,6 +295,12 @@ export class UserHomeComponent implements OnInit {
       isMyPlaylist: isMyPlaylist
     }
     console.log(this.subMenuData)
+  }
+
+  reload(url:any){
+    this.router.navigateByUrl('/home', {skipLocationChange: true}).then(() => {
+      this.router.navigate([url]);
+    });
   }
 
   subMenuDisplay(){

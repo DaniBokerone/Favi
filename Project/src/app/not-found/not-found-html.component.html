@@ -1,6 +1,7 @@
 <div class="full-h">
     <div class="not-found">
         <i class="fa-solid fa-triangle-exclamation"></i>
-        <a routerLink="/">Volver al inicio</a>
+        <a *ngIf="!isLogged" routerLink='/' >Volver al inicio</a>
+        <a *ngIf="isLogged" routerLink='/home' >Volver al inicio</a>
     </div>
 </div>

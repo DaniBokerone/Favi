@@ -1,0 +1,14 @@
+@use '../../vars' as *;
+
+.logo{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background-color: $dark-text-color;
+}
+.content{
+    background-color: $bg-color;
+
+    height: 100vh;
+}

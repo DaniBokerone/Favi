@@ -42,8 +42,9 @@ export class UploadAlbumComponent implements OnInit {
     this.rest.postFile('/add_albums/addAlbum', fd).done((res:any)=>{
       this.idAlbum = res;
       console.log(res);
+      this.phase = 2;
     });
-    this.phase = 2;
+    
   }
 
   uploadSongsConfirm(){
@@ -57,8 +58,9 @@ export class UploadAlbumComponent implements OnInit {
     this.rest.postFile('/add_albums/uploadAlbumSongs', fd).done((res:any)=>{
       console.log(res)
       this.idSongs = JSON.parse(res);
+      this.phase = 3;
     });
-    this.phase = 3;
+    
   }
 
   uploadNameSongs(nameSongs:any){
@@ -108,7 +110,7 @@ export class UploadAlbumComponent implements OnInit {
       username: this.globalVar.currentUser.username,
       album_id: this.idAlbum
     }
-    this.rest.post('/add_albums/cancelUpload',data).subscribe({
+    this.rest.post('/add_albums/deleteAlbum',data).subscribe({
       next: res=>{
         this.phase = 1;
       },

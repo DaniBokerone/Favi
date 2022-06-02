@@ -41,6 +41,7 @@ export class PlaylistComponent  implements OnInit {
             },
             error: getErr=>{
               console.log(getErr)
+              this.router.navigate(['notfound404']);
             }
           });
   
@@ -60,12 +61,12 @@ export class PlaylistComponent  implements OnInit {
         }
     }
     addToFav(song:any){
-      this.userHome.addToFav(song.song_id)
+      this.userHome.addToFav(song)
       return song.fav = true;
       
     }
     removeToFav(song:any){
-      this.userHome.removeToFav(song.song_id);
+      this.userHome.removeToFav(song);
       return song.fav = false;
     }
   
@@ -77,7 +78,7 @@ export class PlaylistComponent  implements OnInit {
       this.rest.post('/followPlaylist',data).subscribe({
         next: res=>{
           console.log("follow playlist")
-          this.userHome.getFollowedPlaylists();
+          this.userHome.getFollowedPlaylists(); 
         },
         error: err=>{
           console.log("No se puede follow")

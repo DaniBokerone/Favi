@@ -39,22 +39,22 @@ export class SidenavComponent implements OnInit {
   getPlaylists(){
     setTimeout(()=>{
       this.myPlaylists = this.userHome.myPlaylists;
-    }, 200);
+    }, 100);
   }
   getFavAlbums(){
     setTimeout(()=>{
       this.favAlbums = this.userHome.favAlbums;
-    }, 200);
+    }, 100);
   }
   getFavArtist(){
     setTimeout(()=>{
       this.favArtist = this.userHome.followedArtists;
-    }, 200);
+    }, 100);
   }
   getFavPlaylists(){
     setTimeout(()=>{
       this.favPlaylists = this.userHome.followedPlaylists;
-    }, 200);
+    }, 100);
   }
 
   logout(){

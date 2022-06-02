@@ -1,5 +1,5 @@
 import { Component, HostListener, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { GlobalVarService } from '../global-var.service';
 import { RestService } from '../rest.service';
 import { UserHomeComponent } from '../user-home/user-home.component';
@@ -18,7 +18,8 @@ export class SongsComponent implements OnInit{
   public username = this.globalVar.currentUser.username;
   public isFixed:boolean = false;
   constructor(private activeRoute: ActivatedRoute, private rest:RestService,
-    private globalVar: GlobalVarService, private userHome: UserHomeComponent) { }
+    private globalVar: GlobalVarService, private userHome: UserHomeComponent,
+    private router:Router) { }
 
   ngOnInit(): void {
     this.activeRoute.params.subscribe({
@@ -35,12 +36,14 @@ export class SongsComponent implements OnInit{
           },
           error: getErr=>{
             console.log(getErr)
+            this.router.navigate(['notfound404']);
           }
         });
 
       },
       error: err =>{
         console.log(err)
+        this.router.navigate(['notfound404']);
       }
     });
   }
@@ -58,14 +61,14 @@ export class SongsComponent implements OnInit{
    * @param song JSON de la cancion
    * 
    * llamamos a la funcion de userHome.addTofav
-   * pasando como parametro song.song_id (la id de la cancion)
+   * pasando como parametro song
    * esta funcion devuelve un boolean que se guarda en
    * song.fav
    * 
    * @returns boolean
    */
   addToFav(song:any){
-    this.userHome.addToFav(song.song_id)
+    this.userHome.addToFav(song)
     return song.fav = true;
     
   }
@@ -75,14 +78,14 @@ export class SongsComponent implements OnInit{
    * @param song JSON de la cancion
    * 
    * llamamos a la funcion de userHome.removeToFav
-   * pasando como parametro song.song_id (la id de la cancion)
+   * pasando como parametro song
    * esta funcion devuelve un boolean que se guarda en
    * song.fav
    * 
    * @returns boolean
    */
   removeToFav(song:any){
-    this.userHome.removeToFav(song.song_id);
+    this.userHome.removeToFav(song);
     return song.fav = false;
   }
 

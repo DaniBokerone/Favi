@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-home',
+  templateUrl: 'home-html.component.html',
   template: `
     <p>
       home works!
@@ -10,6 +11,7 @@ import { Component, OnInit } from '@angular/core';
     <a routerLink="/login">login</a>
     
   `,
+  styleUrls: ['home.scss'],
   styles: [
   ]
 })

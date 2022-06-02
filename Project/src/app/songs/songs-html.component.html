@@ -3,7 +3,7 @@
         <img src="data:image/jpeg;base64,{{album.cover_image}}" *ngIf="!isFixed">
         <div class="upload-profile-img" *ngIf="album.playlist_id && album.creator_name == username">
             <label for="upload"><i class="fa-solid fa-pen-to-square is-size-3"></i></label>
-            <input type='file' id="upload" ngModel name="img" (change)="uploadImg($event.target)"/>
+            <input accept="image/jpeg,image/x-png" type='file' id="upload" ngModel name="img" (change)="uploadImg($event.target)"/>
         </div>
         <!-- <img src="../../assets/img/noimage.png"> -->
         <h1 *ngIf="!(album.playlist_id && album.creator_name == username)" class="is-size-4" [ngClass]="isFixed? 'ellipsis not-fixed-album-title':''">{{album.name}}</h1>

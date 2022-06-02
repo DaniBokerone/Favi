@@ -5,8 +5,6 @@ import { CookieService } from 'ngx-cookie-service';
 import { GlobalVarService } from '../global-var.service';
 import { RestService } from '../rest.service';
 
-declare var $: any;
-
 @Component({
   selector: 'app-user-profile',
   templateUrl: './user-profile-html.component.html',
@@ -90,7 +88,6 @@ export class UserProfileComponent implements OnInit {
         
       }else{
         console.log("iguales")
-        /**@TODO update user */
       }
     }
   }

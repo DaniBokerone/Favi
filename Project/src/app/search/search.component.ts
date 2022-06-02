@@ -69,11 +69,13 @@ export class SearchComponent implements OnInit {
   }
 
   addToFav(song:any){
-    this.userHome.addToFav(song.id);
+    console.log("ADD")
+    console.log(song)
+    this.userHome.addToFav(song);
     return song.fav = true;
   }
   removeToFav(song:any){
-    this.userHome.removeToFav(song.id);
+    this.userHome.removeToFav(song);
     return song.fav = false;
   }
   load(song:any){
