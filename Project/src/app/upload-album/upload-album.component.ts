@@ -12,6 +12,7 @@ import { RestService } from '../rest.service';
 export class UploadAlbumComponent implements OnInit {
 
   public filesToUpload:any;
+  public filesToUploadTime:any=[];
   public coverAlbum:any;
   public coverAlbumImage:any;
   public idAlbum:any;
@@ -25,6 +26,9 @@ export class UploadAlbumComponent implements OnInit {
 
   uploadSongs(files:any){
     this.filesToUpload = files.files;
+    for(let i = 0; i<this.filesToUpload.length;i++){
+      this.getTime(this.filesToUpload[i]);
+    }
     console.log(this.filesToUpload)
   }
   uploadCoverALbum(files:any){
@@ -48,11 +52,13 @@ export class UploadAlbumComponent implements OnInit {
   }
 
   uploadSongsConfirm(){
+    console.log(this.filesToUploadTime)
     let fd = new FormData();
     fd.append("username", this.globalVar.currentUser.username);
     fd.append("album_id", this.idAlbum);
     for(let i=0;i<this.filesToUpload.length;i++){
       fd.append("song_"+i, this.filesToUpload[i]);
+      fd.append("time_"+i, this.filesToUploadTime[i]);
     }
     fd.append("total_songs", this.filesToUpload.length);
     this.rest.postFile('/add_albums/uploadAlbumSongs', fd).done((res:any)=>{
@@ -62,6 +68,36 @@ export class UploadAlbumComponent implements OnInit {
     });
     
   }
+  getTime(song:any){
+    let audioUrl = URL.createObjectURL(song); 
+    // document.getElementById('audio').setAttribute('src', obUrl); 
+    //register canplaythrough event to #audio element to can get duration 
+    let audio = new Audio(audioUrl);
+    var duration =0; //store duration
+    let me = this;
+    audio.addEventListener('canplaythrough', function(e:any){ 
+      
+      //add duration in the input field #f_du 
+      
+      duration = Math.round(e.currentTarget.duration);
+      me.filesToUploadTime.push(duration);
+      // document.getElementById('f_du').value = f_duration; 
+      // URL.revokeObjectURL(obUrl); 
+    }); 
+    
+    //when select a file, create an ObjectURL with the file and add it in the #audio element 
+
+    // var obUrl; 
+    // document.getElementById('fup').addEventListener('change', function(e){ 
+    //   var file = e.currentTarget.files[0]; 
+    //   //check file extension for audio/video type 
+    //   if(file.name.match(/\.(wav|mp3|flac|wma|m4a)$/i)){ 
+    //     obUrl = URL.createObjectURL(file); 
+    //     document.getElementById('audio').setAttribute('src', obUrl); 
+    //   } 
+    // });
+  }
+  
 
   uploadNameSongs(nameSongs:any){
     

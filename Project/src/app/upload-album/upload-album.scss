@@ -1,10 +1,11 @@
 @use "../../vars" as *;
 
 .upload-content{
-    .fase-1{
+    .fase-1, .fase-2{
         display: flex;
         flex-direction: column;
         align-items: center;
+        width: 100%;
         label{
             min-width: 50%;
             max-width: 50%;
@@ -16,30 +17,69 @@
             max-width: 50%;
             min-height: 50%;
             max-height: 50%;
+            margin: auto;
+            margin-bottom: 20px;
         }
-        .upload-profile-img{
-            height: 100px;
-            width: 100px;
+        .upload{
             display: flex;
-            /* margin: 50px; */
-            align-items: center;
-            justify-content: center;
-    
-            position: absolute;
-            input{
-                visibility: hidden;
-                width: 0;
-                height: 0;
-            }
+            align-content: center;
+            flex-wrap: wrap;
+            flex-direction: column;
+            width: 100%;
             label{
                 width: 100%;
                 height: 100%;
                 display: flex;
                 border-radius: 100%;
-                background-color: $black-50;
                 align-items: center;
                 justify-content: center;
+                margin: 5%;
             }
         }
+        #uploadCoverAlbum, #uploadSongs{
+            visibility: hidden;
+            width: 0;
+            height: 0;
+        }
+        form{
+            display: contents;
+            input{
+                margin: 5%;
+            }
+        }
+        
+    }
+    .fase-2, .fase-3{
+        button{
+            display: flex;
+            margin: auto;
+            justify-content: center;
+            margin-bottom: 5%;
+            margin-top: 5%;
+        }
+    }
+    .cancel-div{
+        display: flex;
+        justify-content: center;
+    }
+    .fase-3{
+        margin-top: 5%;
+        form{
+            display: flex;
+            flex-direction: column;
+            width: 80%;
+            margin: auto;
+            .change-name-div{
+                display: flex;
+                flex-direction: column;
+            }
+        }
+    }
+    .fase-4, .fase-5{
+        display: flex;
+        width: 100%;
+        height: 80vh;
+        justify-content: center;
+        align-items: center;
     }
 }

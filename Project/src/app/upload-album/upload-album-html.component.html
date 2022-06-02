@@ -1,35 +1,39 @@
 <div class="full-h">
     <h1 class="is-size-4 my-h1" fxLayoutAlign="center">UPLOAD</h1>
-    <!-- <div class="file-select">
-        <input type='file' id="uploadSongs" multiple="multiple" max="20" ngModel name="img" (change)="uploadSongs($event.target)"/>
-    </div> -->
 
     <div class="upload-content">
+        <h1 *ngIf="phase == 1" class="is-size-4 my-h1" fxLayoutAlign="center">Select an image and title</h1>
         <div class="fase-1" *ngIf="phase == 1">
-            <div class="upload-cover-album">
+            
+            <div class="upload">
                 <label for="uploadCoverAlbum"><i class="fa-solid fa-pen-to-square is-size-3"></i></label>
                 <input accept="image/jpeg,image/x-png" type="file" ngModel name="uploadCoverAlbum" id="uploadCoverAlbum" (change)="uploadCoverALbum($event.target)">
                 <img *ngIf="coverAlbumImage" src="{{coverAlbumImage}}">
             </div>
-            <!-- <div>
-                <input type="file" ngModel name="coverAlbum" (change)="uploadCoverALbum($event.target)">
-                <img *ngIf="coverAlbumImage" src="{{coverAlbumImage}}">
-            </div> -->
+
             <form #album="ngForm" (submit)="uploadAlbum(album.value)">
-                <input type="text" ngModel name="nameAlbum" autocomplete="off">
+                <input type="text" ngModel name="nameAlbum" autocomplete="off" class="my-input">
                 <button *ngIf="coverAlbumImage" class="my-button my-button-confirm">Next</button>
             </form>
 
         </div>
+
+        <h1 *ngIf="phase == 2" class="is-size-4 my-h1" fxLayoutAlign="center">Upload the music</h1>
         <div class="fase-2" *ngIf="phase == 2">
-            <input accept="audio/wav,audio/mp3,audio/flac,audio/wma,audio/m4a," type='file' id="uploadSongs" multiple="multiple" ngModel name="img" (change)="uploadSongs($event.target)"/>
-            <button *ngIf="filesToUpload" (click)="uploadSongsConfirm()" class="my-button my-button-confirm">Next</button>
+            <div class="upload">
+                <label for="uploadSongs"><i class="fa-solid fa-arrow-up-from-bracket is-size-3"></i></label>
+                <input accept="audio/wav,audio/mp3,audio/flac,audio/wma,audio/m4a," type='file' id="uploadSongs" multiple="multiple" ngModel name="img" (change)="uploadSongs($event.target)"/>
+                <button *ngIf="filesToUpload" (click)="uploadSongsConfirm()" class="my-button my-button-confirm">Next</button>
+            </div>
+            
         </div>
+
+        <h1 *ngIf="phase == 3" class="is-size-4 my-h1" fxLayoutAlign="center">Set a name for a track</h1>
         <div class="fase-3" *ngIf="phase == 3">
             <form #namesongs="ngForm" (submit)="uploadNameSongs(namesongs.value)">
-                <div *ngFor="let file of filesToUpload; let i=index">
-                    <label for="namesong{{i}}">{{file.name}}</label>
-                    <input type="text" ngModel name="namesong{{i}}" id="namesong{{i}}" value="asd" autocomplete="off">
+                <div *ngFor="let file of filesToUpload; let i=index" class="change-name-div">
+                    <label class="ellipsis" for="namesong{{i}}">{{file.name}}</label>
+                    <input type="text" ngModel name="namesong{{i}}" id="namesong{{i}}" value="asd" autocomplete="off" class="my-input">
                 </div>
                 <button *ngIf="filesToUpload" class="my-button my-button-confirm">DONE</button>
             </form>
