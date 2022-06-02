@@ -43,10 +43,11 @@
             <button (click)="publish()" class="my-button my-button-confirm">Publish</button>
         </div>
         <div class="fase-5" *ngIf="phase == 5">
-            <p>Se ha publicado correctamente</p>
+            <p>Published successfully</p>
+            <button class="my-button my-button-confirm" routerLink="/home/songs/{{idAlbum}}">Go to album</button>
         </div>
         <div class="cancel-div" *ngIf="phase > 1">
-            <button (click)="cancelUpload()" class="my-button my-button-remove">Cancel</button>
+            <button (click)="cancelUpload()" class="my-button my-button-remove">{{phase==5? 'Delete Album': 'Cancel'}}</button>
         </div>
     </div>
 

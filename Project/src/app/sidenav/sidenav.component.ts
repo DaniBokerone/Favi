@@ -58,8 +58,7 @@ export class SidenavComponent implements OnInit {
   }
 
   logout(){
-    this.coockieService.delete('token_access');
-    this.router.navigate(['/login']);
+    this.userHome.logout();
   }
 
   closeSideNav(){

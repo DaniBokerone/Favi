@@ -43,6 +43,7 @@ export class UserHomeComponent implements OnInit {
   public songPath = this.globalVar.SONG_REPOSITORY;
   public isPlayed: boolean = false;
   public volumeMenu:boolean = false;
+  public isRepeat:boolean = false;
   duration = '';
   durationImput = 0;
   currentTime = '';
@@ -71,7 +72,7 @@ export class UserHomeComponent implements OnInit {
   ];
 
   constructor(private globalVar:GlobalVarService, private activeRoute:ActivatedRoute,
-    private router: Router, private rest:RestService) { }
+    private router: Router, private rest:RestService, private coockieService:CookieService) { }
 
   ngOnInit(): void {
     
@@ -86,6 +87,7 @@ export class UserHomeComponent implements OnInit {
     this.getMyPlaylist();
     this.getFollowedArtists();
   }
+
 
   getAllAlbums(){
     this.rest.get('/getAllAlbums').subscribe({
@@ -174,6 +176,11 @@ export class UserHomeComponent implements OnInit {
     return this.router.url == "/home";
   }
   
+  logout(){
+    this.audio.pause();
+    this.coockieService.delete('token_access');
+    this.router.navigate(['/login']);
+  }
 
   /**
    * 
@@ -400,8 +407,12 @@ export class UserHomeComponent implements OnInit {
     console.log(this.currentPlaylist)
     console.log(this.currentPosition)
     console.log(this.currentSong)
-    this.currentPosition++;
+    if(!this.isRepeat){
+      this.currentPosition++;
+    }
+    
     if(this.currentPosition >= this.currentPlaylist.length){
+      return;
       this.currentPosition = 0;
     }
     this.currentSong = this.currentPlaylist[this.currentPosition];
@@ -426,6 +437,13 @@ export class UserHomeComponent implements OnInit {
 
   }
 
+  repeat(){
+    if(this.isRepeat){
+      this.isRepeat = false;
+    }else{
+      this.isRepeat = true;
+    }
+  }
   setVolume(event:any){
     this.audio.volume = event.target.value;
   }
