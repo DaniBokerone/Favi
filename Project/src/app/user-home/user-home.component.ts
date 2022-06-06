@@ -316,7 +316,7 @@ export class UserHomeComponent implements OnInit {
   }
   load(song:any){
 
-    this.streamObserver(this.songPath+this.currentSong.file_name);
+    this.streamObserver(this.songPath+this.currentSong.file_name).subscribe(event=>{});
     
   }
 

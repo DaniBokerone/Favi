@@ -66,6 +66,12 @@
             max-width: 40px;
             max-height: 40px;
         }
+        .song-buttons{
+            display: flex;
+            i{
+                padding: 5px 0;
+            }
+        }
     }
 }
 .slide-separator{

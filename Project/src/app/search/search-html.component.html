@@ -32,7 +32,7 @@
                             <p class="ellipsis">{{song.name}}</p>
                             <p class="ellipsis">{{song.artist_username}}</p>
                         </div>
-                        <div>
+                        <div class="song-buttons">
                             <i (click)="removeToFav(song)" *ngIf="song.fav" class="fa-solid fa-heart my-icon-color"></i>
                             <i (click)="addToFav(song)" *ngIf="!song.fav" class="fa-regular fa-heart"></i>
                             <i (click)="openSubMenu(songs, i)" class="fa-solid fa-ellipsis-vertical"></i>
