@@ -26,7 +26,7 @@
                 
                 <div *ngIf="typeToSearch==0||typeToSearch==2">
                     <li *ngIf="songs" class="slide-separator"><i class="fa-solid fa-music"></i> Songs</li>
-                    <li *ngFor="let song of songs">
+                    <li *ngFor="let song of songs; let i=index">
                         <img src="data:image/jpeg;base64,{{song.cover_img}}">
                         <div (click)="load(song)" class="data">
                             <p class="ellipsis">{{song.name}}</p>
@@ -35,6 +35,7 @@
                         <div>
                             <i (click)="removeToFav(song)" *ngIf="song.fav" class="fa-solid fa-heart my-icon-color"></i>
                             <i (click)="addToFav(song)" *ngIf="!song.fav" class="fa-regular fa-heart"></i>
+                            <i (click)="openSubMenu(songs, i)" class="fa-solid fa-ellipsis-vertical"></i>
                         </div>
                     </li>
                 </div>

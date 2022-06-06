@@ -81,5 +81,8 @@ export class SearchComponent implements OnInit {
     this.userHome.goToArtist(id);
   }
   
+  openSubMenu(songList:any, index:any){
+    this.userHome.openSubMenu(songList, index, null, false);
+  }
 }
 

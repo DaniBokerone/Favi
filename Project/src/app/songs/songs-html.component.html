@@ -36,10 +36,6 @@
         
     </div>
     <div *ngIf="isFixed" class="space-header"></div>
-    <script>
-        
-
-    </script>
     
     <div class="separator"></div>  
     <div class="song-list">
@@ -52,7 +48,6 @@
                         <p class="ellipsis">{{song.name}}</p>
                         <p>by {{song.artist_name}}</p>
                     </div>
-                    {{song.duration}}
 
                     <i (click)="removeToFav(song)" *ngIf="song.fav" class="fa-solid fa-heart my-icon-color"></i>
                     <i (click)="addToFav(song)" *ngIf="!song.fav" class="fa-regular fa-heart"></i>
