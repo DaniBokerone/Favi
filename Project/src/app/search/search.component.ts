@@ -34,7 +34,6 @@ export class SearchComponent implements OnInit {
   }
 
   setType(type:any){
-    console.log(type)
     this.typeToSearch = type;
   }
 
@@ -45,17 +44,14 @@ export class SearchComponent implements OnInit {
         type: this.typeToSearch,
         username: this.globalVar.currentUser.username
       }
-      console.log(data)
       this.rest.post('/search', data).subscribe({
         next: res=>{
-          console.log(res)
           this.artists = res.artists;
           this.songs = res.songs;
           this.albums = res.albums;
           this.playlists = res.playlists;
         },
         error: err=>{
-          console.log(err)
         }
       });
     }else{
@@ -69,8 +65,6 @@ export class SearchComponent implements OnInit {
   }
 
   addToFav(song:any){
-    console.log("ADD")
-    console.log(song)
     this.userHome.addToFav(song);
     return song.fav = true;
   }

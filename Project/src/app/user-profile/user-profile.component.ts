@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { DomSanitizer } from '@angular/platform-browser';
 import { CookieService } from 'ngx-cookie-service';
 import { GlobalVarService } from '../global-var.service';
 import { RestService } from '../rest.service';
@@ -18,11 +17,10 @@ export class UserProfileComponent implements OnInit {
   public img:any;
   public banner:any;
   constructor(private globalVar: GlobalVarService, private rest:RestService,
-    private sanitizer:DomSanitizer, private cookieService:CookieService) { }
+    private cookieService:CookieService) { }
 
   ngOnInit(): void {
     this.user = this.globalVar.currentUser;
-    console.log(this.user)
     this.getImg();
     if(this.user.is_artist){
       this.getBanner();
@@ -33,10 +31,8 @@ export class UserProfileComponent implements OnInit {
     this.rest.post('/getProfileImage',{username:this.user.username}).subscribe({
       next: res=>{
         this.img = res.profile_image;
-        console.log("get img")
       },
       error: err=>{
-        console.log(err);
       }
     });
   }
@@ -44,10 +40,8 @@ export class UserProfileComponent implements OnInit {
     this.rest.post('/getBanner',{username:this.user.username}).subscribe({
       next: res=>{
         this.banner = res.banner;
-        console.log("get banner")
       },
       error: err=>{
-        console.log(err);
       }
     });
   }
@@ -58,22 +52,18 @@ export class UserProfileComponent implements OnInit {
     }else{
       this.edit = true;
     }
-    console.log("Enable edit:" +this.edit)
     return this.edit;
 
   }
   update(data:NgForm){
-    // TODO validaciones
     if(true){
       if(!this.check(data, this.user)){
         let editedUser = {
           oldUsername: this.globalVar.currentUser.username,
           user: data
         }
-        console.log(editedUser)
         this.rest.post('/editUser', editedUser).subscribe({
           next: res=>{
-            console.log(res)
             this.globalVar.setCurrentUser(res);
             this.user = this.globalVar.currentUser;
             this.cookieService.deleteAll();
@@ -81,13 +71,9 @@ export class UserProfileComponent implements OnInit {
 
           },
           error: err=>{
-            console.log(err)
           }
         })
-        console.log("cambios")
         
-      }else{
-        console.log("iguales")
       }
     }
   }
@@ -113,17 +99,14 @@ export class UserProfileComponent implements OnInit {
   }
 
   photo(img:any){  
-    console.log(img)
     let data = {
       img : img.img,
       username: this.globalVar.currentUser.username
     }
     this.rest.post('/editProfileImage', data).subscribe({
       next: res=>{
-        console.log(res)
       },
       error: err=>{
-        console.log(err)
       }
     })
     

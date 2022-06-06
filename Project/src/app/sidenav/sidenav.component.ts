@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { GlobalVarService } from '../global-var.service';
 import { CookieService } from 'ngx-cookie-service';
-import { ActivatedRoute, Router } from '@angular/router';
-import { style } from '@angular/animations';
+import { Router } from '@angular/router';
 import { UserHomeComponent } from '../user-home/user-home.component';
 
 declare var $: any;
@@ -21,12 +20,10 @@ export class SidenavComponent implements OnInit {
   public user:any;
   
 
-  constructor(private globalVar: GlobalVarService, private coockieService: CookieService,
-    private router:Router, private userHome:UserHomeComponent) { }
+  constructor(private globalVar: GlobalVarService, private userHome:UserHomeComponent) { }
 
   ngOnInit(): void {
     this.user = this.globalVar.currentUser;
-    console.log(this.user)
     this.init();
     
   }

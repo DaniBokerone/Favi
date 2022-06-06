@@ -5,10 +5,8 @@
             <label for="upload"><i class="fa-solid fa-pen-to-square is-size-3"></i></label>
             <input accept="image/jpeg,image/x-png" type='file' id="upload" ngModel name="img" (change)="uploadImg($event.target)"/>
         </div>
-        <!-- <img src="../../assets/img/noimage.png"> -->
         <h1 *ngIf="!(album.playlist_id && album.creator_name == username)" class="is-size-4" [ngClass]="isFixed? 'ellipsis not-fixed-album-title':''">{{album.name}}</h1>
         <form #name="ngForm" (submit)="updatePlaylist(name.value)" *ngIf="album.playlist_id && album.creator_name == username">
-            <!-- <input type="text" ngModel="{{album.name}}" name="playlistName" autocomplete="off" class="my-input"> -->
             <input  class="my-input my-input-no-border my-input-center" type="text" ngModel="{{album.name}}" name="playlistName" autocomplete="off">
             <button class="my-button my-button-confirm my-button-little"><i class="fa-solid fa-circle-check"></i></button>
         </form>

@@ -27,7 +27,6 @@ export class MyFavSongsComponent implements OnInit {
     let data = {username: this.globalVar.currentUser.username}
     this.rest.post('/favAlbum', data).subscribe({
       next: res =>{
-        console.log(res)
         this.album = res;
       },
       error: err=>{
@@ -35,7 +34,7 @@ export class MyFavSongsComponent implements OnInit {
       }
     })
   }
-  /**@TODO */
+
   @HostListener('window:scroll',['$event']) animationHeader(){
     if(window.scrollY>220){
       this.isFixed = true;
@@ -62,20 +61,14 @@ export class MyFavSongsComponent implements OnInit {
     this.userHome.followAlbum(album.album_id);
     return album.follow = false;
   }
-  publish(album:any){
-
-  }
-  unpublish(album:any){
-    
-  }
+  publish(album:any){ }
+  unpublish(album:any){  }
 
   goToArtist(id:any){
     this.userHome.goToArtist(id);
   }
 
   load(songList:any, index:any){
-    console.log(songList)
-    // this.globalVar.currentSong = song;
     this.userHome.loadMusic(songList, index);
 
   }

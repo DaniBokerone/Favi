@@ -19,7 +19,6 @@ export class RegisterComponent implements OnInit {
   }
 
   login(data: NgForm){
-    // TODO: validaciones register form
     if(true){
       this.rest.post('/register',data)
       .subscribe({
@@ -27,7 +26,6 @@ export class RegisterComponent implements OnInit {
           this.router.navigate(['/login']);
         },
         error: err=>{
-          console.log(err);
         }
       })
     }

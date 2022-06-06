@@ -138,3 +138,21 @@ body, html{
 .current-song-body{
     margin-bottom: 110px;
 }
+.my-form{
+    background-color: $bg-color-1;
+    color: $text-color;
+    label{
+        color: $text-color;
+    }
+    input{
+        background-color: $bg-color;
+        border-color: $bg-color;
+        color: $text-color;
+        &::placeholder{
+            color: $gray;
+        }
+        &:focus{
+            border-color: $cyan;
+        }
+    }
+}

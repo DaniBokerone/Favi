@@ -28,30 +28,24 @@ export class ArtistProfileComponent implements OnInit {
           username: this.globalVar.currentUser.username,
           id: res["id"],
         };
-        console.log("todo piola");
         this.rest.post('/getArtist', data).subscribe({
           next: getRes=>{
             this.artist = getRes;
-            console.log(getRes)
             
           },
           error: getErr=>{
-            console.log(getErr)
             this.router.navigate(['notfound404']);
           }
         });
 
       },
       error: err =>{
-        console.log(err)
         this.router.navigate(['notfound404']);
       }
     });
   }
 
   load(songList:any, index:any){
-    console.log(songList)
-    // this.globalVar.currentSong = song;
     this.userHome.loadMusic(songList, index);
 
   }
@@ -66,11 +60,9 @@ export class ArtistProfileComponent implements OnInit {
     }
     this.rest.post('/followArtist',data).subscribe({
       next: res=>{
-        console.log("funciona follow")
         this.userHome.getFollowedArtists();
       },
       error: err=>{
-        console.log(err)
       }
     });
     return artist.fav = true;

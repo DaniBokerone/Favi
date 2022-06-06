@@ -1,8 +1,6 @@
 <div class="full-h" *ngIf="artist">
     <div class="banner" style="background-image: url(data:image/jpeg;base64,{{artist.banner}});">
         <div class="gradient">
-        <!-- <img src="data:image/jpeg;base64,{{artist.banner}}"> -->
-    
         <div class="img-profile is-size-5" >
             <img src="data:image/jpeg;base64,{{artist.profile_image}}">
             <div>
@@ -28,7 +26,6 @@
                         <p class="ellipsis">{{song.name}}</p>
                         <p>by {{song.artist_name}}</p>
                     </div>
-                    {{song.duration}}
 
                     <i (click)="removeToFav(song)" *ngIf="song.fav" class="fa-solid fa-heart my-icon-color"></i>
                     <i (click)="addToFav(song)" *ngIf="!song.fav" class="fa-regular fa-heart"></i>
@@ -39,29 +36,6 @@
         </ul>
     </div>
     <div class="separator"></div>  
-    <!-- <div class="song-list">
-        <ul>
-            <li *ngFor="let song of album.songs; let i=index">
-                <div class="song" (click)="load(album.songs, i)">
-                    <span>{{(i+1)}}</span>
-                    
-                    <div class="info-song">
-                        <p class="ellipsis">{{song.name}}</p>
-                        <p>by {{song.artist_name}}</p>
-                    </div>
-                    {{song.duration}}
-
-                    <i (click)="removeToFav(song)" *ngIf="song.fav" class="fa-solid fa-heart my-icon-color"></i>
-                    <i (click)="addToFav(song)" *ngIf="!song.fav" class="fa-regular fa-heart"></i>
-                    
-                    <i class="fa-solid fa-ellipsis-vertical"></i>
-                </div>  
-            </li>
-        </ul>
-        <div>
-            <span>{{album.release_date}}</span>
-        </div>
-    </div> -->
     <h1 class="is-size-4 my-h1" fxLayoutAlign="center">Albums</h1>
     <div class="home-content">
         <div class="card my-card" *ngFor="let album of artist.albums" (click)="goTo(album.album_id)">

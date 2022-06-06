@@ -28,27 +28,22 @@ export class SongsComponent implements OnInit{
           username: this.globalVar.currentUser.username,
           id: res["id"],
         };
-        console.log("todo piola");
         this.rest.getWithParams('/getAlbum', data).subscribe({
           next: getRes=>{
             this.album = getRes;
-            console.log(getRes)
           },
           error: getErr=>{
-            console.log(getErr)
             this.router.navigate(['notfound404']);
           }
         });
 
       },
       error: err =>{
-        console.log(err)
         this.router.navigate(['notfound404']);
       }
     });
   }
 
-  /**@TODO */
   @HostListener('window:scroll',['$event']) animationHeader(){
       if(window.scrollY>220){
         this.isFixed = true;
@@ -107,7 +102,6 @@ export class SongsComponent implements OnInit{
 
   load(songList:any, index:any){
     console.log(songList)
-    // this.globalVar.currentSong = song;
     this.userHome.loadMusic(songList, index);
 
   }

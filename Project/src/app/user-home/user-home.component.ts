@@ -29,10 +29,6 @@ export class UserHomeComponent implements OnInit {
   public followedArtists:any;
   public subMenuSong:boolean = false;
 
-  // public subMenuSongCurrentSong:any;
-  // public subMenuSongCurrentPlaylist:any;
-  // public subMenuSongCurrentPosition:any;
-
   public subMenuData:any;
 
   public displaySong:boolean = false;
@@ -92,11 +88,9 @@ export class UserHomeComponent implements OnInit {
   getAllAlbums(){
     this.rest.get('/getAllAlbums').subscribe({
       next: res=>{
-        console.log(res)
         this.items = res;
       },
       error: err=>{
-        console.log(":C")
       }
     });
   }
@@ -105,10 +99,8 @@ export class UserHomeComponent implements OnInit {
     this.rest.post('/getFollowedAlbums', {username:this.user.username}).subscribe({
       next: res=>{
         this.favAlbums = res;
-        console.log(this.favAlbums);
       },
       error: err=>{
-        console.log("piolan't")
       }
     });
   }
@@ -116,22 +108,18 @@ export class UserHomeComponent implements OnInit {
   getAllArtists(){
     this.rest.get('/getAllArtists').subscribe({
       next: res=>{
-        console.log(res)
         this.artists = res;
       },
       error: err=>{
-        console.log(":C")
       }
     });
   }
   getFollowedPlaylists(){
     this.rest.post('/getFollowedPlaylists', {username:this.user.username}).subscribe({
       next: res=>{
-        console.log(res)
         this.followedPlaylists = res;
       },
       error: err=>{
-        console.log(":C")
       }
     });
   }
@@ -139,11 +127,9 @@ export class UserHomeComponent implements OnInit {
   getAllPlaylists(){
     this.rest.post('/getAllPlaylists', {username:this.user.username}).subscribe({
       next: res=>{
-        console.log(res)
         this.playlists = res;
       },
       error: err=>{
-        console.log(":C")
       }
     });
   }
@@ -151,11 +137,9 @@ export class UserHomeComponent implements OnInit {
   getMyPlaylist(){
     this.rest.post('/getMyPlaylists',{username:this.user.username}).subscribe({
       next: res=>{
-        console.log(res)
         this.myPlaylists = res;
       },
       error: err=>{
-        console.log(err)
       }
     });
   }
@@ -163,11 +147,9 @@ export class UserHomeComponent implements OnInit {
   getFollowedArtists(){
     this.rest.post('/getFollowedArtists',{username:this.user.username}).subscribe({
       next: res=>{
-        console.log(res)
         this.followedArtists = res;
       },
       error: err=>{
-        console.log(err)
       }
     });
   }
@@ -195,23 +177,18 @@ export class UserHomeComponent implements OnInit {
    * @returns void
    */
   addToFav(song:any){
-    // debugger
     let data ={
       username: this.globalVar.currentUser.username,
       song_id: song.song_id,
     };
-    console.log(data)
-    console.log(song)
     this.rest.post('/fav',data).subscribe({
       next: res =>{
-        console.log("añadido a fav")
         if(this.currentSong){
           this.currentSong.fav=res.fav;
         }
        
       },
       error: err=>{
-        console.log("NO se ha podido añadir")
       }
     });
     
@@ -231,7 +208,6 @@ export class UserHomeComponent implements OnInit {
         this.getFollowedAlbums();
       },
       error: err=>{
-        console.log(err)
       }
     });
   }
@@ -250,7 +226,6 @@ export class UserHomeComponent implements OnInit {
         this.getMyPlaylist();
       },
       error: err=>{
-        console.log(err);
       }
     });
   }
@@ -263,13 +238,10 @@ export class UserHomeComponent implements OnInit {
     }
     this.rest.post('/addToPlaylist', data).subscribe({
       next: res=>{
-        console.log(res)
       },
       error: err=>{
-        console.log(err)  
       }
     });
-    console.log(data)
     
   }
   removeToPlaylist(song:any, playlist:any){
@@ -280,15 +252,11 @@ export class UserHomeComponent implements OnInit {
     }
     this.rest.post('/removeToPlaylist', data).subscribe({
       next: res=>{
-        console.log(res)
-        console.log(playlist)
         this.reload('home/playlist/'+playlist);
       },
       error: err=>{
-        console.log(err)  
       }
     });
-    console.log(data)
     
   }
 
@@ -301,7 +269,6 @@ export class UserHomeComponent implements OnInit {
       playlist_id: playlist_id,
       isMyPlaylist: isMyPlaylist
     }
-    console.log(this.subMenuData)
   }
 
   reload(url:any){
@@ -325,7 +292,6 @@ export class UserHomeComponent implements OnInit {
     }else{
       this.displaySong = true;
     }
-    console.log("Open:" +this.displaySong)
     return this.displaySong;
 
   }
@@ -336,7 +302,6 @@ export class UserHomeComponent implements OnInit {
     }else{
       this.volumeMenu = true;
     }
-    console.log("Open:" +this.volumeMenu)
     return this.volumeMenu;
 
   }
@@ -351,46 +316,8 @@ export class UserHomeComponent implements OnInit {
   }
   load(song:any){
 
-    // this.ngOnInit();
-    // console.log(song);
-    // this.userHome.showFooter(true);
-    let me = this;
-    // this.audio.removeEventListener("ended",this.addEnded);
-    this.streamObserver(this.songPath+this.currentSong.file_name)
-    .subscribe(event=>{});
-    // this.addEnded();
-    // this.audio.addEventListener("ended",this.addEnded);
-    this.isPlayed = true;
-    // this.audio.addEventListener("ended", this.next);
-    // this.audio.src = this.songPath+this.currentSong.file_name;
-    // this.audio.load();
-    // this.play();
-    // if(this.isPlayed){
-    //   this.isPlayed = false
-    // }else{
-    //   this.isPlayed = true
-    // }
-    // return this.isPlayed;
-    console.log("current song")
-    console.log(this.currentSong)
-    console.log(this.audio)
-    // this.ngOnInit();
+    this.streamObserver(this.songPath+this.currentSong.file_name);
     
-  }
-
-  addEnded(){
-    // let currentPlaylist = this.currentPlaylist;
-    // let currentPosition = this.currentPosition;
-    // let currentSong = this.currentSong;
-    // let me = this;
-    // this.audio.removeEventListener("ended",function(){
-    //   console.log("end")
-    //   me.next();
-    // });
-    // this.audio.addEventListener("ended",function(){
-      console.log("end")
-      this.next();
-    // });
   }
 
   play(){
@@ -404,16 +331,12 @@ export class UserHomeComponent implements OnInit {
   }
 
   next(){
-    console.log(this.currentPlaylist)
-    console.log(this.currentPosition)
-    console.log(this.currentSong)
     if(!this.isRepeat){
       this.currentPosition++;
     }
     
     if(this.currentPosition >= this.currentPlaylist.length){
       return;
-      this.currentPosition = 0;
     }
     this.currentSong = this.currentPlaylist[this.currentPosition];
     this.load(this.currentSong);
@@ -465,7 +388,6 @@ export class UserHomeComponent implements OnInit {
         this.next();
       }
       this.addEvent(this.audio,this.audioEvents,handler,nextSong);
-      // this.audio.addEventListener("ended",this.next);
 
       return() =>{
         this.audio.pause();

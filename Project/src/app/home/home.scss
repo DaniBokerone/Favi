@@ -6,9 +6,15 @@
     justify-content: center;
     height: 100vh;
     background-color: $dark-text-color;
+    img{
+        width: 150px;
+    }
 }
 .content{
     background-color: $bg-color;
+    padding: 5%;
 
-    height: 100vh;
+    .buttons{
+        justify-content: center;
+    }
 }

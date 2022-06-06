@@ -33,26 +33,21 @@ export class PlaylistComponent  implements OnInit {
             username: this.globalVar.currentUser.username,
             id: res["id"],
           };
-          console.log("todo piola");
           this.rest.getWithParams('/getPlaylist', data).subscribe({
             next: getRes=>{
               this.album = getRes;
-              console.log(getRes)
             },
             error: getErr=>{
-              console.log(getErr)
               this.router.navigate(['notfound404']);
             }
           });
   
         },
         error: err =>{
-          console.log(err)
         }
       });
     }
   
-    /**@TODO */
     @HostListener('window:scroll',['$event']) animationHeader(){
         if(window.scrollY>220){
           this.isFixed = true;
@@ -77,11 +72,9 @@ export class PlaylistComponent  implements OnInit {
       };
       this.rest.post('/followPlaylist',data).subscribe({
         next: res=>{
-          console.log("follow playlist")
           this.userHome.getFollowedPlaylists(); 
         },
         error: err=>{
-          console.log("No se puede follow")
         }
       });
       return album.follow = true;
@@ -96,8 +89,6 @@ export class PlaylistComponent  implements OnInit {
     }
   
     load(songList:any, index:any){
-      console.log(songList)
-      // this.globalVar.currentSong = song;
       this.userHome.loadMusic(songList, index);
   
     }
@@ -123,10 +114,8 @@ export class PlaylistComponent  implements OnInit {
       };
       this.rest.post('/publishPlaylist',data).subscribe({
         next: res=>{
-          console.log("public")
         },
         error: err=>{
-          console.log(err)
         }
       });
       return album.public = true;
@@ -143,13 +132,10 @@ export class PlaylistComponent  implements OnInit {
       }
       this.rest.post('/deletePlaylist',data).subscribe({
         next: res=>{
-          console.log("delete :D")
-          /**@TODO redirecto home */
           this.userHome.getMyPlaylist();
           this.router.navigate(['/home']);
         },
         error: err=>{
-          console.log(err)
         }
       });
     }
@@ -174,10 +160,8 @@ export class PlaylistComponent  implements OnInit {
       }
       this.rest.post('/editPlaylist',data).subscribe({
         next: res=>{
-          /**@TODO currentizar */
         },
         error: err=>{
-          console.log(err)
         }
       });
       
