@@ -1,0 +1,6 @@
+{
+	"appId": "com.favi.app",
+	"appName": "Favi",
+	"webDir": "dist/project",
+	"bundledWebRuntime": false
+}
